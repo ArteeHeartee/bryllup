@@ -31,29 +31,19 @@
   <link rel="stylesheet" href="style.css">
 </head>
 
-<body>
+<body class="invitation-closed">
+
+  <!-- Fast toppmeny som vises etter at invitasjonen er åpnet -->
 
   <header class="site-header" data-header>
 
     <a
       class="wordmark"
-      href="#hjem"
+      href="#invitasjon"
       aria-label="Til toppen"
     >
       P <span>&</span> A
     </a>
-
-    <button
-      class="menu-toggle"
-      type="button"
-      aria-expanded="false"
-      aria-controls="main-navigation"
-      aria-label="Åpne meny"
-      data-menu-toggle
-    >
-      <span></span>
-      <span></span>
-    </button>
 
     <nav
       class="main-navigation"
@@ -68,128 +58,198 @@
       <a href="#rsvp">RSVP</a>
     </nav>
 
+    <div class="header-actions">
+
+      <button
+        class="reopen-button"
+        type="button"
+        data-reopen-invitation
+      >
+        Se invitasjonen
+      </button>
+
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-navigation"
+        aria-label="Åpne meny"
+        data-menu-toggle
+      >
+        <span></span>
+        <span></span>
+      </button>
+
+    </div>
+
   </header>
 
 
   <main>
 
+    <!-- Interaktiv invitasjon -->
+
     <section
-      class="invitation-hero"
-      id="hjem"
-      aria-labelledby="hero-title"
+      class="invitation-section"
+      id="invitasjon"
+      aria-labelledby="invitation-title"
     >
 
-      <div class="paper-grain" aria-hidden="true"></div>
-
-      <div class="invitation-frame">
-
-        <div class="hero-topline">
-
-          <span>Formell invitasjon følger</span>
-
-          <span class="hero-monogram">
-            P <i>&</i> A
-          </span>
-
-          <span>Trondheim · Norge</span>
-
-        </div>
+      <div class="paper-texture" aria-hidden="true"></div>
 
 
-        <div class="venue-illustration" aria-hidden="true">
+      <!-- Innholdet på innsiden av invitasjonen -->
 
-          <div class="illustration-sun"></div>
+      <div class="invitation-interior">
 
-          <svg
-            viewBox="0 0 760 300"
-            role="img"
-            aria-label="Dekorativ arkitektonisk illustrasjon"
-          >
-            <g
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
+        <div class="inside-panel inside-left">
 
-              <path d="M110 235H650" />
+          <p class="inside-heading">
+            Praktisk
+          </p>
 
-              <path d="M170 235V142L265 83L360 142V235" />
+          <div class="inside-information">
 
-              <path d="M360 235V127L470 66L580 127V235" />
+            <article>
+              <h3>Overnatting</h3>
+              <p>
+                Anbefalinger til overnatting i Trondheim
+                kommer senere.
+              </p>
+            </article>
 
-              <path d="M218 235V171H312V235" />
+            <article>
+              <h3>Transport</h3>
+              <p>
+                Informasjon om parkering, transport og
+                hjemreise publiseres når planene er klare.
+              </p>
+            </article>
 
-              <path d="M414 235V158H527V235" />
+            <article>
+              <h3>Gaver</h3>
+              <p>
+                Deres tilstedeværelse betyr mest.
+                Gaveønsker publiseres senere.
+              </p>
+            </article>
 
-              <path d="M246 171V126H284V171" />
+            <article>
+              <h3>RSVP</h3>
+              <p>
+                Svarfrist og påmelding kommer sammen
+                med den formelle invitasjonen.
+              </p>
+            </article>
 
-              <path d="M447 157V109H487V157" />
-
-              <path d="M170 142L265 83L360 142" />
-
-              <path d="M360 127L470 66L580 127" />
-
-              <path d="M145 235V175L170 160" />
-
-              <path d="M580 160L610 177V235" />
-
-              <path d="M120 235C160 208 190 210 220 235" />
-
-              <path d="M540 235C575 207 615 208 650 235" />
-
-              <path d="M90 246H670" />
-
-              <path d="M135 246C160 260 188 260 214 246" />
-
-              <path d="M546 246C570 260 602 260 630 246" />
-
-            </g>
-          </svg>
+          </div>
 
         </div>
 
 
-        <div class="hero-copy">
+        <div class="inside-panel inside-center">
 
-          <p class="hero-kicker">
+          <p class="invitation-eyebrow">
             Sammen med familiene våre
           </p>
 
-          <h1 id="hero-title">
+          <img
+            class="harmonien-illustration"
+            src="assets/harmonien.png"
+            alt="Illustrasjon av Harmonien i Trondheim"
+          >
+
+          <h1 id="invitation-title">
             <span>Pernille</span>
-            <em>and</em>
+            <em>og</em>
             <span>Andreas</span>
           </h1>
 
-          <p class="invitation-text">
+          <p class="invitation-request">
             inviterer til feiring av vårt bryllup
           </p>
 
-          <div class="date-block">
+          <div class="wedding-date">
 
-            <span class="date-day">
+            <span class="wedding-day">
               18
             </span>
 
-            <span class="date-details">
+            <span class="wedding-month">
               September<br>
               2027
             </span>
 
           </div>
 
-          <p class="venue-name">
+          <p class="venue">
             Harmonien
           </p>
 
-          <p class="venue-city">
+          <p class="city">
             Trondheim
           </p>
 
         </div>
 
+
+        <div class="inside-panel inside-right">
+
+          <p class="inside-heading">
+            Program
+          </p>
+
+          <div class="mini-program">
+
+            <article>
+              <span>Tid kommer</span>
+              <div>
+                <h3>Vielse</h3>
+                <p>
+                  Tidspunkt og sted publiseres senere.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span>Deretter</span>
+              <div>
+                <h3>Mottakelse</h3>
+                <p>
+                  Velkomst og noe godt i glasset.
+                </p>
+              </div>
+            </article>
+
+            <article>
+              <span>Kvelden</span>
+              <div>
+                <h3>Middag og fest</h3>
+                <p>
+                  Middag, taler, dans og feiring.
+                </p>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="dresscode-preview">
+
+            <p class="inside-heading">
+              Antrekk
+            </p>
+
+            <p>
+              Informasjon om antrekk kommer sammen
+              med den formelle invitasjonen.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- Nedtelling nederst på det åpne kortet -->
 
         <div
           class="countdown"
@@ -222,54 +282,123 @@
 
 
         <a
-          class="scroll-link"
+          class="continue-link"
           href="#historien"
         >
           Fortsett til historien vår
+          <span aria-hidden="true">↓</span>
         </a>
+
+      </div>
+
+
+      <!-- Forsiden med to fløyer -->
+
+      <div
+        class="invitation-cover"
+        data-invitation-cover
+      >
+
+        <div class="cover-shadow" aria-hidden="true"></div>
+
+
+        <div class="cover-door cover-door-left">
+
+          <div class="cover-content">
+
+            <span class="cover-initial">
+              P
+            </span>
+
+            <span class="cover-detail">
+              2027
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="cover-door cover-door-right">
+
+          <div class="cover-content">
+
+            <span class="cover-initial">
+              A
+            </span>
+
+            <span class="cover-detail">
+              18 · 09
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          class="open-invitation-button"
+          type="button"
+          data-open-invitation
+        >
+          <span>Åpne invitasjonen</span>
+          <i aria-hidden="true"></i>
+        </button>
 
       </div>
 
     </section>
 
 
+    <!-- Historien -->
+
     <section
       class="story-section"
       id="historien"
     >
 
-      <div class="story-layout">
+      <div class="section-intro reveal">
+
+        <p class="section-label">
+          Historien vår
+        </p>
+
+        <h2>
+          Fra et første møte<br>
+          til et ja
+        </h2>
+
+      </div>
+
+
+      <div class="story-grid">
 
         <div class="story-copy reveal">
 
-          <p class="section-label">
-            Historien vår
-          </p>
-
-          <h2>
-            Fra et første møte<br>
-            til et ja
-          </h2>
-
-          <p>
-            Noen øyeblikk forandrer alt. For oss ble solnedgangen
-            på havet begynnelsen på et nytt kapittel.
+          <p class="story-lead">
+            Noen øyeblikk forandrer alt.
           </p>
 
           <p>
-            Her skal vi etter hvert fortelle mer om veien frem
-            til bryllupsdagen – fra de små øyeblikkene i hverdagen
-            til frieriet vi aldri kommer til å glemme.
+            For oss ble solnedgangen på havet begynnelsen
+            på et nytt kapittel.
+          </p>
+
+          <p>
+            Her skal vi etter hvert fortelle mer om veien
+            frem til bryllupsdagen – fra de små øyeblikkene
+            i hverdagen til frieriet vi aldri kommer til å
+            glemme.
           </p>
 
         </div>
 
 
-        <figure class="story-image reveal">
+        <figure class="story-photo reveal">
 
           <img
             src="assets/frierisolnedgangv1.jpg"
-            alt="Frieriet til Pernille og Andreas ved solnedgang"
+            alt="Andreas frir til Pernille ved solnedgang"
           >
 
           <figcaption>
@@ -283,12 +412,14 @@
     </section>
 
 
+    <!-- Program -->
+
     <section
-      class="editorial-section program-section"
+      class="content-section program-section"
       id="program"
     >
 
-      <div class="section-heading reveal">
+      <div class="section-intro reveal">
 
         <p class="section-label">
           Bryllupsdagen
@@ -297,7 +428,8 @@
         <h2>Program</h2>
 
         <p>
-          Detaljert program publiseres når alle tidspunktene er klare.
+          Detaljert program publiseres når alle
+          tidspunktene er klare.
         </p>
 
       </div>
@@ -311,12 +443,13 @@
             Tid kommer
           </span>
 
-          <div class="timeline-marker"></div>
+          <span class="timeline-dot"></span>
 
           <div>
             <h3>Vielse</h3>
             <p>
-              Informasjon om tidspunkt og sted kommer senere.
+              Informasjon om tidspunkt og sted
+              publiseres senere.
             </p>
           </div>
 
@@ -329,12 +462,13 @@
             Deretter
           </span>
 
-          <div class="timeline-marker"></div>
+          <span class="timeline-dot"></span>
 
           <div>
             <h3>Mottakelse</h3>
             <p>
-              Vi møtes til velkomst, noe godt i glasset og feiring.
+              Vi møtes til velkomst, noe godt i
+              glasset og feiring.
             </p>
           </div>
 
@@ -347,12 +481,13 @@
             Kvelden
           </span>
 
-          <div class="timeline-marker"></div>
+          <span class="timeline-dot"></span>
 
           <div>
             <h3>Middag og fest</h3>
             <p>
-              Middag, taler, dans og en kveld vi håper å huske lenge.
+              Middag, taler, dans og en kveld vi
+              håper å huske lenge.
             </p>
           </div>
 
@@ -363,12 +498,14 @@
     </section>
 
 
+    <!-- Praktisk informasjon -->
+
     <section
-      class="editorial-section practical-section"
+      class="content-section practical-section"
       id="praktisk"
     >
 
-      <div class="section-heading reveal">
+      <div class="section-intro reveal">
 
         <p class="section-label">
           Alt du trenger å vite
@@ -383,15 +520,14 @@
 
         <article class="information-card reveal">
 
-          <span class="card-number">
-            01
-          </span>
+          <span>01</span>
 
           <h3>Sted</h3>
 
           <p>
-            Bryllupsfeiringen finner sted på Harmonien i Trondheim.
-            Mer detaljert informasjon kommer senere.
+            Bryllupsfeiringen finner sted på Harmonien
+            i Trondheim. Mer detaljert informasjon
+            kommer senere.
           </p>
 
         </article>
@@ -399,15 +535,13 @@
 
         <article class="information-card reveal">
 
-          <span class="card-number">
-            02
-          </span>
+          <span>02</span>
 
           <h3>Antrekk</h3>
 
           <p>
-            Informasjon om ønsket antrekk blir publisert sammen
-            med den formelle invitasjonen.
+            Informasjon om ønsket antrekk publiseres
+            sammen med den formelle invitasjonen.
           </p>
 
         </article>
@@ -415,15 +549,13 @@
 
         <article class="information-card reveal">
 
-          <span class="card-number">
-            03
-          </span>
+          <span>03</span>
 
           <h3>Transport</h3>
 
           <p>
-            Informasjon om transport, parkering og hjemreise
-            publiseres når planene er ferdige.
+            Informasjon om transport, parkering og
+            hjemreise publiseres når planene er klare.
           </p>
 
         </article>
@@ -431,15 +563,13 @@
 
         <article class="information-card reveal">
 
-          <span class="card-number">
-            04
-          </span>
+          <span>04</span>
 
           <h3>Overnatting</h3>
 
           <p>
-            Vi kommer med anbefalinger til overnatting i Trondheim
-            for gjester som reiser til byen.
+            Vi kommer med anbefalinger til overnatting
+            i Trondheim for gjester som reiser til byen.
           </p>
 
         </article>
@@ -449,12 +579,14 @@
     </section>
 
 
+    <!-- Gaveønsker -->
+
     <section
-      class="editorial-section gifts-section"
+      class="gifts-section"
       id="gaveonsker"
     >
 
-      <div class="gifts-inner reveal">
+      <div class="gifts-content reveal">
 
         <p class="section-label">
           Gaver
@@ -462,14 +594,15 @@
 
         <h2>Gaveønsker</h2>
 
-        <p class="gifts-intro">
-          Det viktigste for oss er at dere ønsker å feire dagen
-          sammen med oss.
+        <p class="gifts-lead">
+          Det viktigste for oss er at dere ønsker å
+          feire dagen sammen med oss.
         </p>
 
         <p>
-          Dersom noen likevel ønsker å gi en gave, vil vi publisere
-          våre gaveønsker her når invitasjonene sendes ut.
+          Dersom noen likevel ønsker å gi en gave,
+          publiserer vi våre gaveønsker her når
+          invitasjonene sendes ut.
         </p>
 
       </div>
@@ -477,12 +610,14 @@
     </section>
 
 
+    <!-- RSVP -->
+
     <section
       class="rsvp-section"
       id="rsvp"
     >
 
-      <div class="rsvp-frame reveal">
+      <div class="rsvp-card reveal">
 
         <p class="section-label">
           Vi håper du kommer
@@ -491,13 +626,13 @@
         <h2>RSVP</h2>
 
         <p>
-          Svarskjema og svarfrist publiseres sammen med den
-          formelle invitasjonen.
+          Svarskjema og svarfrist publiseres sammen
+          med den formelle invitasjonen.
         </p>
 
         <button
-          class="rsvp-button"
           type="button"
+          class="rsvp-button"
           disabled
         >
           Påmelding åpner senere
@@ -512,17 +647,13 @@
 
   <footer class="site-footer">
 
-    <p class="footer-script">
-      Pernille and Andreas
+    <p class="footer-names">
+      Pernille og Andreas
     </p>
 
-    <p>
-      18. september 2027
-    </p>
+    <p>18. september 2027</p>
 
-    <p>
-      Harmonien · Trondheim
-    </p>
+    <p>Harmonien · Trondheim</p>
 
   </footer>
 

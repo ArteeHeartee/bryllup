@@ -34,7 +34,20 @@ const navLinks = [
 
 
 /*
-  Invitasjonen
+  RSVP-BACKEND
+
+  Skjemaet står foreløpig i testmodus.
+
+  Senere erstatter vi teksten under med adressen
+  til vår egen backend-funksjon.
+*/
+
+const RSVP_ENDPOINT =
+  "DIN_BACKEND_ADRESSE_KOMMER_HER";
+
+
+/*
+  INVITASJON
 */
 
 const openInvitation = () => {
@@ -96,7 +109,7 @@ if (reopenInvitationButton) {
 
 
 /*
-  Header
+  HEADER
 */
 
 const updateHeader = () => {
@@ -123,7 +136,7 @@ window.addEventListener(
 
 
 /*
-  Mobilmeny
+  MOBILMENY
 */
 
 function closeMenu() {
@@ -203,23 +216,7 @@ window.addEventListener(
 
 
 /*
-  Escape lukker mobilmenyen
-*/
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (event.key === "Escape") {
-      closeMenu();
-    }
-
-  }
-);
-
-
-/*
-  Aktivt menypunkt
+  AKTIVT MENYPUNKT
 */
 
 const navigationSections = [
@@ -276,10 +273,9 @@ if ("IntersectionObserver" in window) {
 
 
 /*
-  Nedtelling
+  NEDTELLING
 
-  Foreløpig tidspunkt:
-  18. september 2027 klokken 13:00.
+  18. september 2027 klokken 13.30.
 */
 
 const daysElement =
@@ -305,7 +301,7 @@ const secondsElement =
 
 const weddingDate =
   new Date(
-    "2027-09-18T13:00:00+02:00"
+    "2027-09-18T13:30:00+02:00"
   );
 
 
@@ -341,17 +337,10 @@ const updateCountdown = () => {
 
   if (difference <= 0) {
 
-    daysElement.textContent =
-      "000";
-
-    hoursElement.textContent =
-      "00";
-
-    minutesElement.textContent =
-      "00";
-
-    secondsElement.textContent =
-      "00";
+    daysElement.textContent = "000";
+    hoursElement.textContent = "00";
+    minutesElement.textContent = "00";
+    secondsElement.textContent = "00";
 
     return;
   }
@@ -418,7 +407,7 @@ window.setInterval(
 
 
 /*
-  Scrollanimasjoner
+  SCROLLANIMASJONER
 */
 
 const revealElements = [
@@ -472,6 +461,359 @@ if ("IntersectionObserver" in window) {
       element.classList.add(
         "visible"
       );
+    }
+  );
+
+}
+
+
+/*
+  GAVEKNAPP MED MIDLERTIDIG LENKE
+*/
+
+const giftLink =
+  document.querySelector(
+    "[data-gift-link]"
+  );
+
+
+if (giftLink) {
+
+  giftLink.addEventListener(
+    "click",
+    (event) => {
+
+      if (
+        giftLink.classList.contains(
+          "disabled-link"
+        )
+      ) {
+        event.preventDefault();
+      }
+
+    }
+  );
+
+}
+
+
+/*
+  RSVP POPUP
+*/
+
+const rsvpModal =
+  document.querySelector(
+    "[data-rsvp-modal]"
+  );
+
+const openRsvpButton =
+  document.querySelector(
+    "[data-open-rsvp]"
+  );
+
+const closeRsvpButtons = [
+  ...document.querySelectorAll(
+    "[data-close-rsvp]"
+  )
+];
+
+
+const openRsvpModal = () => {
+
+  if (!rsvpModal) {
+    return;
+  }
+
+  rsvpModal.classList.add(
+    "open"
+  );
+
+  rsvpModal.setAttribute(
+    "aria-hidden",
+    "false"
+  );
+
+  body.classList.add(
+    "modal-open"
+  );
+
+
+  window.setTimeout(() => {
+
+    const firstField =
+      rsvpModal.querySelector(
+        "input, textarea"
+      );
+
+    if (firstField) {
+      firstField.focus();
+    }
+
+  }, 350);
+
+};
+
+
+const closeRsvpModal = () => {
+
+  if (!rsvpModal) {
+    return;
+  }
+
+  rsvpModal.classList.remove(
+    "open"
+  );
+
+  rsvpModal.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  body.classList.remove(
+    "modal-open"
+  );
+
+
+  if (openRsvpButton) {
+    openRsvpButton.focus();
+  }
+
+};
+
+
+if (openRsvpButton) {
+
+  openRsvpButton.addEventListener(
+    "click",
+    openRsvpModal
+  );
+
+}
+
+
+closeRsvpButtons.forEach(
+  (button) => {
+
+    button.addEventListener(
+      "click",
+      closeRsvpModal
+    );
+
+  }
+);
+
+
+/*
+  ESCAPE LUKKER MENY OG POPUP
+*/
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (event.key !== "Escape") {
+      return;
+    }
+
+    closeMenu();
+    closeRsvpModal();
+
+  }
+);
+
+
+/*
+  RSVP-SKJEMA
+*/
+
+const rsvpForm =
+  document.querySelector(
+    "[data-rsvp-form]"
+  );
+
+const formStatus =
+  document.querySelector(
+    "[data-form-status]"
+  );
+
+
+const setFormStatus = (
+  message,
+  type = ""
+) => {
+
+  if (!formStatus) {
+    return;
+  }
+
+  formStatus.textContent =
+    message;
+
+  formStatus.className =
+    "form-status";
+
+  if (type) {
+    formStatus.classList.add(type);
+  }
+
+};
+
+
+const formDataToObject = (
+  formData
+) => {
+
+  const result = {};
+
+  formData.forEach(
+    (value, key) => {
+
+      result[key] = value;
+
+    }
+  );
+
+  return result;
+
+};
+
+
+if (rsvpForm) {
+
+  rsvpForm.addEventListener(
+    "submit",
+    async (event) => {
+
+      event.preventDefault();
+
+
+      if (!rsvpForm.checkValidity()) {
+
+        rsvpForm.reportValidity();
+
+        return;
+
+      }
+
+
+      const submitButton =
+        rsvpForm.querySelector(
+          ".form-submit"
+        );
+
+
+      const formData =
+        new FormData(rsvpForm);
+
+
+      const payload =
+        formDataToObject(formData);
+
+
+      payload.submittedAt =
+        new Date().toISOString();
+
+
+      /*
+        TESTMODUS
+
+        Frem til backend-adressen er lagt inn,
+        sendes ingen personopplysninger noe sted.
+      */
+
+      if (
+        RSVP_ENDPOINT ===
+        "DIN_BACKEND_ADRESSE_KOMMER_HER"
+      ) {
+
+        console.table(payload);
+
+        setFormStatus(
+          "Skjemaet fungerer, men står foreløpig i testmodus. Svaret er derfor ikke sendt ennå.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          "Sender …";
+
+        setFormStatus(
+          "Sender svaret …"
+        );
+
+
+        const response =
+          await fetch(
+            RSVP_ENDPOINT,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(payload)
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Serveren svarte med status ${response.status}`
+          );
+
+        }
+
+
+        setFormStatus(
+          "Tusen takk! Svaret deres er registrert.",
+          "success"
+        );
+
+
+        rsvpForm.reset();
+
+
+        window.setTimeout(
+          closeRsvpModal,
+          2500
+        );
+
+      } catch (error) {
+
+        console.error(
+          "RSVP-feil:",
+          error
+        );
+
+
+        setFormStatus(
+          "Vi klarte ikke å sende svaret. Prøv igjen, eller ta kontakt med Pernille eller Andreas.",
+          "error"
+        );
+
+      } finally {
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "Send svar";
+
+      }
+
     }
   );
 

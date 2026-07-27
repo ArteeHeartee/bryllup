@@ -24,7 +24,7 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap"
     rel="stylesheet"
   >
 
@@ -48,9 +48,9 @@
       type="button"
       aria-expanded="false"
       aria-controls="main-navigation"
+      aria-label="Åpne meny"
       data-menu-toggle
     >
-      <span class="sr-only">Åpne meny</span>
       <span></span>
       <span></span>
     </button>
@@ -61,10 +61,11 @@
       aria-label="Hovedmeny"
       data-navigation
     >
-      <a class="active" href="#velkommen">Velkommen</a>
+      <a href="#velkommen">Velkommen</a>
       <a href="#historien">Historien</a>
       <a href="#program">Program</a>
       <a href="#informasjon">Info</a>
+      <a href="#gaveonsker">Gaveønsker</a>
       <a href="#rsvp">RSVP</a>
     </nav>
 
@@ -90,23 +91,18 @@
 
       <div class="hero-content">
 
+        <p class="hero-script">
+          save the date
+        </p>
+
         <p class="hero-date">
-          Den 18. september 2027
+          18. september 2027
         </p>
 
         <p class="hero-intro">
           samles vi med menneskene<br>
           vi er aller mest glade i.
         </p>
-
-        <div
-          class="ornament"
-          aria-hidden="true"
-        >
-          <span></span>
-          <span class="heart">♡</span>
-          <span></span>
-        </div>
 
         <h1
           class="hero-title"
@@ -127,8 +123,8 @@
 
       <a
         class="scroll-cue"
-        href="#velkommen"
-        aria-label="Scroll ned til velkomstseksjonen"
+        href="#nedtelling"
+        aria-label="Scroll ned til nedtellingen"
       >
         <span>Scroll</span>
         <i aria-hidden="true"></i>
@@ -136,87 +132,250 @@
 
     </section>
 
+
     <section
-      class="placeholder-section"
+      class="countdown-section"
+      id="nedtelling"
+      aria-labelledby="countdown-heading"
+    >
+
+      <div class="countdown-inner">
+
+        <p class="section-kicker">
+          Vi teller ned
+        </p>
+
+        <h2 id="countdown-heading">
+          Til vi feirer kjærligheten
+        </h2>
+
+        <div
+          class="countdown"
+          aria-live="polite"
+          data-countdown
+        >
+
+          <div class="countdown-item">
+            <span
+              class="countdown-number"
+              data-days
+            >
+              000
+            </span>
+
+            <span class="countdown-label">
+              Dager
+            </span>
+          </div>
+
+          <div class="countdown-divider"></div>
+
+          <div class="countdown-item">
+            <span
+              class="countdown-number"
+              data-hours
+            >
+              00
+            </span>
+
+            <span class="countdown-label">
+              Timer
+            </span>
+          </div>
+
+          <div class="countdown-divider"></div>
+
+          <div class="countdown-item">
+            <span
+              class="countdown-number"
+              data-minutes
+            >
+              00
+            </span>
+
+            <span class="countdown-label">
+              Minutter
+            </span>
+          </div>
+
+          <div class="countdown-divider"></div>
+
+          <div class="countdown-item">
+            <span
+              class="countdown-number"
+              data-seconds
+            >
+              00
+            </span>
+
+            <span class="countdown-label">
+              Sekunder
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <section
+      class="content-section"
       id="velkommen"
     >
+
       <div class="section-inner">
 
-        <p class="eyebrow">
+        <p class="section-kicker">
           Kapittel én
         </p>
 
         <h2>Velkommen</h2>
 
-        <p>
-          Denne seksjonen blir neste steg. Først finpusser vi
-          hero-seksjonen til den sitter helt perfekt.
+        <p class="section-text">
+          Vi gleder oss til å samle menneskene vi er aller mest
+          glade i, og feire denne dagen sammen med dere.
         </p>
 
       </div>
+
     </section>
 
+
     <section
-      class="placeholder-section alt"
+      class="content-section alternate"
       id="historien"
     >
+
       <div class="section-inner">
 
-        <p class="eyebrow">
+        <p class="section-kicker">
           Kapittel to
         </p>
 
         <h2>Historien vår</h2>
 
+        <p class="section-text">
+          Her skal vi fortelle historien om veien frem til
+          frieriet og dagen vi nå gleder oss til.
+        </p>
+
       </div>
+
     </section>
 
+
     <section
-      class="placeholder-section"
+      class="content-section"
       id="program"
     >
+
       <div class="section-inner">
 
-        <p class="eyebrow">
+        <p class="section-kicker">
           Kapittel tre
         </p>
 
         <h2>Dagen</h2>
 
+        <p class="section-text">
+          Programmet for bryllupsdagen kommer her når alle
+          detaljene er klare.
+        </p>
+
       </div>
+
     </section>
 
+
     <section
-      class="placeholder-section alt"
+      class="content-section alternate"
       id="informasjon"
     >
+
       <div class="section-inner">
 
-        <p class="eyebrow">
+        <p class="section-kicker">
           Kapittel fire
         </p>
 
         <h2>Praktisk informasjon</h2>
 
+        <p class="section-text">
+          Her finner dere etter hvert informasjon om sted,
+          antrekk, transport og andre praktiske detaljer.
+        </p>
+
       </div>
+
     </section>
 
+
     <section
-      class="placeholder-section"
-      id="rsvp"
+      class="content-section"
+      id="gaveonsker"
     >
+
       <div class="section-inner">
 
-        <p class="eyebrow">
+        <p class="section-kicker">
           Kapittel fem
+        </p>
+
+        <h2>Gaveønsker</h2>
+
+        <p class="section-text">
+          Deres tilstedeværelse på dagen betyr aller mest.
+          Informasjon om gaveønsker kommer senere.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <section
+      class="content-section alternate"
+      id="rsvp"
+    >
+
+      <div class="section-inner">
+
+        <p class="section-kicker">
+          Kapittel seks
         </p>
 
         <h2>Vi sees</h2>
 
+        <p class="section-text">
+          Påmelding og svarfrist kommer her når den formelle
+          invitasjonen er sendt.
+        </p>
+
       </div>
+
     </section>
 
   </main>
+
+
+  <footer class="site-footer">
+
+    <p class="footer-names">
+      Pernille <span>&</span> Andreas
+    </p>
+
+    <p>
+      18. september 2027
+    </p>
+
+    <p>
+      Harmonien · Trondheim
+    </p>
+
+  </footer>
+
 
   <script src="script.js"></script>
 

@@ -523,7 +523,11 @@ footer p:first-child {
 
 @media (max-width: 900px) {
   .navbar {
-    padding: 24px;
+    padding: 22px 24px;
+  }
+
+  .navbar.scrolled {
+    padding: 14px 24px;
   }
 
   .menu-button {

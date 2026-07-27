@@ -1,129 +1,81 @@
-// =====================================
-// NEDTELLING
-// =====================================
+const header = document.querySelector("[data-header]");
+const menuToggle = document.querySelector("[data-menu-toggle]");
+const navigation = document.querySelector("[data-navigation]");
+const navLinks = [...document.querySelectorAll(".main-navigation a")];
+const heroBackground = document.querySelector(".hero-background");
 
-const weddingDate = new Date("2027-09-18T00:00:00+02:00");
-
-const daysElement = document.getElementById("days");
-const hoursElement = document.getElementById("hours");
-const minutesElement = document.getElementById("minutes");
-const secondsElement = document.getElementById("seconds");
-
-function updateCountdown() {
-    const now = new Date();
-    const difference = weddingDate - now;
-
-    if (difference <= 0) {
-        daysElement.textContent = "0";
-        hoursElement.textContent = "00";
-        minutesElement.textContent = "00";
-        secondsElement.textContent = "00";
-        return;
-    }
-
-    const days = Math.floor(difference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((difference / (1000 * 60)) % 60);
-    const seconds = Math.floor((difference / 1000) % 60);
-
-    daysElement.textContent = days;
-    hoursElement.textContent = hours.toString().padStart(2, "0");
-    minutesElement.textContent = minutes.toString().padStart(2, "0");
-    secondsElement.textContent = seconds.toString().padStart(2, "0");
-}
-
-updateCountdown();
-setInterval(updateCountdown, 1000);
-
-
-// =====================================
-// NAVBAR
-// =====================================
-
-const navbar = document.querySelector(".navbar");
-
-function updateNavbar() {
-    if (window.scrollY > 60) {
-        navbar.classList.add("scrolled");
+// Header ved scrolling
+const updateHeader = () => {
+    if (window.scrollY > 40) {
+        header.classList.add("scrolled");
     } else {
-        navbar.classList.remove("scrolled");
+        header.classList.remove("scrolled");
     }
+};
+
+updateHeader();
+window.addEventListener("scroll", updateHeader);
+
+// Mobilmeny
+if (menuToggle) {
+    menuToggle.addEventListener("click", () => {
+        const isOpen =
+            menuToggle.getAttribute("aria-expanded") === "true";
+
+        menuToggle.setAttribute("aria-expanded", !isOpen);
+        navigation.classList.toggle("open");
+        document.body.classList.toggle("menu-open");
+    });
 }
 
-updateNavbar();
-window.addEventListener("scroll", updateNavbar);
-
-
-// =====================================
-// MOBILMENY
-// =====================================
-
-const menuButton = document.querySelector(".menu-button");
-const navLinks = document.querySelector(".nav-links");
-
-menuButton.addEventListener("click", () => {
-
-    navLinks.classList.toggle("open");
-
-    document.body.classList.toggle("menu-open");
-
-    const open = navLinks.classList.contains("open");
-
-    menuButton.setAttribute("aria-expanded", open);
-
-    menuButton.textContent = open ? "✕" : "☰";
-});
-
-
-// Lukk meny når man klikker på en lenke
-
-document.querySelectorAll(".nav-links a").forEach(link => {
-
+// Lukk meny når man klikker på et menypunkt
+navLinks.forEach(link => {
     link.addEventListener("click", () => {
-
-        navLinks.classList.remove("open");
-
+        navigation.classList.remove("open");
         document.body.classList.remove("menu-open");
-
-        menuButton.textContent = "☰";
-
-        menuButton.setAttribute("aria-expanded", "false");
-
+        menuToggle.setAttribute("aria-expanded", "false");
     });
-
 });
 
+// Aktiv meny basert på seksjon
+const sections = document.querySelectorAll("section[id]");
 
-// =====================================
-// AKTIV MENY
-// =====================================
+const observer = new IntersectionObserver(
+    entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
 
-const sections = document.querySelectorAll("section");
+            navLinks.forEach(link => {
+                link.classList.remove("active");
 
-const menuItems = document.querySelectorAll(".nav-links a");
+                if (
+                    link.getAttribute("href") ===
+                    "#" + entry.target.id
+                ) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    },
+    {
+        rootMargin: "-40% 0px -50% 0px"
+    }
+);
 
-window.addEventListener("scroll", () => {
+sections.forEach(section => observer.observe(section));
 
-    let current = "";
+// Myk parallax på hero-bildet
+window.addEventListener(
+    "scroll",
+    () => {
+        if (!heroBackground) return;
 
-    sections.forEach(section => {
+        const offset = Math.min(window.scrollY * 0.16, 90);
 
-        const top = section.offsetTop - 120;
-
-        if (pageYOffset >= top) {
-            current = section.getAttribute("id");
-        }
-
-    });
-
-    menuItems.forEach(item => {
-
-        item.classList.remove("active");
-
-        if (item.getAttribute("href") === "#" + current) {
-            item.classList.add("active");
-        }
-
-    });
-
-});
+        heroBackground.style.transform =
+            `translateY(${offset}px) scale(1.025)`;
+    },
+    {
+        passive: true
+    }
+);

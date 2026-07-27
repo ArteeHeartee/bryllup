@@ -1,4 +1,5 @@
-const header = document.querySelector("[data-header]");
+const header =
+  document.querySelector("[data-header]");
 
 const menuToggle =
   document.querySelector("[data-menu-toggle]");
@@ -12,12 +13,9 @@ const navLinks = [
   )
 ];
 
-const heroBackground =
-  document.querySelector(".hero-background");
-
 
 /*
-  Toppmeny ved scrolling
+  Header
 */
 
 const updateHeader = () => {
@@ -27,7 +25,7 @@ const updateHeader = () => {
 
   header.classList.toggle(
     "scrolled",
-    window.scrollY > 40
+    window.scrollY > 35
   );
 };
 
@@ -94,32 +92,9 @@ navLinks.forEach((link) => {
 });
 
 
-/*
-  Parallax-effekt i hero
-*/
-
 window.addEventListener(
   "scroll",
-  () => {
-
-    updateHeader();
-
-    if (
-      heroBackground &&
-      window.innerWidth > 900
-    ) {
-
-      const offset = Math.min(
-        window.scrollY * 0.14,
-        85
-      );
-
-      heroBackground.style.transform =
-        `translateY(${offset}px) scale(1.025)`;
-
-    }
-
-  },
+  updateHeader,
   {
     passive: true
   }
@@ -130,7 +105,7 @@ window.addEventListener(
   Aktivt menypunkt
 */
 
-const sections = [
+const navigationSections = [
   ...document.querySelectorAll(
     "main section[id]"
   )
@@ -139,7 +114,7 @@ const sections = [
 
 if ("IntersectionObserver" in window) {
 
-  const observer =
+  const sectionObserver =
     new IntersectionObserver(
       (entries) => {
 
@@ -151,15 +126,13 @@ if ("IntersectionObserver" in window) {
 
           navLinks.forEach((link) => {
 
-            const linkTarget =
-              link.getAttribute("href");
-
-            const sectionTarget =
+            const isActive =
+              link.getAttribute("href") ===
               `#${entry.target.id}`;
 
             link.classList.toggle(
               "active",
-              linkTarget === sectionTarget
+              isActive
             );
 
           });
@@ -169,32 +142,28 @@ if ("IntersectionObserver" in window) {
       },
       {
         rootMargin:
-          "-40% 0px -50% 0px",
+          "-38% 0px -54% 0px",
 
         threshold: 0
       }
     );
 
 
-  sections.forEach((section) => {
-    observer.observe(section);
-  });
+  navigationSections.forEach(
+    (section) => {
+      sectionObserver.observe(section);
+    }
+  );
 
 }
 
 
 /*
-  Nedtelling til bryllupet
+  Nedtelling
 
-  Dato:
-  18. september 2027
-
-  Klokkeslettet er foreløpig satt
-  til klokken 13:00 norsk tid.
+  Foreløpig tidspunkt:
+  18. september 2027 klokken 13:00.
 */
-
-const countdownElement =
-  document.querySelector("[data-countdown]");
 
 const daysElement =
   document.querySelector("[data-days]");
@@ -214,10 +183,10 @@ const weddingDate =
 
 
 const padNumber = (
-  value,
+  number,
   length = 2
 ) => {
-  return String(value).padStart(
+  return String(number).padStart(
     length,
     "0"
   );
@@ -227,7 +196,6 @@ const padNumber = (
 const updateCountdown = () => {
 
   if (
-    !countdownElement ||
     !daysElement ||
     !hoursElement ||
     !minutesElement ||
@@ -237,14 +205,12 @@ const updateCountdown = () => {
   }
 
 
-  const now = new Date();
-
-  const distance =
+  const difference =
     weddingDate.getTime() -
-    now.getTime();
+    Date.now();
 
 
-  if (distance <= 0) {
+  if (difference <= 0) {
 
     daysElement.textContent = "000";
     hoursElement.textContent = "00";
@@ -256,13 +222,15 @@ const updateCountdown = () => {
 
 
   const totalSeconds =
-    Math.floor(distance / 1000);
+    Math.floor(
+      difference / 1000
+    );
 
 
   const days =
     Math.floor(
       totalSeconds /
-      (60 * 60 * 24)
+      86400
     );
 
 
@@ -270,9 +238,9 @@ const updateCountdown = () => {
     Math.floor(
       (
         totalSeconds %
-        (60 * 60 * 24)
+        86400
       ) /
-      (60 * 60)
+      3600
     );
 
 
@@ -280,7 +248,7 @@ const updateCountdown = () => {
     Math.floor(
       (
         totalSeconds %
-        (60 * 60)
+        3600
       ) /
       60
     );
@@ -315,7 +283,60 @@ setInterval(
 
 
 /*
-  Første oppdatering av header
+  Myke innlastingsanimasjoner
 */
+
+const revealElements = [
+  ...document.querySelectorAll(
+    ".reveal"
+  )
+];
+
+
+if ("IntersectionObserver" in window) {
+
+  const revealObserver =
+    new IntersectionObserver(
+      (entries, observer) => {
+
+        entries.forEach((entry) => {
+
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          entry.target.classList.add(
+            "visible"
+          );
+
+          observer.unobserve(
+            entry.target
+          );
+
+        });
+
+      },
+      {
+        threshold: .14
+      }
+    );
+
+
+  revealElements.forEach(
+    (element) => {
+      revealObserver.observe(element);
+    }
+  );
+
+} else {
+
+  revealElements.forEach(
+    (element) => {
+      element.classList.add("visible");
+    }
+  );
+
+}
+
 
 updateHeader();

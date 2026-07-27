@@ -5,12 +5,17 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
   >
 
   <meta
     name="description"
     content="Bryllupet til Pernille og Andreas – 18. september 2027 på Harmonien i Trondheim."
+  >
+
+  <meta
+    name="theme-color"
+    content="#f5f1ea"
   >
 
   <title>Pernille & Andreas | 18. september 2027</title>
@@ -32,8 +37,6 @@
 </head>
 
 <body class="invitation-closed">
-
-  <!-- Fast toppmeny som vises etter at invitasjonen er åpnet -->
 
   <header class="site-header" data-header>
 
@@ -87,22 +90,23 @@
 
   <main>
 
-    <!-- Interaktiv invitasjon -->
-
     <section
       class="invitation-section"
       id="invitasjon"
       aria-labelledby="invitation-title"
     >
 
-      <div class="paper-texture" aria-hidden="true"></div>
+      <div
+        class="paper-texture"
+        aria-hidden="true"
+      ></div>
 
 
-      <!-- Innholdet på innsiden av invitasjonen -->
+      <!-- Innsiden av invitasjonen -->
 
       <div class="invitation-interior">
 
-        <div class="inside-panel inside-left">
+        <aside class="inside-panel inside-left">
 
           <p class="inside-heading">
             Praktisk
@@ -112,6 +116,7 @@
 
             <article>
               <h3>Overnatting</h3>
+
               <p>
                 Anbefalinger til overnatting i Trondheim
                 kommer senere.
@@ -120,6 +125,7 @@
 
             <article>
               <h3>Transport</h3>
+
               <p>
                 Informasjon om parkering, transport og
                 hjemreise publiseres når planene er klare.
@@ -128,6 +134,7 @@
 
             <article>
               <h3>Gaver</h3>
+
               <p>
                 Deres tilstedeværelse betyr mest.
                 Gaveønsker publiseres senere.
@@ -136,6 +143,7 @@
 
             <article>
               <h3>RSVP</h3>
+
               <p>
                 Svarfrist og påmelding kommer sammen
                 med den formelle invitasjonen.
@@ -144,7 +152,7 @@
 
           </div>
 
-        </div>
+        </aside>
 
 
         <div class="inside-panel inside-center">
@@ -160,9 +168,13 @@
           >
 
           <h1 id="invitation-title">
+
             <span>Pernille</span>
+
             <em>og</em>
+
             <span>Andreas</span>
+
           </h1>
 
           <p class="invitation-request">
@@ -193,7 +205,7 @@
         </div>
 
 
-        <div class="inside-panel inside-right">
+        <aside class="inside-panel inside-right">
 
           <p class="inside-heading">
             Program
@@ -202,33 +214,51 @@
           <div class="mini-program">
 
             <article>
-              <span>Tid kommer</span>
+
+              <span>
+                Tid kommer
+              </span>
+
               <div>
                 <h3>Vielse</h3>
+
                 <p>
                   Tidspunkt og sted publiseres senere.
                 </p>
               </div>
+
             </article>
 
             <article>
-              <span>Deretter</span>
+
+              <span>
+                Deretter
+              </span>
+
               <div>
                 <h3>Mottakelse</h3>
+
                 <p>
                   Velkomst og noe godt i glasset.
                 </p>
               </div>
+
             </article>
 
             <article>
-              <span>Kvelden</span>
+
+              <span>
+                Kvelden
+              </span>
+
               <div>
                 <h3>Middag og fest</h3>
+
                 <p>
                   Middag, taler, dans og feiring.
                 </p>
               </div>
+
             </article>
 
           </div>
@@ -246,10 +276,8 @@
 
           </div>
 
-        </div>
+        </aside>
 
-
-        <!-- Nedtelling nederst på det åpne kortet -->
 
         <div
           class="countdown"
@@ -259,23 +287,51 @@
         >
 
           <div class="countdown-item">
-            <span data-days>000</span>
-            <small>Dager</small>
+
+            <span data-days>
+              000
+            </span>
+
+            <small>
+              Dager
+            </small>
+
           </div>
 
           <div class="countdown-item">
-            <span data-hours>00</span>
-            <small>Timer</small>
+
+            <span data-hours>
+              00
+            </span>
+
+            <small>
+              Timer
+            </small>
+
           </div>
 
           <div class="countdown-item">
-            <span data-minutes>00</span>
-            <small>Minutter</small>
+
+            <span data-minutes>
+              00
+            </span>
+
+            <small>
+              Minutter
+            </small>
+
           </div>
 
           <div class="countdown-item">
-            <span data-seconds>00</span>
-            <small>Sekunder</small>
+
+            <span data-seconds>
+              00
+            </span>
+
+            <small>
+              Sekunder
+            </small>
+
           </div>
 
         </div>
@@ -286,20 +342,38 @@
           href="#historien"
         >
           Fortsett til historien vår
-          <span aria-hidden="true">↓</span>
+
+          <span aria-hidden="true">
+            ↓
+          </span>
         </a>
 
       </div>
 
 
-      <!-- Forsiden med to fløyer -->
+      <!-- Den lukkede konvolutten -->
 
       <div
         class="invitation-cover"
         data-invitation-cover
       >
 
-        <div class="cover-shadow" aria-hidden="true"></div>
+        <div
+          class="envelope-shadow"
+          aria-hidden="true"
+        ></div>
+
+
+        <div
+          class="envelope-top-flap"
+          aria-hidden="true"
+        ></div>
+
+
+        <div
+          class="envelope-bottom-fold"
+          aria-hidden="true"
+        ></div>
 
 
         <div class="cover-door cover-door-left">
@@ -337,12 +411,24 @@
 
 
         <button
-          class="open-invitation-button"
+          class="wax-seal"
           type="button"
+          aria-label="Åpne invitasjonen"
           data-open-invitation
         >
-          <span>Åpne invitasjonen</span>
-          <i aria-hidden="true"></i>
+
+          <span class="wax-seal-inner">
+
+            <span class="wax-monogram">
+              PA
+            </span>
+
+          </span>
+
+          <span class="wax-hint">
+            Åpne
+          </span>
+
         </button>
 
       </div>
@@ -357,55 +443,59 @@
       id="historien"
     >
 
-      <div class="section-intro reveal">
+      <div class="story-container">
 
-        <p class="section-label">
-          Historien vår
-        </p>
+        <div class="story-heading reveal">
 
-        <h2>
-          Fra et første møte<br>
-          til et ja
-        </h2>
-
-      </div>
-
-
-      <div class="story-grid">
-
-        <div class="story-copy reveal">
-
-          <p class="story-lead">
-            Noen øyeblikk forandrer alt.
+          <p class="section-label">
+            Historien vår
           </p>
 
-          <p>
-            For oss ble solnedgangen på havet begynnelsen
-            på et nytt kapittel.
-          </p>
-
-          <p>
-            Her skal vi etter hvert fortelle mer om veien
-            frem til bryllupsdagen – fra de små øyeblikkene
-            i hverdagen til frieriet vi aldri kommer til å
-            glemme.
-          </p>
+          <h2>
+            Fra et første møte<br>
+            til et ja
+          </h2>
 
         </div>
 
 
-        <figure class="story-photo reveal">
+        <div class="story-grid">
 
-          <img
-            src="assets/frierisolnedgangv1.jpg"
-            alt="Andreas frir til Pernille ved solnedgang"
-          >
+          <div class="story-copy reveal">
 
-          <figcaption>
-            Kreta · Sommeren 2026
-          </figcaption>
+            <p class="story-lead">
+              Noen øyeblikk forandrer alt.
+            </p>
 
-        </figure>
+            <p>
+              For oss ble solnedgangen på havet
+              begynnelsen på et nytt kapittel.
+            </p>
+
+            <p>
+              Her skal vi etter hvert fortelle mer om
+              veien frem til bryllupsdagen – fra de små
+              øyeblikkene i hverdagen til frieriet vi
+              aldri kommer til å glemme.
+            </p>
+
+          </div>
+
+
+          <figure class="story-photo reveal">
+
+            <img
+              src="assets/frierisolnedgangv1.jpg"
+              alt="Andreas frir til Pernille ved solnedgang"
+            >
+
+            <figcaption>
+              Kreta · Sommeren 2026
+            </figcaption>
+
+          </figure>
+
+        </div>
 
       </div>
 
@@ -447,6 +537,7 @@
 
           <div>
             <h3>Vielse</h3>
+
             <p>
               Informasjon om tidspunkt og sted
               publiseres senere.
@@ -466,9 +557,10 @@
 
           <div>
             <h3>Mottakelse</h3>
+
             <p>
-              Vi møtes til velkomst, noe godt i
-              glasset og feiring.
+              Vi møtes til velkomst, noe godt
+              i glasset og feiring.
             </p>
           </div>
 
@@ -485,9 +577,10 @@
 
           <div>
             <h3>Middag og fest</h3>
+
             <p>
-              Middag, taler, dans og en kveld vi
-              håper å huske lenge.
+              Middag, taler, dans og en kveld
+              vi håper å huske lenge.
             </p>
           </div>
 
@@ -511,7 +604,9 @@
           Alt du trenger å vite
         </p>
 
-        <h2>Praktisk informasjon</h2>
+        <h2>
+          Praktisk informasjon
+        </h2>
 
       </div>
 
@@ -525,9 +620,9 @@
           <h3>Sted</h3>
 
           <p>
-            Bryllupsfeiringen finner sted på Harmonien
-            i Trondheim. Mer detaljert informasjon
-            kommer senere.
+            Bryllupsfeiringen finner sted på
+            Harmonien i Trondheim. Mer detaljert
+            informasjon kommer senere.
           </p>
 
         </article>
@@ -595,8 +690,8 @@
         <h2>Gaveønsker</h2>
 
         <p class="gifts-lead">
-          Det viktigste for oss er at dere ønsker å
-          feire dagen sammen med oss.
+          Det viktigste for oss er at dere ønsker
+          å feire dagen sammen med oss.
         </p>
 
         <p>
@@ -651,9 +746,13 @@
       Pernille og Andreas
     </p>
 
-    <p>18. september 2027</p>
+    <p>
+      18. september 2027
+    </p>
 
-    <p>Harmonien · Trondheim</p>
+    <p>
+      Harmonien · Trondheim
+    </p>
 
   </footer>
 

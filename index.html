@@ -24,7 +24,7 @@
   >
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Italiana&family=Montserrat:wght@300;400;500&family=Parisienne&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Allura&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Montserrat:wght@300;400;500&display=swap"
     rel="stylesheet"
   >
 
@@ -37,10 +37,10 @@
 
     <a
       class="wordmark"
-      href="#hero"
+      href="#hjem"
       aria-label="Til toppen"
     >
-      Pernille <span>&</span> Andreas
+      P <span>&</span> A
     </a>
 
     <button
@@ -61,182 +61,172 @@
       aria-label="Hovedmeny"
       data-navigation
     >
-      <a href="#velkommen">Velkommen</a>
       <a href="#historien">Historien</a>
       <a href="#program">Program</a>
-      <a href="#informasjon">Info</a>
+      <a href="#praktisk">Praktisk</a>
       <a href="#gaveonsker">Gaveønsker</a>
       <a href="#rsvp">RSVP</a>
     </nav>
 
   </header>
 
+
   <main>
 
     <section
-      class="hero"
-      id="hero"
+      class="invitation-hero"
+      id="hjem"
       aria-labelledby="hero-title"
     >
 
-      <div
-        class="hero-background"
-        aria-hidden="true"
-      ></div>
+      <div class="paper-grain" aria-hidden="true"></div>
 
-      <div
-        class="hero-overlay"
-        aria-hidden="true"
-      ></div>
+      <div class="invitation-frame">
 
-      <div class="hero-content">
+        <div class="hero-topline">
 
-        <p class="hero-script">
-          save the date
-        </p>
+          <span>Formell invitasjon følger</span>
 
-        <p class="hero-date">
-          18. september 2027
-        </p>
+          <span class="hero-monogram">
+            P <i>&</i> A
+          </span>
 
-        <p class="hero-intro">
-          samles vi med menneskene<br>
-          vi er aller mest glade i.
-        </p>
+          <span>Trondheim · Norge</span>
 
-        <h1
-          class="hero-title"
-          id="hero-title"
-        >
-          <span>Pernille</span>
-          <em>&</em>
-          <span>Andreas</span>
-        </h1>
-
-        <p class="hero-location">
-          Harmonien
-          <span>•</span>
-          Trondheim
-        </p>
-
-      </div>
-
-      <a
-        class="scroll-cue"
-        href="#nedtelling"
-        aria-label="Scroll ned til nedtellingen"
-      >
-        <span>Scroll</span>
-        <i aria-hidden="true"></i>
-      </a>
-
-    </section>
+        </div>
 
 
-    <section
-      class="countdown-section"
-      id="nedtelling"
-      aria-labelledby="countdown-heading"
-    >
+        <div class="venue-illustration" aria-hidden="true">
 
-      <div class="countdown-inner">
+          <div class="illustration-sun"></div>
 
-        <p class="section-kicker">
-          Vi teller ned
-        </p>
+          <svg
+            viewBox="0 0 760 300"
+            role="img"
+            aria-label="Dekorativ arkitektonisk illustrasjon"
+          >
+            <g
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
 
-        <h2 id="countdown-heading">
-          Til vi feirer kjærligheten
-        </h2>
+              <path d="M110 235H650" />
+
+              <path d="M170 235V142L265 83L360 142V235" />
+
+              <path d="M360 235V127L470 66L580 127V235" />
+
+              <path d="M218 235V171H312V235" />
+
+              <path d="M414 235V158H527V235" />
+
+              <path d="M246 171V126H284V171" />
+
+              <path d="M447 157V109H487V157" />
+
+              <path d="M170 142L265 83L360 142" />
+
+              <path d="M360 127L470 66L580 127" />
+
+              <path d="M145 235V175L170 160" />
+
+              <path d="M580 160L610 177V235" />
+
+              <path d="M120 235C160 208 190 210 220 235" />
+
+              <path d="M540 235C575 207 615 208 650 235" />
+
+              <path d="M90 246H670" />
+
+              <path d="M135 246C160 260 188 260 214 246" />
+
+              <path d="M546 246C570 260 602 260 630 246" />
+
+            </g>
+          </svg>
+
+        </div>
+
+
+        <div class="hero-copy">
+
+          <p class="hero-kicker">
+            Sammen med familiene våre
+          </p>
+
+          <h1 id="hero-title">
+            <span>Pernille</span>
+            <em>and</em>
+            <span>Andreas</span>
+          </h1>
+
+          <p class="invitation-text">
+            inviterer til feiring av vårt bryllup
+          </p>
+
+          <div class="date-block">
+
+            <span class="date-day">
+              18
+            </span>
+
+            <span class="date-details">
+              September<br>
+              2027
+            </span>
+
+          </div>
+
+          <p class="venue-name">
+            Harmonien
+          </p>
+
+          <p class="venue-city">
+            Trondheim
+          </p>
+
+        </div>
+
 
         <div
           class="countdown"
+          aria-label="Nedtelling til bryllupet"
           aria-live="polite"
           data-countdown
         >
 
           <div class="countdown-item">
-            <span
-              class="countdown-number"
-              data-days
-            >
-              000
-            </span>
-
-            <span class="countdown-label">
-              Dager
-            </span>
+            <span data-days>000</span>
+            <small>Dager</small>
           </div>
 
-          <div class="countdown-divider"></div>
-
           <div class="countdown-item">
-            <span
-              class="countdown-number"
-              data-hours
-            >
-              00
-            </span>
-
-            <span class="countdown-label">
-              Timer
-            </span>
+            <span data-hours>00</span>
+            <small>Timer</small>
           </div>
 
-          <div class="countdown-divider"></div>
-
           <div class="countdown-item">
-            <span
-              class="countdown-number"
-              data-minutes
-            >
-              00
-            </span>
-
-            <span class="countdown-label">
-              Minutter
-            </span>
+            <span data-minutes>00</span>
+            <small>Minutter</small>
           </div>
 
-          <div class="countdown-divider"></div>
-
           <div class="countdown-item">
-            <span
-              class="countdown-number"
-              data-seconds
-            >
-              00
-            </span>
-
-            <span class="countdown-label">
-              Sekunder
-            </span>
+            <span data-seconds>00</span>
+            <small>Sekunder</small>
           </div>
 
         </div>
 
-      </div>
 
-    </section>
-
-
-    <section
-      class="content-section"
-      id="velkommen"
-    >
-
-      <div class="section-inner">
-
-        <p class="section-kicker">
-          Kapittel én
-        </p>
-
-        <h2>Velkommen</h2>
-
-        <p class="section-text">
-          Vi gleder oss til å samle menneskene vi er aller mest
-          glade i, og feire denne dagen sammen med dere.
-        </p>
+        <a
+          class="scroll-link"
+          href="#historien"
+        >
+          Fortsett til historien vår
+        </a>
 
       </div>
 
@@ -244,22 +234,49 @@
 
 
     <section
-      class="content-section alternate"
+      class="story-section"
       id="historien"
     >
 
-      <div class="section-inner">
+      <div class="story-layout">
 
-        <p class="section-kicker">
-          Kapittel to
-        </p>
+        <div class="story-copy reveal">
 
-        <h2>Historien vår</h2>
+          <p class="section-label">
+            Historien vår
+          </p>
 
-        <p class="section-text">
-          Her skal vi fortelle historien om veien frem til
-          frieriet og dagen vi nå gleder oss til.
-        </p>
+          <h2>
+            Fra et første møte<br>
+            til et ja
+          </h2>
+
+          <p>
+            Noen øyeblikk forandrer alt. For oss ble solnedgangen
+            på havet begynnelsen på et nytt kapittel.
+          </p>
+
+          <p>
+            Her skal vi etter hvert fortelle mer om veien frem
+            til bryllupsdagen – fra de små øyeblikkene i hverdagen
+            til frieriet vi aldri kommer til å glemme.
+          </p>
+
+        </div>
+
+
+        <figure class="story-image reveal">
+
+          <img
+            src="assets/frierisolnedgangv1.jpg"
+            alt="Frieriet til Pernille og Andreas ved solnedgang"
+          >
+
+          <figcaption>
+            Kreta · Sommeren 2026
+          </figcaption>
+
+        </figure>
 
       </div>
 
@@ -267,22 +284,79 @@
 
 
     <section
-      class="content-section"
+      class="editorial-section program-section"
       id="program"
     >
 
-      <div class="section-inner">
+      <div class="section-heading reveal">
 
-        <p class="section-kicker">
-          Kapittel tre
+        <p class="section-label">
+          Bryllupsdagen
         </p>
 
-        <h2>Dagen</h2>
+        <h2>Program</h2>
 
-        <p class="section-text">
-          Programmet for bryllupsdagen kommer her når alle
-          detaljene er klare.
+        <p>
+          Detaljert program publiseres når alle tidspunktene er klare.
         </p>
+
+      </div>
+
+
+      <div class="timeline reveal">
+
+        <article class="timeline-item">
+
+          <span class="timeline-time">
+            Tid kommer
+          </span>
+
+          <div class="timeline-marker"></div>
+
+          <div>
+            <h3>Vielse</h3>
+            <p>
+              Informasjon om tidspunkt og sted kommer senere.
+            </p>
+          </div>
+
+        </article>
+
+
+        <article class="timeline-item">
+
+          <span class="timeline-time">
+            Deretter
+          </span>
+
+          <div class="timeline-marker"></div>
+
+          <div>
+            <h3>Mottakelse</h3>
+            <p>
+              Vi møtes til velkomst, noe godt i glasset og feiring.
+            </p>
+          </div>
+
+        </article>
+
+
+        <article class="timeline-item">
+
+          <span class="timeline-time">
+            Kvelden
+          </span>
+
+          <div class="timeline-marker"></div>
+
+          <div>
+            <h3>Middag og fest</h3>
+            <p>
+              Middag, taler, dans og en kveld vi håper å huske lenge.
+            </p>
+          </div>
+
+        </article>
 
       </div>
 
@@ -290,22 +364,85 @@
 
 
     <section
-      class="content-section alternate"
-      id="informasjon"
+      class="editorial-section practical-section"
+      id="praktisk"
     >
 
-      <div class="section-inner">
+      <div class="section-heading reveal">
 
-        <p class="section-kicker">
-          Kapittel fire
+        <p class="section-label">
+          Alt du trenger å vite
         </p>
 
         <h2>Praktisk informasjon</h2>
 
-        <p class="section-text">
-          Her finner dere etter hvert informasjon om sted,
-          antrekk, transport og andre praktiske detaljer.
-        </p>
+      </div>
+
+
+      <div class="information-grid">
+
+        <article class="information-card reveal">
+
+          <span class="card-number">
+            01
+          </span>
+
+          <h3>Sted</h3>
+
+          <p>
+            Bryllupsfeiringen finner sted på Harmonien i Trondheim.
+            Mer detaljert informasjon kommer senere.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span class="card-number">
+            02
+          </span>
+
+          <h3>Antrekk</h3>
+
+          <p>
+            Informasjon om ønsket antrekk blir publisert sammen
+            med den formelle invitasjonen.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span class="card-number">
+            03
+          </span>
+
+          <h3>Transport</h3>
+
+          <p>
+            Informasjon om transport, parkering og hjemreise
+            publiseres når planene er ferdige.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span class="card-number">
+            04
+          </span>
+
+          <h3>Overnatting</h3>
+
+          <p>
+            Vi kommer med anbefalinger til overnatting i Trondheim
+            for gjester som reiser til byen.
+          </p>
+
+        </article>
 
       </div>
 
@@ -313,21 +450,26 @@
 
 
     <section
-      class="content-section"
+      class="editorial-section gifts-section"
       id="gaveonsker"
     >
 
-      <div class="section-inner">
+      <div class="gifts-inner reveal">
 
-        <p class="section-kicker">
-          Kapittel fem
+        <p class="section-label">
+          Gaver
         </p>
 
         <h2>Gaveønsker</h2>
 
-        <p class="section-text">
-          Deres tilstedeværelse på dagen betyr aller mest.
-          Informasjon om gaveønsker kommer senere.
+        <p class="gifts-intro">
+          Det viktigste for oss er at dere ønsker å feire dagen
+          sammen med oss.
+        </p>
+
+        <p>
+          Dersom noen likevel ønsker å gi en gave, vil vi publisere
+          våre gaveønsker her når invitasjonene sendes ut.
         </p>
 
       </div>
@@ -336,22 +478,30 @@
 
 
     <section
-      class="content-section alternate"
+      class="rsvp-section"
       id="rsvp"
     >
 
-      <div class="section-inner">
+      <div class="rsvp-frame reveal">
 
-        <p class="section-kicker">
-          Kapittel seks
+        <p class="section-label">
+          Vi håper du kommer
         </p>
 
-        <h2>Vi sees</h2>
+        <h2>RSVP</h2>
 
-        <p class="section-text">
-          Påmelding og svarfrist kommer her når den formelle
-          invitasjonen er sendt.
+        <p>
+          Svarskjema og svarfrist publiseres sammen med den
+          formelle invitasjonen.
         </p>
+
+        <button
+          class="rsvp-button"
+          type="button"
+          disabled
+        >
+          Påmelding åpner senere
+        </button>
 
       </div>
 
@@ -362,8 +512,8 @@
 
   <footer class="site-footer">
 
-    <p class="footer-names">
-      Pernille <span>&</span> Andreas
+    <p class="footer-script">
+      Pernille and Andreas
     </p>
 
     <p>

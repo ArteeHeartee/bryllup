@@ -51,7 +51,8 @@ body {
 
 
 body.invitation-closed,
-body.menu-open {
+body.menu-open,
+body.modal-open {
   overflow: hidden;
 }
 
@@ -68,17 +69,18 @@ a {
 }
 
 
-button {
+button,
+input,
+textarea {
   font: inherit;
 }
 
 
-/* Papirtekstur */
+/* PAPIRTEKSTUR */
 
 .paper-texture {
   position: absolute;
   inset: 0;
-
   z-index: 1;
 
   pointer-events: none;
@@ -103,7 +105,7 @@ button {
 }
 
 
-/* Header */
+/* HEADER */
 
 .site-header {
   position: fixed;
@@ -212,8 +214,7 @@ body.invitation-open .site-header {
 
   transform: translateX(-50%);
 
-  transition:
-    width .3s var(--ease);
+  transition: width .3s var(--ease);
 }
 
 
@@ -299,19 +300,17 @@ body.invitation-open .site-header {
 
 .menu-toggle[aria-expanded="true"] span:first-child {
   top: 21px;
-
   transform: rotate(45deg);
 }
 
 
 .menu-toggle[aria-expanded="true"] span:last-child {
   top: 21px;
-
   transform: rotate(-45deg);
 }
 
 
-/* Invitasjonsområdet */
+/* INVITASJON */
 
 .invitation-section {
   position: relative;
@@ -335,8 +334,6 @@ body.invitation-open .site-header {
     );
 }
 
-
-/* Innsiden */
 
 .invitation-interior {
   position: relative;
@@ -369,7 +366,6 @@ body.invitation-open .site-header {
 
 body.invitation-open .invitation-interior {
   opacity: 1;
-
   transform: scale(1);
 }
 
@@ -518,9 +514,9 @@ body.invitation-open .invitation-interior {
 
   color: var(--espresso);
 
-  font-family: "EB Garamond", serif;
-  font-size: .24em;
-  font-style: italic;
+  font-family: "Allura", cursive;
+  font-size: .42em;
+  font-style: normal;
   font-weight: 400;
 
   vertical-align: middle;
@@ -640,7 +636,7 @@ body.invitation-open .invitation-interior {
 }
 
 
-/* Nedtelling */
+/* NEDTELLING */
 
 .countdown {
   position: relative;
@@ -737,7 +733,7 @@ body.invitation-open .invitation-interior {
 }
 
 
-/* Konvolutten */
+/* KONVOLUTT */
 
 .invitation-cover {
   position: absolute;
@@ -758,7 +754,6 @@ body.invitation-open .invitation-interior {
 
 body.invitation-open .invitation-cover {
   visibility: hidden;
-
   pointer-events: none;
 }
 
@@ -774,8 +769,7 @@ body.invitation-open .invitation-cover {
 
   opacity: .48;
 
-  transition:
-    opacity .7s var(--ease);
+  transition: opacity .7s var(--ease);
 }
 
 
@@ -981,7 +975,7 @@ body.invitation-open .cover-door-right {
 }
 
 
-/* Voksseglet */
+/* BLANKT VOKSSEGL */
 
 .wax-seal {
   position: absolute;
@@ -994,9 +988,7 @@ body.invitation-open .cover-door-right {
 
   padding: 0;
 
-  color: var(--paper-light);
   background: transparent;
-
   border: 0;
 
   transform: translate(-50%, -50%);
@@ -1026,11 +1018,10 @@ body.invitation-open .cover-door-right {
 .wax-seal-inner {
   position: relative;
 
+  display: block;
+
   width: 100%;
   height: 100%;
-
-  display: grid;
-  place-items: center;
 
   border-radius:
     48% 52% 44% 56%
@@ -1059,7 +1050,7 @@ body.invitation-open .cover-door-right {
   position: absolute;
   inset: 10px;
 
-  border: 1px solid rgba(245, 241, 234, .44);
+  border: 1px solid rgba(245, 241, 234, .4);
   border-radius: 50%;
 
   box-shadow:
@@ -1088,43 +1079,6 @@ body.invitation-open .cover-door-right {
 }
 
 
-.wax-monogram {
-  position: relative;
-  z-index: 3;
-
-  font-family: "Bodoni Moda", serif;
-  font-size: 1.45rem;
-  font-style: italic;
-
-  letter-spacing: -.12em;
-
-  text-shadow:
-    0 1px 2px rgba(52, 20, 27, .7);
-}
-
-
-.wax-hint {
-  position: absolute;
-  top: calc(100% + 13px);
-  left: 50%;
-
-  color: var(--espresso-soft);
-
-  font-family: "Montserrat", sans-serif;
-  font-size: .48rem;
-  font-weight: 500;
-
-  letter-spacing: .24em;
-  text-transform: uppercase;
-
-  transform: translateX(-50%);
-
-  opacity: .72;
-
-  white-space: nowrap;
-}
-
-
 body.invitation-open .wax-seal {
   opacity: 0;
 
@@ -1136,7 +1090,7 @@ body.invitation-open .wax-seal {
 }
 
 
-/* Generelle seksjoner */
+/* FELLES SEKSJONER */
 
 .section-label {
   margin: 0 0 13px;
@@ -1162,9 +1116,10 @@ body.invitation-open .wax-seal {
 
 
 .section-intro h2,
-.story-heading h2,
+.story-introduction h2,
 .gifts-content h2,
-.rsvp-card h2 {
+.rsvp-card h2,
+.modal-heading h2 {
   margin: 0;
 
   font-family: "Bodoni Moda", serif;
@@ -1175,8 +1130,9 @@ body.invitation-open .wax-seal {
 }
 
 
-.section-intro > p:last-child {
-  max-width: 560px;
+.section-intro > p:last-child,
+.story-introduction > p:last-child {
+  max-width: 600px;
 
   margin: 19px auto 0;
 
@@ -1187,7 +1143,7 @@ body.invitation-open .wax-seal {
 }
 
 
-/* Historien */
+/* HISTORIEN */
 
 .story-section {
   padding:
@@ -1199,61 +1155,218 @@ body.invitation-open .wax-seal {
 
 
 .story-container {
-  width: min(var(--content-width), 100%);
+  width: min(1080px, 100%);
 
   margin: 0 auto;
 }
 
 
-.story-heading {
-  margin-bottom: 55px;
+.story-introduction {
+  margin-bottom:
+    clamp(70px, 8vw, 110px);
 
   text-align: center;
 }
 
 
-.story-heading h2 {
-  font-size: clamp(3.3rem, 6vw, 6.3rem);
+.story-introduction h2 {
+  font-size:
+    clamp(3.3rem, 6vw, 6.2rem);
 }
 
 
-.story-grid {
-  display: grid;
-  grid-template-columns: .82fr 1.18fr;
-  align-items: center;
-
-  gap: clamp(48px, 7vw, 105px);
-}
-
-
-.story-copy {
-  max-width: 500px;
-}
-
-
-.story-copy p {
-  color: var(--espresso-soft);
-
-  font-size: 1.04rem;
-  line-height: 1.78;
-}
-
-
-.story-copy .story-lead {
-  color: var(--espresso);
-
-  font-family: "Bodoni Moda", serif;
-  font-size: 1.55rem;
-
-  line-height: 1.35;
-}
-
-
-.story-photo {
+.relationship-timeline {
   position: relative;
 
+  display: flex;
+  flex-direction: column;
+
+  gap: 0;
+}
+
+
+.relationship-timeline::before {
+  content: "";
+
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+
+  width: 1px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--line-dark) 4%,
+      var(--line-dark) 96%,
+      transparent
+    );
+
+  transform: translateX(-50%);
+}
+
+
+.relationship-event {
+  position: relative;
+
+  min-height: 300px;
+
+  display: grid;
+  grid-template-columns: 1fr 110px 1fr;
+  align-items: center;
+
+  gap: 35px;
+
+  padding: 45px 0;
+}
+
+
+.relationship-event:nth-child(odd) .event-date {
+  grid-column: 1;
+  text-align: right;
+}
+
+
+.relationship-event:nth-child(odd) .event-marker {
+  grid-column: 2;
+}
+
+
+.relationship-event:nth-child(odd) .event-content {
+  grid-column: 3;
+}
+
+
+.relationship-event:nth-child(even) .event-date {
+  grid-column: 3;
+  grid-row: 1;
+
+  text-align: left;
+}
+
+
+.relationship-event:nth-child(even) .event-marker {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+
+.relationship-event:nth-child(even) .event-content {
+  grid-column: 1;
+  grid-row: 1;
+
+  text-align: right;
+}
+
+
+.event-date span {
+  display: block;
+
+  color: var(--burgundy);
+
+  font-family: "Bodoni Moda", serif;
+  font-size: 3.3rem;
+
+  line-height: 1;
+}
+
+
+.event-date small {
+  display: block;
+
+  margin-top: 8px;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .51rem;
+  font-weight: 500;
+
+  letter-spacing: .23em;
+  text-transform: uppercase;
+}
+
+
+.event-marker {
+  position: relative;
+  z-index: 2;
+
+  width: 84px;
+  height: 84px;
+
+  display: grid;
+  place-items: center;
+
+  justify-self: center;
+
+  color: var(--burgundy);
+
+  background: var(--paper-light);
+
+  border: 1px solid var(--line-dark);
+  border-radius: 50%;
+
+  box-shadow:
+    0 0 0 10px var(--paper-light);
+}
+
+
+.event-marker svg {
+  width: 48px;
+  height: 48px;
+
+  fill: none;
+
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+.event-content {
+  max-width: 390px;
+}
+
+
+.event-number {
+  margin: 0 0 8px;
+
+  color: var(--burgundy);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .49rem;
+  font-weight: 500;
+
+  letter-spacing: .25em;
+  text-transform: uppercase;
+}
+
+
+.event-content h3 {
+  margin: 0 0 13px;
+
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-weight: 400;
+
+  line-height: 1.1;
+}
+
+
+.event-content > p:last-child {
   margin: 0;
-  padding: 13px;
+
+  color: var(--espresso-soft);
+
+  font-size: 1.03rem;
+  line-height: 1.7;
+}
+
+
+.timeline-photo {
+  margin: 28px 0 0;
+  padding: 10px;
 
   background: var(--paper);
 
@@ -1261,48 +1374,46 @@ body.invitation-open .wax-seal {
 }
 
 
-.story-photo::before {
-  content: "";
-
-  position: absolute;
-  inset: 6px;
-
-  border: 1px solid rgba(101, 47, 59, .15);
-
-  pointer-events: none;
-}
-
-
-.story-photo img {
-  position: relative;
-
+.timeline-photo img {
   width: 100%;
-  aspect-ratio: 4 / 4.6;
+  aspect-ratio: 4 / 5;
 
   object-fit: cover;
-  object-position: center 39%;
-
-  filter:
-    sepia(.07)
-    saturate(.86)
-    contrast(.97);
+  object-position: center 38%;
 }
 
 
-.story-photo figcaption {
-  padding: 12px 4px 1px;
+.timeline-photo figcaption {
+  padding: 10px 4px 2px;
 
   font-family: "Montserrat", sans-serif;
-  font-size: .48rem;
+  font-size: .43rem;
   font-weight: 500;
 
-  letter-spacing: .24em;
+  letter-spacing: .2em;
   text-align: center;
   text-transform: uppercase;
 }
 
 
-/* Program */
+.relationship-event.featured-event {
+  align-items: start;
+}
+
+
+.relationship-event.wedding-event
+.event-marker {
+  color: var(--paper-light);
+  background: var(--burgundy);
+
+  border-color: var(--burgundy);
+
+  box-shadow:
+    0 0 0 10px var(--paper-light);
+}
+
+
+/* PROGRAM */
 
 .content-section {
   padding:
@@ -1325,7 +1436,7 @@ body.invitation-open .wax-seal {
 
 .timeline-item {
   display: grid;
-  grid-template-columns: 120px 25px 1fr;
+  grid-template-columns: 130px 25px 1fr;
 
   gap: 23px;
 
@@ -1407,7 +1518,7 @@ body.invitation-open .wax-seal {
 }
 
 
-/* Praktisk */
+/* PRAKTISK */
 
 .practical-section {
   background: var(--paper);
@@ -1428,7 +1539,7 @@ body.invitation-open .wax-seal {
 
 
 .information-card {
-  min-height: 250px;
+  min-height: 260px;
 
   padding:
     clamp(30px, 3.3vw, 46px)
@@ -1456,11 +1567,11 @@ body.invitation-open .wax-seal {
 }
 
 
-/* Gaveønsker */
+/* GAVEØNSKER */
 
 .gifts-section {
   padding:
-    clamp(80px, 8vw, 120px)
+    clamp(80px, 8vw, 125px)
     24px;
 
   color: var(--paper);
@@ -1469,7 +1580,7 @@ body.invitation-open .wax-seal {
 
 
 .gifts-content {
-  width: min(720px, 100%);
+  width: min(760px, 100%);
 
   margin: 0 auto;
 
@@ -1488,7 +1599,7 @@ body.invitation-open .wax-seal {
 
 
 .gifts-content p {
-  max-width: 620px;
+  max-width: 670px;
 
   margin: 18px auto 0;
 
@@ -1506,6 +1617,67 @@ body.invitation-open .wax-seal {
 
   font-size: 1.26rem;
   font-style: italic;
+}
+
+
+.gift-button {
+  width: fit-content;
+
+  margin: 36px auto 0;
+  padding: 16px 25px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 20px;
+
+  color: var(--burgundy-dark);
+  background: var(--paper-light);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .54rem;
+  font-weight: 500;
+
+  letter-spacing: .2em;
+  text-transform: uppercase;
+
+  border: 1px solid var(--paper-light);
+
+  transition:
+    color .3s ease,
+    background-color .3s ease;
+}
+
+
+.gift-button:not(.disabled-link):hover {
+  color: var(--paper-light);
+  background: transparent;
+}
+
+
+.gift-button span {
+  font-size: 1rem;
+}
+
+
+.disabled-link {
+  cursor: default;
+  opacity: .7;
+}
+
+
+.gift-link-note {
+  display: block;
+
+  margin-top: 12px;
+
+  color: var(--blush);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .43rem;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
 }
 
 
@@ -1550,26 +1722,334 @@ body.invitation-open .wax-seal {
 }
 
 
-.rsvp-button {
-  padding: 14px 25px;
+.rsvp-button,
+.form-submit {
+  padding: 15px 27px;
 
   color: var(--paper);
-  background: #9b797d;
+  background: var(--burgundy);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .53rem;
+  font-size: .54rem;
   font-weight: 500;
 
   letter-spacing: .2em;
   text-transform: uppercase;
 
-  border: 1px solid #9b797d;
+  border: 1px solid var(--burgundy);
 
-  opacity: .85;
+  cursor: pointer;
+
+  transition:
+    color .3s ease,
+    background-color .3s ease;
 }
 
 
-/* Footer */
+.rsvp-button:hover,
+.form-submit:hover {
+  color: var(--burgundy);
+  background: transparent;
+}
+
+
+/* RSVP MODAL */
+
+.rsvp-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: grid;
+  place-items: center;
+
+  padding:
+    calc(20px + env(safe-area-inset-top))
+    20px
+    calc(20px + env(safe-area-inset-bottom));
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity .35s var(--ease),
+    visibility .35s var(--ease);
+}
+
+
+.rsvp-modal.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  background:
+    rgba(38, 27, 23, .72);
+
+  border: 0;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+
+.modal-panel {
+  position: relative;
+  z-index: 2;
+
+  width: min(760px, 100%);
+  max-height: min(880px, 94dvh);
+
+  overflow-y: auto;
+
+  padding:
+    clamp(45px, 6vw, 75px)
+    clamp(25px, 6vw, 65px);
+
+  color: var(--espresso);
+  background: var(--paper-light);
+
+  border: 1px solid var(--line-dark);
+
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, .24);
+
+  transform: translateY(30px) scale(.98);
+
+  transition:
+    transform .4s var(--ease);
+}
+
+
+.rsvp-modal.open .modal-panel {
+  transform: translateY(0) scale(1);
+}
+
+
+.modal-panel::before {
+  content: "";
+
+  position: absolute;
+  inset: 9px;
+
+  border: 1px solid rgba(101, 47, 59, .14);
+
+  pointer-events: none;
+}
+
+
+.modal-close {
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  z-index: 4;
+
+  width: 42px;
+  height: 42px;
+
+  padding: 0;
+
+  background: transparent;
+  border: 0;
+
+  cursor: pointer;
+}
+
+
+.modal-close span {
+  position: absolute;
+  top: 20px;
+  left: 8px;
+
+  width: 26px;
+  height: 1px;
+
+  background: var(--espresso);
+}
+
+
+.modal-close span:first-child {
+  transform: rotate(45deg);
+}
+
+
+.modal-close span:last-child {
+  transform: rotate(-45deg);
+}
+
+
+.modal-heading {
+  margin-bottom: 42px;
+
+  text-align: center;
+}
+
+
+.modal-heading h2 {
+  color: var(--burgundy-dark);
+}
+
+
+.modal-heading > p:last-child {
+  margin: 17px auto 0;
+
+  color: var(--espresso-soft);
+
+  font-size: 1rem;
+}
+
+
+.rsvp-form {
+  position: relative;
+  z-index: 2;
+}
+
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 25px;
+}
+
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+
+.form-field > span,
+.radio-field legend {
+  color: var(--burgundy);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .51rem;
+  font-weight: 500;
+
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+
+.form-field input,
+.form-field textarea {
+  width: 100%;
+
+  padding: 13px 0;
+
+  color: var(--espresso);
+  background: transparent;
+
+  font-family: "EB Garamond", serif;
+  font-size: 1.05rem;
+
+  border: 0;
+  border-bottom: 1px solid var(--line-dark);
+  border-radius: 0;
+
+  outline: none;
+
+  resize: vertical;
+}
+
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-bottom-color: var(--burgundy);
+}
+
+
+.form-field textarea {
+  min-height: 80px;
+}
+
+
+.radio-field {
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+}
+
+
+.radio-field legend {
+  margin-bottom: 14px;
+}
+
+
+.radio-field label {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin: 0 22px 10px 0;
+
+  color: var(--espresso-soft);
+
+  cursor: pointer;
+}
+
+
+.radio-field input {
+  width: auto;
+}
+
+
+.form-status {
+  min-height: 25px;
+
+  margin: 24px 0 16px;
+
+  color: var(--burgundy);
+
+  text-align: center;
+}
+
+
+.form-status.error {
+  color: #8a242d;
+}
+
+
+.form-status.success {
+  color: #3d6847;
+}
+
+
+.form-submit {
+  display: block;
+
+  min-width: 190px;
+
+  margin: 0 auto;
+}
+
+
+.form-submit:disabled {
+  cursor: wait;
+  opacity: .6;
+}
+
+
+/* FOOTER */
 
 .site-footer {
   padding:
@@ -1608,7 +2088,7 @@ body.invitation-open .wax-seal {
 }
 
 
-/* Scrollanimasjon */
+/* SCROLLANIMASJON */
 
 .reveal {
   opacity: 0;
@@ -1623,12 +2103,11 @@ body.invitation-open .wax-seal {
 
 .reveal.visible {
   opacity: 1;
-
   transform: translateY(0);
 }
 
 
-/* Nettbrett */
+/* NETTBRETT */
 
 @media (max-width: 1050px) {
 
@@ -1648,46 +2127,10 @@ body.invitation-open .wax-seal {
     font-size: .76rem;
   }
 
-  .information-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
 }
 
 
-@media (max-width: 900px) {
-
-  .main-navigation {
-    gap: 17px;
-  }
-
-  .main-navigation a {
-    font-size: .51rem;
-    letter-spacing: .13em;
-  }
-
-  .reopen-button {
-    display: none;
-  }
-
-  .story-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .story-copy {
-    max-width: 650px;
-  }
-
-  .story-photo {
-    width: min(610px, 100%);
-
-    margin: 0 auto;
-  }
-
-}
-
-
-/* Mobil */
+/* MOBIL */
 
 @media (max-width: 760px) {
 
@@ -1721,6 +2164,10 @@ body.invitation-open .wax-seal {
 
   .menu-toggle {
     display: block;
+  }
+
+  .reopen-button {
+    display: none;
   }
 
   .main-navigation {
@@ -1798,9 +2245,11 @@ body.invitation-open .wax-seal {
     display: none;
   }
 
+
+  /* MOBILINVITASJON */
+
   .invitation-section {
     min-height: 100svh;
-
     padding: 0;
   }
 
@@ -1815,7 +2264,6 @@ body.invitation-open .wax-seal {
     overflow: visible;
 
     border: 0;
-
     box-shadow: none;
   }
 
@@ -1870,9 +2318,9 @@ body.invitation-open .wax-seal {
   .inside-center h1 em {
     display: block;
 
-    margin: .13em 0 .03em;
+    margin: .1em 0 .02em;
 
-    font-size: .27em;
+    font-size: .48em;
   }
 
   .invitation-request {
@@ -1945,13 +2393,8 @@ body.invitation-open .wax-seal {
     height: 88px;
   }
 
-  .wax-monogram {
-    font-size: 1.22rem;
-  }
 
-  .wax-hint {
-    font-size: .42rem;
-  }
+  /* MOBIL HISTORIE */
 
   .story-section,
   .content-section {
@@ -1959,36 +2402,112 @@ body.invitation-open .wax-seal {
       76px 22px;
   }
 
-  .story-heading {
-    margin-bottom: 40px;
+  .story-introduction {
+    margin-bottom: 62px;
   }
 
-  .story-heading h2,
+  .story-introduction h2,
   .section-intro h2 {
     font-size: clamp(2.8rem, 13vw, 4.2rem);
 
     line-height: 1.02;
   }
 
+  .relationship-timeline::before {
+    left: 39px;
+
+    transform: none;
+  }
+
+  .relationship-event {
+    min-height: auto;
+
+    grid-template-columns: 78px 1fr;
+    align-items: start;
+
+    gap: 25px;
+
+    padding: 38px 0;
+  }
+
+  .relationship-event:nth-child(odd)
+  .event-date,
+  .relationship-event:nth-child(even)
+  .event-date {
+    grid-column: 1;
+    grid-row: 1;
+
+    text-align: center;
+  }
+
+  .relationship-event:nth-child(odd)
+  .event-marker,
+  .relationship-event:nth-child(even)
+  .event-marker {
+    position: absolute;
+    top: 103px;
+    left: 17px;
+
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .relationship-event:nth-child(odd)
+  .event-content,
+  .relationship-event:nth-child(even)
+  .event-content {
+    grid-column: 2;
+    grid-row: 1;
+
+    max-width: none;
+
+    text-align: left;
+  }
+
+  .event-date span {
+    font-size: 2.35rem;
+  }
+
+  .event-date small {
+    font-size: .38rem;
+    letter-spacing: .12em;
+  }
+
+  .event-marker {
+    width: 45px;
+    height: 45px;
+
+    box-shadow:
+      0 0 0 7px var(--paper-light);
+  }
+
+  .event-marker svg {
+    width: 27px;
+    height: 27px;
+  }
+
+  .event-content {
+    padding-top: 5px;
+  }
+
+  .event-content h3 {
+    font-size: 1.85rem;
+  }
+
+  .event-content > p:last-child {
+    font-size: .98rem;
+    line-height: 1.65;
+  }
+
+  .timeline-photo {
+    margin-top: 20px;
+  }
+
+
+  /* MOBIL PROGRAM */
+
   .section-intro {
     margin-bottom: 38px;
-  }
-
-  .story-grid {
-    gap: 35px;
-  }
-
-  .story-copy p {
-    font-size: 1rem;
-    line-height: 1.7;
-  }
-
-  .story-copy .story-lead {
-    font-size: 1.38rem;
-  }
-
-  .story-photo img {
-    aspect-ratio: 4 / 4.8;
   }
 
   .timeline-item {
@@ -2011,23 +2530,34 @@ body.invitation-open .wax-seal {
     font-size: 1.45rem;
   }
 
+
+  /* 2 x 2 PRAKTISKE BOKSER */
+
   .information-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .information-card {
-    min-height: auto;
+    min-height: 250px;
 
-    padding: 34px 28px;
+    padding: 27px 16px;
   }
 
   .information-card > span {
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
 
   .information-card h3 {
-    font-size: 1.45rem;
+    font-size: 1.35rem;
   }
+
+  .information-card p {
+    font-size: .86rem;
+    line-height: 1.5;
+  }
+
+
+  /* GAVER OG RSVP */
 
   .gifts-section {
     padding:
@@ -2036,6 +2566,12 @@ body.invitation-open .wax-seal {
 
   .gifts-content h2 {
     font-size: clamp(3.2rem, 14vw, 4.5rem);
+  }
+
+  .gift-button {
+    width: 100%;
+
+    justify-content: center;
   }
 
   .rsvp-section {
@@ -2048,10 +2584,66 @@ body.invitation-open .wax-seal {
       55px 24px;
   }
 
+
+  /* MOBIL POPUP */
+
+  .rsvp-modal {
+    padding: 0;
+  }
+
+  .modal-panel {
+    width: 100%;
+    max-height: 100dvh;
+    min-height: 100dvh;
+
+    padding:
+      calc(
+        75px +
+        env(safe-area-inset-top)
+      )
+      23px
+      calc(
+        45px +
+        env(safe-area-inset-bottom)
+      );
+
+    border: 0;
+  }
+
+  .modal-panel::before {
+    display: none;
+  }
+
+  .modal-close {
+    top:
+      calc(
+        18px +
+        env(safe-area-inset-top)
+      );
+
+    right: 18px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 22px;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .radio-field label {
+    display: flex;
+
+    margin-right: 0;
+  }
+
 }
 
 
-/* Små mobiler */
+/* SMÅ MOBILER */
 
 @media (max-width: 390px) {
 
@@ -2077,10 +2669,20 @@ body.invitation-open .wax-seal {
     letter-spacing: .25em;
   }
 
+  .information-card {
+    min-height: 235px;
+
+    padding: 23px 12px;
+  }
+
+  .information-card p {
+    font-size: .81rem;
+  }
+
 }
 
 
-/* Redusert bevegelse */
+/* REDUSERT BEVEGELSE */
 
 @media (prefers-reduced-motion: reduce) {
 
@@ -2091,22 +2693,16 @@ body.invitation-open .wax-seal {
   *,
   *::before,
   *::after {
-    animation-duration:
-      .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
 
-    animation-iteration-count:
-      1 !important;
+    transition-duration: .01ms !important;
 
-    transition-duration:
-      .01ms !important;
-
-    scroll-behavior:
-      auto !important;
+    scroll-behavior: auto !important;
   }
 
   .reveal {
     opacity: 1;
-
     transform: none;
   }
 

@@ -8,6 +8,7 @@
   --white: #ffffff;
   --border: rgba(47, 43, 39, 0.14);
   --shadow: 0 20px 50px rgba(47, 43, 39, 0.1);
+  --navbar-height: 82px;
 }
 
 * {
@@ -18,6 +19,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: var(--navbar-height);
 }
 
 body {
@@ -65,6 +67,10 @@ p {
   color: var(--muted-text);
 }
 
+section {
+  scroll-margin-top: var(--navbar-height);
+}
+
 .section {
   padding: 110px 24px;
 }
@@ -103,16 +109,21 @@ p {
 
 .navbar {
   position: fixed;
-  z-index: 100;
+  z-index: 9999;
   top: 0;
+  right: 0;
   left: 0;
+
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
+
   padding: 24px 55px;
+
   color: var(--white);
   background-color: transparent;
+
   transition:
     padding 0.3s ease,
     color 0.3s ease,
@@ -126,17 +137,12 @@ p {
   background-color: rgba(252, 250, 247, 0.96);
   box-shadow: 0 4px 20px rgba(47, 43, 39, 0.08);
   backdrop-filter: blur(10px);
-}
-
-.navbar.scrolled .nav-links a::after {
-  background-color: var(--accent);
-}
-
-.navbar.scrolled .menu-button {
-  color: var(--text);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .logo {
+  position: relative;
+  z-index: 10001;
   font-size: 1.8rem;
   letter-spacing: 0.08em;
 }
@@ -166,17 +172,28 @@ p {
   transition: width 0.3s ease;
 }
 
-.nav-links a:hover::after {
+.nav-links a:hover::after,
+.nav-links a.active::after {
   width: 100%;
 }
 
+.navbar.scrolled .nav-links a::after {
+  background-color: var(--accent);
+}
+
 .menu-button {
+  position: relative;
+  z-index: 10001;
   display: none;
   border: 0;
   color: var(--white);
   background: transparent;
   cursor: pointer;
   font-size: 1.7rem;
+}
+
+.navbar.scrolled .menu-button {
+  color: var(--text);
 }
 
 /* Forside */
@@ -522,6 +539,10 @@ footer p:first-child {
 /* Mobil */
 
 @media (max-width: 900px) {
+  :root {
+    --navbar-height: 70px;
+  }
+
   .navbar {
     padding: 22px 24px;
   }
@@ -531,23 +552,25 @@ footer p:first-child {
   }
 
   .menu-button {
-    position: relative;
-    z-index: 30;
     display: block;
   }
 
   .nav-links {
     position: fixed;
-    z-index: 25;
+    z-index: 10000;
     inset: 0;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 28px;
+
     visibility: hidden;
+    color: var(--white);
     background-color: rgba(41, 37, 33, 0.98);
     opacity: 0;
+
     transition:
       visibility 0.3s ease,
       opacity 0.3s ease;
@@ -560,6 +583,14 @@ footer p:first-child {
 
   .nav-links a {
     font-size: 0.88rem;
+  }
+
+  .navbar.scrolled .nav-links a {
+    color: var(--white);
+  }
+
+  .navbar.scrolled .nav-links a::after {
+    background-color: var(--white);
   }
 
   .two-column {

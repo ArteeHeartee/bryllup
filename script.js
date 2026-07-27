@@ -1,19 +1,30 @@
-const body = document.body;
+const body =
+  document.body;
 
 const header =
-  document.querySelector("[data-header]");
+  document.querySelector(
+    "[data-header]"
+  );
 
 const openInvitationButton =
-  document.querySelector("[data-open-invitation]");
+  document.querySelector(
+    "[data-open-invitation]"
+  );
 
 const reopenInvitationButton =
-  document.querySelector("[data-reopen-invitation]");
+  document.querySelector(
+    "[data-reopen-invitation]"
+  );
 
 const menuToggle =
-  document.querySelector("[data-menu-toggle]");
+  document.querySelector(
+    "[data-menu-toggle]"
+  );
 
 const navigation =
-  document.querySelector("[data-navigation]");
+  document.querySelector(
+    "[data-navigation]"
+  );
 
 const navLinks = [
   ...document.querySelectorAll(
@@ -23,7 +34,7 @@ const navLinks = [
 
 
 /*
-  Åpning og lukking av invitasjonen
+  Invitasjonen
 */
 
 const openInvitation = () => {
@@ -36,15 +47,12 @@ const openInvitation = () => {
     "invitation-open"
   );
 
-  sessionStorage.setItem(
-    "weddingInvitationOpened",
-    "true"
-  );
-
 };
 
 
 const closeInvitation = () => {
+
+  closeMenu();
 
   window.scrollTo({
     top: 0,
@@ -52,7 +60,7 @@ const closeInvitation = () => {
   });
 
 
-  setTimeout(() => {
+  window.setTimeout(() => {
 
     body.classList.remove(
       "invitation-open"
@@ -60,10 +68,6 @@ const closeInvitation = () => {
 
     body.classList.add(
       "invitation-closed"
-    );
-
-    sessionStorage.removeItem(
-      "weddingInvitationOpened"
     );
 
   }, 350);
@@ -92,31 +96,6 @@ if (reopenInvitationButton) {
 
 
 /*
-  Beholder invitasjonen åpen dersom
-  gjesten allerede har åpnet den
-  i samme nettleserøkt.
-*/
-
-const hasOpenedInvitation =
-  sessionStorage.getItem(
-    "weddingInvitationOpened"
-  ) === "true";
-
-
-if (hasOpenedInvitation) {
-
-  body.classList.remove(
-    "invitation-closed"
-  );
-
-  body.classList.add(
-    "invitation-open"
-  );
-
-}
-
-
-/*
   Header
 */
 
@@ -128,7 +107,7 @@ const updateHeader = () => {
 
   header.classList.toggle(
     "scrolled",
-    window.scrollY > 35
+    window.scrollY > 30
   );
 
 };
@@ -147,7 +126,7 @@ window.addEventListener(
   Mobilmeny
 */
 
-const closeMenu = () => {
+function closeMenu() {
 
   if (!menuToggle || !navigation) {
     return;
@@ -166,7 +145,7 @@ const closeMenu = () => {
     "menu-open"
   );
 
-};
+}
 
 
 if (menuToggle && navigation) {
@@ -211,6 +190,34 @@ navLinks.forEach((link) => {
 });
 
 
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (window.innerWidth > 760) {
+      closeMenu();
+    }
+
+  }
+);
+
+
+/*
+  Escape lukker mobilmenyen
+*/
+
+document.addEventListener(
+  "keydown",
+  (event) => {
+
+    if (event.key === "Escape") {
+      closeMenu();
+    }
+
+  }
+);
+
+
 /*
   Aktivt menypunkt
 */
@@ -252,7 +259,7 @@ if ("IntersectionObserver" in window) {
       },
       {
         rootMargin:
-          "-38% 0px -54% 0px",
+          "-36% 0px -55% 0px",
 
         threshold: 0
       }
@@ -269,27 +276,37 @@ if ("IntersectionObserver" in window) {
 
 
 /*
-  Nedtelling til bryllupet
+  Nedtelling
 
   Foreløpig tidspunkt:
   18. september 2027 klokken 13:00.
 */
 
 const daysElement =
-  document.querySelector("[data-days]");
+  document.querySelector(
+    "[data-days]"
+  );
 
 const hoursElement =
-  document.querySelector("[data-hours]");
+  document.querySelector(
+    "[data-hours]"
+  );
 
 const minutesElement =
-  document.querySelector("[data-minutes]");
+  document.querySelector(
+    "[data-minutes]"
+  );
 
 const secondsElement =
-  document.querySelector("[data-seconds]");
+  document.querySelector(
+    "[data-seconds]"
+  );
 
 
 const weddingDate =
-  new Date("2027-09-18T13:00:00+02:00");
+  new Date(
+    "2027-09-18T13:00:00+02:00"
+  );
 
 
 const padNumber = (
@@ -324,10 +341,17 @@ const updateCountdown = () => {
 
   if (difference <= 0) {
 
-    daysElement.textContent = "000";
-    hoursElement.textContent = "00";
-    minutesElement.textContent = "00";
-    secondsElement.textContent = "00";
+    daysElement.textContent =
+      "000";
+
+    hoursElement.textContent =
+      "00";
+
+    minutesElement.textContent =
+      "00";
+
+    secondsElement.textContent =
+      "00";
 
     return;
   }
@@ -387,14 +411,14 @@ const updateCountdown = () => {
 updateCountdown();
 
 
-setInterval(
+window.setInterval(
   updateCountdown,
   1000
 );
 
 
 /*
-  Myke innlastingsanimasjoner
+  Scrollanimasjoner
 */
 
 const revealElements = [
@@ -428,14 +452,16 @@ if ("IntersectionObserver" in window) {
 
       },
       {
-        threshold: .14
+        threshold: .1
       }
     );
 
 
   revealElements.forEach(
     (element) => {
-      revealObserver.observe(element);
+      revealObserver.observe(
+        element
+      );
     }
   );
 

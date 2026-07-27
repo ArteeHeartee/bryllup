@@ -1,18 +1,23 @@
 const header = document.querySelector("[data-header]");
-const menuToggle = document.querySelector("[data-menu-toggle]");
-const navigation = document.querySelector("[data-navigation]");
+
+const menuToggle =
+  document.querySelector("[data-menu-toggle]");
+
+const navigation =
+  document.querySelector("[data-navigation]");
 
 const navLinks = [
-  ...document.querySelectorAll(".main-navigation a")
+  ...document.querySelectorAll(
+    ".main-navigation a"
+  )
 ];
 
-const heroBackground = document.querySelector(
-  ".hero-background"
-);
+const heroBackground =
+  document.querySelector(".hero-background");
 
 
 /*
-  Endrer menyen når brukeren scroller.
+  Toppmeny ved scrolling
 */
 
 const updateHeader = () => {
@@ -28,7 +33,7 @@ const updateHeader = () => {
 
 
 /*
-  Lukker mobilmenyen.
+  Mobilmeny
 */
 
 const closeMenu = () => {
@@ -42,50 +47,55 @@ const closeMenu = () => {
   );
 
   navigation.classList.remove("open");
-  document.body.classList.remove("menu-open");
+
+  document.body.classList.remove(
+    "menu-open"
+  );
 };
 
 
-/*
-  Åpner og lukker mobilmenyen.
-*/
-
 if (menuToggle && navigation) {
-  menuToggle.addEventListener("click", () => {
 
-    const isOpen =
-      menuToggle.getAttribute("aria-expanded") ===
-      "true";
+  menuToggle.addEventListener(
+    "click",
+    () => {
 
-    menuToggle.setAttribute(
-      "aria-expanded",
-      String(!isOpen)
-    );
+      const isOpen =
+        menuToggle.getAttribute(
+          "aria-expanded"
+        ) === "true";
 
-    navigation.classList.toggle(
-      "open",
-      !isOpen
-    );
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
 
-    document.body.classList.toggle(
-      "menu-open",
-      !isOpen
-    );
-  });
+      navigation.classList.toggle(
+        "open",
+        !isOpen
+      );
+
+      document.body.classList.toggle(
+        "menu-open",
+        !isOpen
+      );
+
+    }
+  );
+
 }
 
 
-/*
-  Lukker mobilmenyen når et menypunkt trykkes.
-*/
-
 navLinks.forEach((link) => {
-  link.addEventListener("click", closeMenu);
+  link.addEventListener(
+    "click",
+    closeMenu
+  );
 });
 
 
 /*
-  Header og parallax ved scrolling.
+  Parallax-effekt i hero
 */
 
 window.addEventListener(
@@ -98,13 +108,15 @@ window.addEventListener(
       heroBackground &&
       window.innerWidth > 900
     ) {
+
       const offset = Math.min(
-        window.scrollY * 0.16,
-        90
+        window.scrollY * 0.14,
+        85
       );
 
       heroBackground.style.transform =
         `translateY(${offset}px) scale(1.025)`;
+
     }
 
   },
@@ -115,8 +127,7 @@ window.addEventListener(
 
 
 /*
-  Markerer riktig menypunkt
-  basert på hvilken seksjon som vises.
+  Aktivt menypunkt
 */
 
 const sections = [
@@ -125,50 +136,186 @@ const sections = [
   )
 ];
 
+
 if ("IntersectionObserver" in window) {
 
-  const observer = new IntersectionObserver(
-    (entries) => {
+  const observer =
+    new IntersectionObserver(
+      (entries) => {
 
-      entries.forEach((entry) => {
+        entries.forEach((entry) => {
 
-        if (!entry.isIntersecting) {
-          return;
-        }
+          if (!entry.isIntersecting) {
+            return;
+          }
 
-        navLinks.forEach((link) => {
+          navLinks.forEach((link) => {
 
-          const linkTarget =
-            link.getAttribute("href");
+            const linkTarget =
+              link.getAttribute("href");
 
-          const sectionTarget =
-            `#${entry.target.id}`;
+            const sectionTarget =
+              `#${entry.target.id}`;
 
-          link.classList.toggle(
-            "active",
-            linkTarget === sectionTarget
-          );
+            link.classList.toggle(
+              "active",
+              linkTarget === sectionTarget
+            );
+
+          });
 
         });
 
-      });
+      },
+      {
+        rootMargin:
+          "-40% 0px -50% 0px",
 
-    },
-    {
-      rootMargin: "-40% 0px -50% 0px",
-      threshold: 0
-    }
-  );
+        threshold: 0
+      }
+    );
+
 
   sections.forEach((section) => {
     observer.observe(section);
   });
+
 }
 
 
 /*
-  Sørger for at headeren har riktig
-  utseende allerede ved innlasting.
+  Nedtelling til bryllupet
+
+  Dato:
+  18. september 2027
+
+  Klokkeslettet er foreløpig satt
+  til klokken 13:00 norsk tid.
+*/
+
+const countdownElement =
+  document.querySelector("[data-countdown]");
+
+const daysElement =
+  document.querySelector("[data-days]");
+
+const hoursElement =
+  document.querySelector("[data-hours]");
+
+const minutesElement =
+  document.querySelector("[data-minutes]");
+
+const secondsElement =
+  document.querySelector("[data-seconds]");
+
+
+const weddingDate =
+  new Date("2027-09-18T13:00:00+02:00");
+
+
+const padNumber = (
+  value,
+  length = 2
+) => {
+  return String(value).padStart(
+    length,
+    "0"
+  );
+};
+
+
+const updateCountdown = () => {
+
+  if (
+    !countdownElement ||
+    !daysElement ||
+    !hoursElement ||
+    !minutesElement ||
+    !secondsElement
+  ) {
+    return;
+  }
+
+
+  const now = new Date();
+
+  const distance =
+    weddingDate.getTime() -
+    now.getTime();
+
+
+  if (distance <= 0) {
+
+    daysElement.textContent = "000";
+    hoursElement.textContent = "00";
+    minutesElement.textContent = "00";
+    secondsElement.textContent = "00";
+
+    return;
+  }
+
+
+  const totalSeconds =
+    Math.floor(distance / 1000);
+
+
+  const days =
+    Math.floor(
+      totalSeconds /
+      (60 * 60 * 24)
+    );
+
+
+  const hours =
+    Math.floor(
+      (
+        totalSeconds %
+        (60 * 60 * 24)
+      ) /
+      (60 * 60)
+    );
+
+
+  const minutes =
+    Math.floor(
+      (
+        totalSeconds %
+        (60 * 60)
+      ) /
+      60
+    );
+
+
+  const seconds =
+    totalSeconds % 60;
+
+
+  daysElement.textContent =
+    padNumber(days, 3);
+
+  hoursElement.textContent =
+    padNumber(hours);
+
+  minutesElement.textContent =
+    padNumber(minutes);
+
+  secondsElement.textContent =
+    padNumber(seconds);
+
+};
+
+
+updateCountdown();
+
+
+setInterval(
+  updateCountdown,
+  1000
+);
+
+
+/*
+  Første oppdatering av header
 */
 
 updateHeader();

@@ -102,16 +102,38 @@ p {
 /* Navigasjon */
 
 .navbar {
-  position: absolute;
-  z-index: 20;
+  position: fixed;
+  z-index: 100;
   top: 0;
   left: 0;
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: space-between;
-  padding: 30px 55px;
+  padding: 24px 55px;
   color: var(--white);
+  background-color: transparent;
+  transition:
+    padding 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.navbar.scrolled {
+  padding: 16px 55px;
+  color: var(--text);
+  background-color: rgba(252, 250, 247, 0.96);
+  box-shadow: 0 4px 20px rgba(47, 43, 39, 0.08);
+  backdrop-filter: blur(10px);
+}
+
+.navbar.scrolled .nav-links a::after {
+  background-color: var(--accent);
+}
+
+.navbar.scrolled .menu-button {
+  color: var(--text);
 }
 
 .logo {

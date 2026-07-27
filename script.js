@@ -1,5 +1,13 @@
+const body = document.body;
+
 const header =
   document.querySelector("[data-header]");
+
+const openInvitationButton =
+  document.querySelector("[data-open-invitation]");
+
+const reopenInvitationButton =
+  document.querySelector("[data-reopen-invitation]");
 
 const menuToggle =
   document.querySelector("[data-menu-toggle]");
@@ -15,10 +23,105 @@ const navLinks = [
 
 
 /*
+  Åpning og lukking av invitasjonen
+*/
+
+const openInvitation = () => {
+
+  body.classList.remove(
+    "invitation-closed"
+  );
+
+  body.classList.add(
+    "invitation-open"
+  );
+
+  sessionStorage.setItem(
+    "weddingInvitationOpened",
+    "true"
+  );
+
+};
+
+
+const closeInvitation = () => {
+
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+
+
+  setTimeout(() => {
+
+    body.classList.remove(
+      "invitation-open"
+    );
+
+    body.classList.add(
+      "invitation-closed"
+    );
+
+    sessionStorage.removeItem(
+      "weddingInvitationOpened"
+    );
+
+  }, 350);
+
+};
+
+
+if (openInvitationButton) {
+
+  openInvitationButton.addEventListener(
+    "click",
+    openInvitation
+  );
+
+}
+
+
+if (reopenInvitationButton) {
+
+  reopenInvitationButton.addEventListener(
+    "click",
+    closeInvitation
+  );
+
+}
+
+
+/*
+  Beholder invitasjonen åpen dersom
+  gjesten allerede har åpnet den
+  i samme nettleserøkt.
+*/
+
+const hasOpenedInvitation =
+  sessionStorage.getItem(
+    "weddingInvitationOpened"
+  ) === "true";
+
+
+if (hasOpenedInvitation) {
+
+  body.classList.remove(
+    "invitation-closed"
+  );
+
+  body.classList.add(
+    "invitation-open"
+  );
+
+}
+
+
+/*
   Header
 */
 
 const updateHeader = () => {
+
   if (!header) {
     return;
   }
@@ -27,7 +130,17 @@ const updateHeader = () => {
     "scrolled",
     window.scrollY > 35
   );
+
 };
+
+
+window.addEventListener(
+  "scroll",
+  updateHeader,
+  {
+    passive: true
+  }
+);
 
 
 /*
@@ -35,6 +148,7 @@ const updateHeader = () => {
 */
 
 const closeMenu = () => {
+
   if (!menuToggle || !navigation) {
     return;
   }
@@ -44,11 +158,14 @@ const closeMenu = () => {
     "false"
   );
 
-  navigation.classList.remove("open");
+  navigation.classList.remove(
+    "open"
+  );
 
-  document.body.classList.remove(
+  body.classList.remove(
     "menu-open"
   );
+
 };
 
 
@@ -73,7 +190,7 @@ if (menuToggle && navigation) {
         !isOpen
       );
 
-      document.body.classList.toggle(
+      body.classList.toggle(
         "menu-open",
         !isOpen
       );
@@ -85,20 +202,13 @@ if (menuToggle && navigation) {
 
 
 navLinks.forEach((link) => {
+
   link.addEventListener(
     "click",
     closeMenu
   );
+
 });
-
-
-window.addEventListener(
-  "scroll",
-  updateHeader,
-  {
-    passive: true
-  }
-);
 
 
 /*
@@ -159,7 +269,7 @@ if ("IntersectionObserver" in window) {
 
 
 /*
-  Nedtelling
+  Nedtelling til bryllupet
 
   Foreløpig tidspunkt:
   18. september 2027 klokken 13:00.
@@ -186,10 +296,12 @@ const padNumber = (
   number,
   length = 2
 ) => {
+
   return String(number).padStart(
     length,
     "0"
   );
+
 };
 
 
@@ -229,8 +341,7 @@ const updateCountdown = () => {
 
   const days =
     Math.floor(
-      totalSeconds /
-      86400
+      totalSeconds / 86400
     );
 
 
@@ -332,7 +443,9 @@ if ("IntersectionObserver" in window) {
 
   revealElements.forEach(
     (element) => {
-      element.classList.add("visible");
+      element.classList.add(
+        "visible"
+      );
     }
   );
 

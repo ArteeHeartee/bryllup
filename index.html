@@ -2,239 +2,49 @@
 <html lang="no">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <meta
-    name="description"
-    content="Bryllupet til Pernille og Andreas – 18. september 2027 på Harmonien i Trondheim."
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Bryllupet til Pernille og Andreas – 18. september 2027 på Harmonien i Trondheim.">
   <title>Pernille & Andreas | 18. september 2027</title>
-
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap"
-    rel="stylesheet"
-  >
-
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <nav class="navbar" aria-label="Hovedmeny">
-    <a href="#hjem" class="logo">P & A</a>
-
-    <button
-      class="menu-button"
-      type="button"
-      aria-label="Åpne meny"
-      aria-expanded="false"
-      aria-controls="main-navigation"
-    >
-      ☰
+  <header class="site-header" data-header>
+    <a class="wordmark" href="#hero" aria-label="Til toppen">Pernille <span>&</span> Andreas</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="main-navigation" data-menu-toggle>
+      <span class="sr-only">Åpne meny</span><span></span><span></span>
     </button>
-
-    <div class="nav-links" id="main-navigation">
-      <a href="#velkommen">Velkommen</a>
-      <a href="#historie">Vår historie</a>
+    <nav class="main-navigation" id="main-navigation" aria-label="Hovedmeny" data-navigation>
+      <a class="active" href="#velkommen">Velkommen</a>
+      <a href="#historien">Historien</a>
       <a href="#program">Program</a>
-      <a href="#praktisk">Praktisk</a>
-      <a href="#rsvp">Svar på invitasjonen</a>
-    </div>
-  </nav>
-
-  <header class="hero" id="hjem">
-    <div class="hero-overlay"></div>
-
-    <div class="hero-content">
-      <p class="hero-small-text">Vi skal gifte oss</p>
-
-      <h1>Pernille <span>&</span> Andreas</h1>
-
-      <div class="hero-divider"></div>
-
-      <p class="hero-date">18. september 2027</p>
-      <p class="hero-location">Harmonien · Trondheim</p>
-
-      <a href="#velkommen" class="hero-button">
-        Les mer
-      </a>
-    </div>
+      <a href="#informasjon">Info</a>
+      <a href="#rsvp">RSVP</a>
+    </nav>
   </header>
 
   <main>
-
-    <section class="section welcome-section" id="velkommen">
-      <div class="section-content narrow">
-        <p class="section-label">Kjære familie og venner</p>
-
-        <h2>Velkommen til bryllupet vårt</h2>
-
-        <div class="ornament" aria-hidden="true">✦</div>
-
-        <p>
-          Vi gleder oss enormt til å feire kjærligheten sammen med
-          menneskene som betyr aller mest for oss.
-        </p>
-
-        <p>
-          Her vil dere etter hvert finne all informasjon dere trenger
-          om bryllupsdagen vår.
-        </p>
-
-        <div class="countdown" id="countdown" aria-label="Nedtelling til bryllupet">
-          <div class="countdown-item">
-            <span id="days">0</span>
-            <p>Dager</p>
-          </div>
-
-          <div class="countdown-item">
-            <span id="hours">0</span>
-            <p>Timer</p>
-          </div>
-
-          <div class="countdown-item">
-            <span id="minutes">0</span>
-            <p>Minutter</p>
-          </div>
-
-          <div class="countdown-item">
-            <span id="seconds">0</span>
-            <p>Sekunder</p>
-          </div>
-        </div>
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="hero-background" aria-hidden="true"></div>
+      <div class="hero-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <p class="hero-date">Den 18. september 2027</p>
+        <p class="hero-intro">samles vi med menneskene<br>vi er aller mest glade i.</p>
+        <div class="ornament" aria-hidden="true"><span></span><span class="heart">♡</span><span></span></div>
+        <h1 class="hero-title" id="hero-title"><span>Pernille</span><em>&</em><span>Andreas</span></h1>
+        <p class="hero-location">Harmonien <span>•</span> Trondheim</p>
       </div>
+      <a class="scroll-cue" href="#velkommen"><span>Scroll</span><i aria-hidden="true"></i></a>
     </section>
 
-    <section class="section story-section" id="historie">
-      <div class="two-column">
-        <div class="image-placeholder" role="img" aria-label="Bilde av Pernille og Andreas">
-          <p>Bilde av dere</p>
-        </div>
-
-        <div class="text-column">
-          <p class="section-label">Fra første møte til forlovelse</p>
-
-          <h2>Vår historie</h2>
-
-          <p>
-            Her skal vi senere fortelle litt om hvordan vi møttes,
-            reisen vår sammen og frieriet på Kreta.
-          </p>
-
-          <p>
-            Denne teksten erstatter vi når vi har bestemt hvordan
-            historien deres skal fortelles.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <section class="section program-section" id="program">
-      <div class="section-content">
-        <p class="section-label">Bryllupsdagen</p>
-
-        <h2>Program</h2>
-
-        <p class="section-intro">
-          Det fullstendige programmet publiseres når bryllupsdagen nærmer seg.
-        </p>
-
-        <div class="timeline">
-          <div class="timeline-item">
-            <span class="timeline-time">Tid kommer</span>
-            <h3>Vielse</h3>
-            <p>Mer informasjon kommer.</p>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-time">Tid kommer</span>
-            <h3>Mottakelse</h3>
-            <p>Velkomst og aperitiff på Harmonien.</p>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-time">Tid kommer</span>
-            <h3>Bryllupsmiddag</h3>
-            <p>Middag, taler og feiring.</p>
-          </div>
-
-          <div class="timeline-item">
-            <span class="timeline-time">Tid kommer</span>
-            <h3>Fest</h3>
-            <p>Dans og fest utover kvelden.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section practical-section" id="praktisk">
-      <div class="section-content">
-        <p class="section-label">Alt du trenger å vite</p>
-
-        <h2>Praktisk informasjon</h2>
-
-        <div class="info-grid">
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">⌖</span>
-            <h3>Sted</h3>
-            <p>Harmonien</p>
-            <p>Øvre Bakklandet 54</p>
-            <p>Trondheim</p>
-          </article>
-
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">♢</span>
-            <h3>Antrekk</h3>
-            <p>Kleskode kommer.</p>
-          </article>
-
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">⌂</span>
-            <h3>Overnatting</h3>
-            <p>Hotellanbefalinger kommer.</p>
-          </article>
-
-          <article class="info-card">
-            <span class="info-icon" aria-hidden="true">?</span>
-            <h3>Spørsmål</h3>
-            <p>Mer informasjon og ofte stilte spørsmål kommer.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section rsvp-section" id="rsvp">
-      <div class="section-content narrow">
-        <p class="section-label">Vi håper du vil feire med oss</p>
-
-        <h2>Svar på invitasjonen</h2>
-
-        <p>
-          RSVP-skjemaet blir tilgjengelig når de formelle
-          invitasjonene sendes ut.
-        </p>
-
-        <button class="rsvp-button" type="button" disabled>
-          RSVP åpner senere
-        </button>
-      </div>
-    </section>
-
+    <section class="placeholder-section" id="velkommen"><div class="section-inner"><p class="eyebrow">Kapittel én</p><h2>Velkommen</h2><p>Denne seksjonen blir neste steg. Først finpusser vi heroen til den sitter helt perfekt.</p></div></section>
+    <section class="placeholder-section alt" id="historien"><div class="section-inner"><p class="eyebrow">Kapittel to</p><h2>Historien vår</h2></div></section>
+    <section class="placeholder-section" id="program"><div class="section-inner"><p class="eyebrow">Kapittel tre</p><h2>Dagen</h2></div></section>
+    <section class="placeholder-section alt" id="informasjon"><div class="section-inner"><p class="eyebrow">Kapittel fire</p><h2>Praktisk informasjon</h2></div></section>
+    <section class="placeholder-section" id="rsvp"><div class="section-inner"><p class="eyebrow">Kapittel fem</p><h2>Vi sees</h2></div></section>
   </main>
-
-  <footer>
-    <p>Pernille & Andreas</p>
-    <p>18. september 2027 · Harmonien, Trondheim</p>
-  </footer>
-
   <script src="script.js"></script>
 </body>
 </html>

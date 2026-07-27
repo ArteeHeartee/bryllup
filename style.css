@@ -227,7 +227,7 @@ button {
   z-index: -3;
 
   background:
-    url("../assets/hero.png")
+    url("assets/hero.png")
     center 48% / cover
     no-repeat;
 

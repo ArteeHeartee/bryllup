@@ -954,3 +954,123 @@ if (rsvpForm) {
 
 updateHeader();
 updateActiveSection();
+/*
+  GLIDENDE AKTIV MARKØR I HURTIGMENYEN
+*/
+
+const quickNavigation =
+  document.querySelector(
+    "[data-quick-navigation]"
+  );
+
+let activeMarker = null;
+
+
+const createActiveMarker = () => {
+
+  if (!quickNavigation) {
+    return;
+  }
+
+  activeMarker =
+    document.createElement("span");
+
+  activeMarker.className =
+    "header-active-marker";
+
+  activeMarker.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  quickNavigation.prepend(
+    activeMarker
+  );
+
+};
+
+
+const moveActiveMarker = () => {
+
+  if (
+    !quickNavigation ||
+    !activeMarker
+  ) {
+    return;
+  }
+
+  const activeLink =
+    quickNavigation.querySelector(
+      "a.active"
+    );
+
+  if (!activeLink) {
+
+    activeMarker.style.opacity = "0";
+
+    return;
+  }
+
+  const navigationRectangle =
+    quickNavigation.getBoundingClientRect();
+
+  const linkRectangle =
+    activeLink.getBoundingClientRect();
+
+  const markerX =
+    linkRectangle.left -
+    navigationRectangle.left +
+    (
+      linkRectangle.width -
+      activeMarker.offsetWidth
+    ) /
+    2;
+
+  activeMarker.style.opacity = "1";
+
+  activeMarker.style.transform =
+    `translate3d(${markerX}px, -50%, 0)`;
+
+};
+
+
+createActiveMarker();
+
+
+window.setTimeout(
+  moveActiveMarker,
+  100
+);
+
+
+window.addEventListener(
+  "resize",
+  moveActiveMarker
+);
+
+
+/*
+  Den eksisterende setActiveNavigation-funksjonen
+  endrer active-klassen. Denne observatøren oppdager
+  endringen og flytter markøren automatisk.
+*/
+
+if (quickNavigation) {
+
+  const navigationMarkerObserver =
+    new MutationObserver(
+      moveActiveMarker
+    );
+
+  navigationMarkerObserver.observe(
+    quickNavigation,
+    {
+      subtree: true,
+      attributes: true,
+      attributeFilter: [
+        "class"
+      ]
+    }
+  );
+
+}

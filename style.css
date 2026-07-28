@@ -5174,3 +5174,308 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* ==================================================
+   DESKTOP: BLA MED SIDEFELT
+   Mobil under 761 px berøres ikke.
+================================================== */
+
+@media (min-width: 761px) {
+
+  /*
+    De gamle lenkene nederst på kortene brukes
+    fortsatt på mobil, men skjules på desktop.
+  */
+
+  body.desktop-page-mode
+  .section-jump {
+    display: none;
+  }
+
+
+  /*
+    Beholderen dekker skjermen, men bare de to
+    sidefeltene kan motta museklikk.
+  */
+
+  .desktop-page-controls {
+    position: fixed;
+    inset:
+      var(--header-height)
+      0
+      0;
+
+    z-index: 80;
+
+    pointer-events: none;
+  }
+
+
+  body.invitation-closed
+  .desktop-page-controls {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+
+  .desktop-page-control {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+
+    width:
+      clamp(
+        52px,
+        7vw,
+        108px
+      );
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    color: var(--burgundy);
+    background: transparent;
+
+    font-family:
+      "Montserrat",
+      sans-serif;
+
+    font-size: .48rem;
+    font-weight: 500;
+
+    letter-spacing: .16em;
+    text-transform: uppercase;
+
+    border: 0;
+
+    opacity: .28;
+
+    cursor: pointer;
+    pointer-events: auto;
+
+    transition:
+      opacity .25s ease,
+      background-color .25s ease;
+  }
+
+
+  .desktop-page-control-previous {
+    left: 0;
+
+    justify-content: flex-start;
+
+    padding-left:
+      clamp(
+        14px,
+        2vw,
+        34px
+      );
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(101, 47, 59, .07),
+        transparent
+      );
+  }
+
+
+  .desktop-page-control-next {
+    right: 0;
+
+    justify-content: flex-end;
+
+    padding-right:
+      clamp(
+        14px,
+        2vw,
+        34px
+      );
+
+    background:
+      linear-gradient(
+        270deg,
+        rgba(101, 47, 59, .07),
+        transparent
+      );
+  }
+
+
+  .desktop-page-control:hover,
+  .desktop-page-control:focus-visible {
+    opacity: 1;
+  }
+
+
+  .desktop-page-control-previous:hover,
+  .desktop-page-control-previous:focus-visible {
+    background:
+      linear-gradient(
+        90deg,
+        rgba(101, 47, 59, .14),
+        transparent
+      );
+  }
+
+
+  .desktop-page-control-next:hover,
+  .desktop-page-control-next:focus-visible {
+    background:
+      linear-gradient(
+        270deg,
+        rgba(101, 47, 59, .14),
+        transparent
+      );
+  }
+
+
+  .desktop-page-control:disabled {
+    opacity: 0;
+    visibility: hidden;
+
+    cursor: default;
+    pointer-events: none;
+  }
+
+
+  .desktop-page-control-arrow {
+    font-family:
+      "EB Garamond",
+      serif;
+
+    font-size: 1.65rem;
+    font-weight: 400;
+
+    line-height: 1;
+
+    transition:
+      transform .25s
+      var(--ease);
+  }
+
+
+  .desktop-page-control-previous:hover
+  .desktop-page-control-arrow {
+    transform:
+      translateX(-6px);
+  }
+
+
+  .desktop-page-control-next:hover
+  .desktop-page-control-arrow {
+    transform:
+      translateX(6px);
+  }
+
+
+  /*
+    På smalere desktop-skjermer skjules teksten.
+    Klikkfeltet og pilen beholdes.
+  */
+
+  @media (max-width: 1180px) {
+
+    .desktop-page-control-label {
+      display: none;
+    }
+
+  }
+
+
+  /*
+    Kortet reagerer forsiktig når brukeren holder
+    musen over feltet for forrige eller neste side.
+  */
+
+  body.desktop-page-hover-previous
+  .desktop-page-active:not(
+    .invitation-section
+  ) {
+    transform:
+      translate3d(
+        calc(-50% + 10px),
+        0,
+        0
+      );
+
+    box-shadow:
+      -8px 28px 78px
+        rgba(52, 40, 34, .16),
+      0 8px 22px
+        rgba(52, 40, 34, .08);
+  }
+
+
+  body.desktop-page-hover-next
+  .desktop-page-active:not(
+    .invitation-section
+  ) {
+    transform:
+      translate3d(
+        calc(-50% - 10px),
+        0,
+        0
+      );
+
+    box-shadow:
+      8px 28px 78px
+        rgba(52, 40, 34, .16),
+      0 8px 22px
+        rgba(52, 40, 34, .08);
+  }
+
+
+  body.desktop-page-hover-previous
+  .invitation-section.desktop-page-active {
+    transform:
+      translate3d(
+        10px,
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-hover-next
+  .invitation-section.desktop-page-active {
+    transform:
+      translate3d(
+        -10px,
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-hover-previous
+  .rsvp-footer-card.desktop-page-active {
+    transform:
+      translate3d(
+        calc(-50% + 10px),
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-hover-next
+  .rsvp-footer-card.desktop-page-active {
+    transform:
+      translate3d(
+        calc(-50% - 10px),
+        0,
+        0
+      );
+  }
+
+
+  .desktop-page-active {
+    will-change:
+      transform,
+      box-shadow;
+  }
+
+}

@@ -2714,3 +2714,650 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* =========================================================
+   SISTE FINPUSS
+   - seksjonene starter høyere
+   - historien uten bokser
+   - alle kapitler tilpasses ett mobilskjermbilde
+   - luftigere gaveønsker
+   - RSVP og footer vises som én avslutning
+   ========================================================= */
+
+
+/* ANIMERT AKTIV MENYKNAPP */
+
+.header-quick-navigation {
+  position: relative;
+}
+
+.header-quick-navigation a {
+  z-index: 2;
+}
+
+.header-quick-navigation a.active {
+  color: var(--paper-light);
+  background: transparent;
+  border-color: transparent;
+}
+
+.header-active-marker {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  z-index: 1;
+
+  width: clamp(34px, 3.1vw, 43px);
+  height: clamp(34px, 3.1vw, 43px);
+
+  background: var(--burgundy);
+  border-radius: 50%;
+
+  opacity: 0;
+
+  transform:
+    translate3d(0, -50%, 0);
+
+  transition:
+    transform .48s var(--ease),
+    width .3s var(--ease),
+    height .3s var(--ease),
+    opacity .25s ease;
+
+  pointer-events: none;
+}
+
+
+/* ALLE KAPITLER STARTER RETT UNDER HEADEREN */
+
+.screen-section {
+  justify-content: flex-start;
+
+  padding-top:
+    calc(
+      var(--header-height) +
+      18px
+    );
+
+  padding-bottom: 20px;
+}
+
+.compact-section-heading {
+  flex: 0 0 auto;
+
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+.section-jump {
+  flex: 0 0 auto;
+
+  margin-top: auto;
+  padding-top: 12px;
+}
+
+
+/* HISTORIEN VÅR */
+
+.story-section {
+  background: var(--paper-light);
+}
+
+.story-section .compact-section-heading {
+  margin-bottom: 12px;
+}
+
+.editorial-timeline {
+  position: relative;
+
+  width: min(1040px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  column-gap: clamp(20px, 3vw, 44px);
+  row-gap: 0;
+}
+
+.editorial-timeline::before {
+  content: "";
+
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+
+  height: 1px;
+
+  background: var(--line);
+
+  transform: translateY(-50%);
+}
+
+.timeline-event {
+  position: relative;
+  z-index: 1;
+
+  min-width: 0;
+
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  align-items: center;
+
+  gap: 12px;
+
+  min-height: 132px;
+  padding: 15px 0;
+
+  background: var(--paper-light);
+
+  border-bottom: 1px solid var(--line);
+}
+
+.timeline-event:nth-child(-n + 4) {
+  border-top: 1px solid var(--line);
+}
+
+.timeline-symbol {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  color: var(--burgundy);
+  background: var(--paper-light);
+
+  border: 1px solid var(--line-dark);
+  border-radius: 50%;
+}
+
+.timeline-symbol svg {
+  width: 24px;
+  height: 24px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.timeline-copy {
+  min-width: 0;
+}
+
+.timeline-copy time {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: var(--burgundy);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .42rem;
+  font-weight: 500;
+
+  line-height: 1.3;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+
+.timeline-copy h3 {
+  margin: 0;
+
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(1.05rem, 1.8vw, 1.55rem);
+  font-weight: 400;
+
+  line-height: 1.05;
+}
+
+.timeline-event-final .timeline-symbol {
+  color: var(--paper-light);
+  background: var(--burgundy);
+
+  border-color: var(--burgundy);
+}
+
+.timeline-event-final .timeline-copy h3 {
+  color: var(--burgundy);
+}
+
+
+/* PROGRAM OG PRAKTISK FLYTTES OPP */
+
+.program-section,
+.practical-section {
+  justify-content: flex-start;
+}
+
+.program-section .compact-section-heading,
+.practical-section .compact-section-heading {
+  margin-bottom: 14px;
+}
+
+.program-grid,
+.information-grid {
+  flex: 0 1 auto;
+}
+
+
+/* GAVEØNSKER */
+
+.gifts-section {
+  justify-content: flex-start;
+
+  padding-top:
+    calc(
+      var(--header-height) +
+      30px
+    );
+}
+
+.gifts-content {
+  width: min(790px, 100%);
+
+  margin: auto auto 0;
+}
+
+.gifts-content .section-label {
+  margin-bottom: 10px;
+}
+
+.gifts-content .gifts-lead {
+  margin-top: 32px;
+}
+
+.gifts-content p {
+  margin-top: 26px;
+}
+
+.gift-button {
+  margin-top: 34px;
+}
+
+.gift-link-note {
+  margin-top: 15px;
+}
+
+.gifts-section .section-jump {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+
+/* RSVP SOM KOMPLETT SISTESIDE */
+
+.rsvp-section {
+  min-height:
+    calc(
+      100svh - 220px
+    );
+
+  justify-content: flex-start;
+
+  padding-top:
+    calc(
+      var(--header-height) +
+      28px
+    );
+
+  padding-bottom: 24px;
+}
+
+.rsvp-card {
+  width: min(820px, 100%);
+
+  margin: 0 auto;
+
+  padding:
+    clamp(65px, 8vw, 105px)
+    clamp(32px, 8vw, 92px);
+}
+
+.rsvp-card > p:not(.section-label) {
+  margin-top: 27px;
+  margin-bottom: 31px;
+
+  font-size: 1.08rem;
+}
+
+.rsvp-section .section-jump {
+  margin-top: auto;
+  padding-top: 24px;
+}
+
+.site-footer {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding:
+    35px 24px
+    calc(
+      35px +
+      env(safe-area-inset-bottom)
+    );
+
+  background: var(--paper);
+}
+
+.site-footer::before {
+  content: "";
+
+  width: min(400px, 70vw);
+  height: 1px;
+
+  margin-bottom: 32px;
+
+  background: var(--line);
+}
+
+
+/* MOBIL */
+
+@media (max-width: 760px) {
+
+  .header-active-marker {
+    width: clamp(29px, 8vw, 37px);
+    height: clamp(29px, 8vw, 37px);
+  }
+
+  .screen-section {
+    min-height: 100svh;
+
+    padding:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        8px
+      )
+      18px
+      calc(
+        12px +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .compact-section-heading {
+    margin-bottom: 9px;
+  }
+
+  .compact-section-heading h2 {
+    font-size: clamp(2.25rem, 10vw, 3rem);
+  }
+
+  .section-label {
+    margin-bottom: 4px;
+  }
+
+  .section-jump {
+    padding-top: 6px;
+  }
+
+
+  /* HISTORIEN: ÉN SKJERM, INGEN RUTER */
+
+  .story-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        5px
+      );
+  }
+
+  .story-section .compact-section-heading {
+    margin-bottom: 7px;
+  }
+
+  .editorial-timeline {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    column-gap: 18px;
+  }
+
+  .editorial-timeline::before {
+    display: none;
+  }
+
+  .timeline-event {
+    grid-template-columns: 34px minmax(0, 1fr);
+
+    gap: 8px;
+
+    min-height: 99px;
+    padding: 8px 0;
+
+    border-top: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .timeline-event:nth-child(-n + 2) {
+    border-top: 1px solid var(--line);
+  }
+
+  .timeline-event:nth-child(-n + 4) {
+    border-top-color: transparent;
+  }
+
+  .timeline-event:nth-child(-n + 2) {
+    border-top-color: var(--line);
+  }
+
+  .timeline-symbol {
+    width: 32px;
+    height: 32px;
+  }
+
+  .timeline-symbol svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .timeline-copy time {
+    margin-bottom: 3px;
+
+    font-size: .31rem;
+    letter-spacing: .06em;
+  }
+
+  .timeline-copy h3 {
+    font-size: clamp(.84rem, 3.7vw, 1.04rem);
+  }
+
+  .story-section .section-jump {
+    margin-top: auto;
+  }
+
+
+  /* PROGRAM */
+
+  .program-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        5px
+      );
+  }
+
+  .program-section .compact-section-heading {
+    margin-bottom: 8px;
+  }
+
+  .program-card {
+    min-height: 194px;
+  }
+
+
+  /* PRAKTISK */
+
+  .practical-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        5px
+      );
+  }
+
+  .practical-section .compact-section-heading {
+    margin-bottom: 8px;
+  }
+
+  .information-card {
+    min-height: 211px;
+  }
+
+
+  /* GAVER */
+
+  .gifts-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        14px
+      );
+  }
+
+  .gifts-content {
+    margin: auto 0;
+  }
+
+  .gifts-content .gifts-lead {
+    margin-top: 24px;
+  }
+
+  .gifts-content p {
+    margin-top: 20px;
+
+    line-height: 1.55;
+  }
+
+  .gift-button {
+    margin-top: 27px;
+  }
+
+  .gifts-section .section-jump {
+    margin-top: auto;
+    padding-top: 12px;
+  }
+
+
+  /* RSVP OG FOOTER SYNLIG SAMMEN */
+
+  .rsvp-section {
+    min-height:
+      calc(
+        100svh - 285px
+      );
+
+    padding-top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top) +
+        15px
+      );
+
+    padding-bottom: 15px;
+  }
+
+  .rsvp-card {
+    width: 100%;
+
+    margin: 0 auto;
+
+    padding: 55px 24px;
+  }
+
+  .rsvp-card h2 {
+    font-size: clamp(3.2rem, 14vw, 4.3rem);
+  }
+
+  .rsvp-card > p:not(.section-label) {
+    margin: 24px auto 29px;
+
+    font-size: .98rem;
+  }
+
+  .rsvp-section .section-jump {
+    margin-top: auto;
+    padding-top: 14px;
+  }
+
+  .site-footer {
+    min-height: 285px;
+
+    padding:
+      30px 20px
+      calc(
+        30px +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .site-footer::before {
+    margin-bottom: 25px;
+  }
+
+}
+
+
+/* LAVERE MOBILSKJERMER */
+
+@media (max-width: 760px) and (max-height: 800px) {
+
+  .compact-section-heading h2 {
+    font-size: 2.15rem;
+  }
+
+  .timeline-event {
+    min-height: 83px;
+  }
+
+  .timeline-symbol {
+    width: 29px;
+    height: 29px;
+  }
+
+  .timeline-symbol svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  .timeline-copy h3 {
+    font-size: .82rem;
+  }
+
+  .program-card {
+    min-height: 170px;
+  }
+
+  .information-card {
+    min-height: 187px;
+  }
+
+  .gifts-content p {
+    margin-top: 14px;
+
+    font-size: .8rem;
+  }
+
+  .gifts-content .gifts-lead {
+    margin-top: 17px;
+
+    font-size: .94rem;
+  }
+
+  .gift-button {
+    margin-top: 18px;
+  }
+
+}

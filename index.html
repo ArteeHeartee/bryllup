@@ -40,26 +40,29 @@
     <a
       class="wordmark"
       href="#invitasjon"
-      aria-label="Gå til invitasjonen"
+      aria-label="Til toppen"
     >
       P <span>&</span> A
     </a>
 
+
     <nav
-      class="quick-navigation"
+      class="header-quick-navigation"
       aria-label="Hurtignavigasjon"
+      data-quick-navigation
     >
 
       <a
         href="#invitasjon"
-        aria-label="Invitasjonen"
-        data-tooltip="Invitasjon"
+        aria-label="Til toppen"
+        data-tooltip="Topp"
       >
         <svg viewBox="0 0 32 32" aria-hidden="true">
           <path d="M7 18L16 9L25 18"></path>
           <path d="M16 10V25"></path>
         </svg>
       </a>
+
 
       <a
         href="#historien"
@@ -71,6 +74,7 @@
         </svg>
       </a>
 
+
       <a
         href="#program"
         aria-label="Program"
@@ -81,6 +85,7 @@
           <path d="M16 9V16L21 19"></path>
         </svg>
       </a>
+
 
       <a
         href="#praktisk"
@@ -94,6 +99,7 @@
           <path d="M11 21H18"></path>
         </svg>
       </a>
+
 
       <a
         href="#gaveonsker"
@@ -109,6 +115,7 @@
         </svg>
       </a>
 
+
       <a
         href="#rsvp"
         aria-label="RSVP"
@@ -123,6 +130,21 @@
 
     </nav>
 
+
+    <nav
+      class="main-navigation"
+      id="main-navigation"
+      aria-label="Hovedmeny"
+      data-navigation
+    >
+      <a href="#historien">Historien</a>
+      <a href="#program">Program</a>
+      <a href="#praktisk">Praktisk</a>
+      <a href="#gaveonsker">Gaveønsker</a>
+      <a href="#rsvp">RSVP</a>
+    </nav>
+
+
     <div class="header-actions">
 
       <button
@@ -136,9 +158,9 @@
       <button
         class="menu-toggle"
         type="button"
-        aria-label="Åpne meny"
-        aria-controls="main-navigation"
         aria-expanded="false"
+        aria-controls="main-navigation"
+        aria-label="Åpne meny"
         data-menu-toggle
       >
         <span></span>
@@ -147,772 +169,709 @@
 
     </div>
 
-    <nav
-      class="main-navigation"
-      id="main-navigation"
-      aria-label="Hovedmeny"
-      data-navigation
-    >
-      <a href="#invitasjon">Invitasjonen</a>
-      <a href="#historien">Historien</a>
-      <a href="#program">Program</a>
-      <a href="#praktisk">Praktisk</a>
-      <a href="#gaveonsker">Gaveønsker</a>
-      <a href="#rsvp">RSVP</a>
-    </nav>
-
   </header>
 
 
-  <main class="site-main">
-
-    <!-- INVITASJON -->
+  <main>
 
     <section
-      class="page-section invitation-section"
+      class="invitation-section"
       id="invitasjon"
       aria-labelledby="invitation-title"
     >
 
-      <div class="stationery-card invitation-card">
-
-        <div class="paper-texture" aria-hidden="true"></div>
-
-        <div class="invitation-interior">
-
-          <aside class="invitation-side invitation-side-left">
-
-            <p class="small-heading">Praktisk</p>
-
-            <div class="invitation-summary">
-
-              <article>
-                <h3>Vielse</h3>
-                <p>Havstein kirke klokken 13.30.</p>
-              </article>
-
-              <article>
-                <h3>Transport</h3>
-                <p>Felles buss fra kirken til Harmonien.</p>
-              </article>
-
-              <article>
-                <h3>Antrekk</h3>
-                <p>Mørk dress. Hvitt er forbeholdt bruden.</p>
-              </article>
-
-              <article>
-                <h3>Overnatting</h3>
-                <p>Vi anbefaler Scandic Bakklandet.</p>
-              </article>
-
-            </div>
-
-          </aside>
+      <div class="paper-texture" aria-hidden="true"></div>
 
 
-          <div class="invitation-center">
+      <div class="invitation-interior">
 
-            <p class="invitation-eyebrow">
-              Sammen med familiene våre
-            </p>
+        <aside class="inside-panel inside-left">
 
-            <img
-              class="harmonien-illustration"
-              src="assets/harmonien.png"
-              alt="Illustrasjon av Harmonien i Trondheim"
-            >
+          <p class="inside-heading">
+            Praktisk
+          </p>
 
-            <h1 id="invitation-title">
-              <span>Pernille</span>
-              <em>&</em>
-              <span>Andreas</span>
-            </h1>
+          <div class="inside-information">
 
-            <p class="invitation-request">
-              inviterer til feiring av vårt bryllup
-            </p>
+            <article>
+              <h3>Vielse</h3>
+              <p>Havstein kirke klokken 13.30.</p>
+            </article>
 
-            <div class="wedding-date">
+            <article>
+              <h3>Transport</h3>
+              <p>Felles buss fra kirken til Harmonien.</p>
+            </article>
 
-              <span class="wedding-day">18</span>
+            <article>
+              <h3>Antrekk</h3>
+              <p>Mørk dress. Hvitt er forbeholdt bruden.</p>
+            </article>
 
-              <span class="wedding-month">
-                september<br>
-                2027
-              </span>
-
-            </div>
-
-            <p class="venue">Harmonien</p>
-            <p class="city">Trondheim</p>
+            <article>
+              <h3>Overnatting</h3>
+              <p>Vi anbefaler Scandic Bakklandet.</p>
+            </article>
 
           </div>
 
-
-          <aside class="invitation-side invitation-side-right">
-
-            <p class="small-heading">Program</p>
-
-            <div class="mini-program">
-
-              <article>
-                <time>13.30</time>
-
-                <div>
-                  <h3>Vielse</h3>
-                  <p>Havstein kirke.</p>
-                </div>
-              </article>
-
-              <article>
-                <time>Deretter</time>
-
-                <div>
-                  <h3>Mottakelse</h3>
-                  <p>Velkomst på Harmonien.</p>
-                </div>
-              </article>
-
-              <article>
-                <time>Kvelden</time>
-
-                <div>
-                  <h3>Middag og fest</h3>
-                  <p>Middag, taler og dans.</p>
-                </div>
-              </article>
-
-            </div>
-
-            <div class="invitation-rsvp-preview">
-
-              <p class="small-heading">RSVP</p>
-
-              <p>
-                Påmeldingen åpner sammen med den
-                formelle invitasjonen.
-              </p>
-
-            </div>
-
-          </aside>
+        </aside>
 
 
-          <div
-            class="countdown"
-            aria-label="Nedtelling til bryllupet"
-            aria-live="polite"
+        <div class="inside-panel inside-center">
+
+          <p class="invitation-eyebrow">
+            Sammen med familiene våre
+          </p>
+
+          <img
+            class="harmonien-illustration"
+            src="assets/harmonien.png"
+            alt="Illustrasjon av Harmonien i Trondheim"
           >
 
-            <div>
-              <span data-days>000</span>
-              <small>Dager</small>
-            </div>
+          <h1 id="invitation-title">
+            <span>Pernille</span>
+            <em>&</em>
+            <span>Andreas</span>
+          </h1>
 
-            <div>
-              <span data-hours>00</span>
-              <small>Timer</small>
-            </div>
+          <p class="invitation-request">
+            inviterer til feiring av vårt bryllup
+          </p>
 
-            <div>
-              <span data-minutes>00</span>
-              <small>Minutter</small>
-            </div>
+          <div class="wedding-date">
 
-            <div>
-              <span data-seconds>00</span>
-              <small>Sekunder</small>
-            </div>
+            <span class="wedding-day">
+              18
+            </span>
+
+            <span class="wedding-month">
+              September<br>
+              2027
+            </span>
 
           </div>
 
-          <a class="card-next-link" href="#historien">
-            <span>Fortsett til historien vår</span>
-            <i aria-hidden="true">↓</i>
-          </a>
+          <p class="venue">Harmonien</p>
+          <p class="city">Trondheim</p>
 
         </div>
+
+
+        <aside class="inside-panel inside-right">
+
+          <p class="inside-heading">
+            Program
+          </p>
+
+          <div class="mini-program">
+
+            <article>
+              <span>13.30</span>
+
+              <div>
+                <h3>Vielse</h3>
+                <p>Havstein kirke.</p>
+              </div>
+            </article>
+
+            <article>
+              <span>Deretter</span>
+
+              <div>
+                <h3>Mottakelse</h3>
+                <p>Velkomst på Harmonien.</p>
+              </div>
+            </article>
+
+            <article>
+              <span>Kvelden</span>
+
+              <div>
+                <h3>Middag og fest</h3>
+                <p>Middag, taler og dans.</p>
+              </div>
+            </article>
+
+          </div>
+
+          <div class="dresscode-preview">
+
+            <p class="inside-heading">
+              RSVP
+            </p>
+
+            <p>
+              Påmeldingen åpner sammen med den
+              formelle invitasjonen.
+            </p>
+
+          </div>
+
+        </aside>
 
 
         <div
-          class="invitation-cover"
-          aria-label="Lukket bryllupsinvitasjon"
-          data-invitation-cover
+          class="countdown"
+          aria-label="Nedtelling til bryllupet"
+          aria-live="polite"
+          data-countdown
         >
 
-          <div class="envelope-shadow" aria-hidden="true"></div>
-          <div class="envelope-top-fold" aria-hidden="true"></div>
-          <div class="envelope-bottom-fold" aria-hidden="true"></div>
-
-          <div class="cover-door cover-door-left">
-
-            <div class="cover-content">
-              <span class="cover-initial">P</span>
-              <span class="cover-detail">2027</span>
-            </div>
-
+          <div class="countdown-item">
+            <span data-days>000</span>
+            <small>Dager</small>
           </div>
 
-          <div class="cover-door cover-door-right">
-
-            <div class="cover-content">
-              <span class="cover-initial">A</span>
-              <span class="cover-detail">18 · 09</span>
-            </div>
-
+          <div class="countdown-item">
+            <span data-hours>00</span>
+            <small>Timer</small>
           </div>
 
-          <button
-            class="wax-seal"
-            type="button"
-            aria-label="Åpne invitasjonen"
-            data-open-invitation
-          >
-            <span class="wax-seal-inner">
-              <span>P&A</span>
-            </span>
-          </button>
+          <div class="countdown-item">
+            <span data-minutes>00</span>
+            <small>Minutter</small>
+          </div>
 
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- HISTORIEN -->
-
-    <section
-      class="page-section"
-      id="historien"
-      aria-labelledby="history-title"
-    >
-
-      <div class="stationery-card content-card history-card">
-
-        <div class="paper-texture" aria-hidden="true"></div>
-
-        <div class="section-heading">
-
-          <p class="section-label">
-            Våre viktigste øyeblikk
-          </p>
-
-          <h2 id="history-title">
-            Historien vår
-          </h2>
+          <div class="countdown-item">
+            <span data-seconds>00</span>
+            <small>Sekunder</small>
+          </div>
 
         </div>
 
 
-        <div class="timeline">
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M13 39V10"></path>
-                <path d="M14 11C23 7 31 16 39 11V26C31 31 23 22 14 27"></path>
-                <path d="M14 16H39"></path>
-                <path d="M21 11V27"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2024-05-17">17. mai 2024</time>
-              <h3>Vi møttes</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M24 39S9 30 9 18C9 11 18 8 24 16C30 8 39 11 39 18C39 30 24 39 24 39Z"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2024-06-11">11. juni 2024</time>
-              <h3>Vi ble kjærester</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M8 24L24 10L40 24"></path>
-                <path d="M12 22V40H36V22"></path>
-                <path d="M20 40V28H28V40"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2024-08-30">30. august 2024</time>
-              <h3>Vi ble samboere</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M14 20C10 15 10 10 13 8C17 9 21 12 22 16"></path>
-                <path d="M34 20C38 15 38 10 35 8C31 9 27 12 26 16"></path>
-                <path d="M12 25C12 16 17 12 24 12C31 12 36 16 36 25C36 35 31 41 24 41C17 41 12 35 12 25Z"></path>
-                <path d="M19 25H20"></path>
-                <path d="M28 25H29"></path>
-                <path d="M21 32C23 34 25 34 27 32"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2025-01-25">25. januar 2025</time>
-              <h3>Lydia & London</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <circle cx="24" cy="24" r="15"></circle>
-                <path d="M24 24L32 18"></path>
-                <path d="M24 24V13"></path>
-                <path d="M24 7V10"></path>
-                <path d="M24 38V41"></path>
-                <path d="M7 24H10"></path>
-                <path d="M38 24H41"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2025-06-06">6. juni 2025</time>
-              <h3>Hospitalsklokka</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <circle cx="24" cy="27" r="12"></circle>
-                <path d="M16 18L20 10H28L32 18"></path>
-                <path d="M20 10L24 18L28 10"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2026-07-07">7. juli 2026</time>
-              <h3>Vi ble forlovet</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M8 24L24 10L40 24"></path>
-                <path d="M12 22V40H36V22"></path>
-                <path d="M19 40V29H29V40"></path>
-                <path d="M35 13V7"></path>
-                <path d="M32 10H38"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time>Dato kommer</time>
-              <h3>Vårt neste hjem</h3>
-            </div>
-
-          </article>
-
-
-          <article class="timeline-event timeline-event-final reveal">
-
-            <div class="timeline-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M10 39H38"></path>
-                <path d="M14 39V19H34V39"></path>
-                <path d="M12 19L24 9L36 19"></path>
-                <path d="M24 9V5"></path>
-                <path d="M21 5H27"></path>
-                <path d="M21 39V29H27V39"></path>
-              </svg>
-            </div>
-
-            <div>
-              <time datetime="2027-09-18">18. september 2027</time>
-              <h3>Vi gifter oss</h3>
-            </div>
-
-          </article>
-
-        </div>
-
-
-        <a class="card-next-link" href="#program">
-          <span>Fortsett til programmet</span>
+        <a class="section-jump invitation-jump" href="#historien">
+          <span>Fortsett til historien vår</span>
           <i aria-hidden="true">↓</i>
         </a>
 
       </div>
 
+
+      <div
+        class="invitation-cover"
+        data-invitation-cover
+      >
+
+        <div class="envelope-shadow" aria-hidden="true"></div>
+        <div class="envelope-top-flap" aria-hidden="true"></div>
+        <div class="envelope-bottom-fold" aria-hidden="true"></div>
+
+
+        <div class="cover-door cover-door-left">
+
+          <div class="cover-content">
+            <span class="cover-initial">P</span>
+            <span class="cover-detail">2027</span>
+          </div>
+
+        </div>
+
+
+        <div class="cover-door cover-door-right">
+
+          <div class="cover-content">
+            <span class="cover-initial">A</span>
+            <span class="cover-detail">18 · 09</span>
+          </div>
+
+        </div>
+
+
+        <button
+          class="wax-seal"
+          type="button"
+          aria-label="Åpne invitasjonen"
+          data-open-invitation
+        >
+          <span class="wax-seal-inner"></span>
+        </button>
+
+      </div>
+
     </section>
 
 
-    <!-- PROGRAM -->
+    <section
+  class="screen-section story-section"
+  id="historien"
+>
+
+  <div class="compact-section-heading reveal">
+
+    <p class="section-label">
+      Våre viktigste øyeblikk
+    </p>
+
+    <h2>Historien vår</h2>
+
+  </div>
+
+
+  <div class="editorial-timeline">
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M13 39V10"></path>
+          <path d="M14 11C23 7 31 16 39 11V26C31 31 23 22 14 27"></path>
+          <path d="M14 16H39"></path>
+          <path d="M21 11V27"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2024-05-17">17. mai 2024</time>
+        <h3>Vi møttes</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M24 39S9 30 9 18C9 11 18 8 24 16C30 8 39 11 39 18C39 30 24 39 24 39Z"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2024-06-11">11. juni 2024</time>
+        <h3>Vi ble kjærester</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M8 24L24 10L40 24"></path>
+          <path d="M12 22V40H36V22"></path>
+          <path d="M20 40V28H28V40"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2024-08-30">30. august 2024</time>
+        <h3>Vi ble samboere</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M14 20C10 15 10 10 13 8C17 9 21 12 22 16"></path>
+          <path d="M34 20C38 15 38 10 35 8C31 9 27 12 26 16"></path>
+          <path d="M12 25C12 16 17 12 24 12C31 12 36 16 36 25C36 35 31 41 24 41C17 41 12 35 12 25Z"></path>
+          <path d="M19 25H20"></path>
+          <path d="M28 25H29"></path>
+          <path d="M21 32C23 34 25 34 27 32"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2025-01-25">25. januar 2025</time>
+        <h3>Lydia & London</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <circle cx="18" cy="23" r="7"></circle>
+          <path d="M25 23H41"></path>
+          <path d="M34 23V29"></path>
+          <path d="M39 23V27"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2025-06-06">6. juni 2025</time>
+        <h3>Hospitalsløkkan</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <ellipse cx="24" cy="30" rx="13" ry="8"></ellipse>
+          <path d="M17 24L24 11L31 24"></path>
+          <path d="M19 18H29"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2026-07-07">7. juli 2026</time>
+        <h3>Vi ble forlovet</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M8 24L24 10L40 24"></path>
+          <path d="M12 22V40H36V22"></path>
+          <path d="M19 40V29H29V40"></path>
+          <path d="M39 9V17"></path>
+          <path d="M35 13H43"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time>Dato kommer</time>
+        <h3>Vårt neste hjem</h3>
+      </div>
+
+    </article>
+
+
+    <article class="timeline-event timeline-event-final reveal">
+
+      <div class="timeline-symbol">
+        <svg viewBox="0 0 48 48" aria-hidden="true">
+          <path d="M12 40V21H36V40"></path>
+          <path d="M9 40H39"></path>
+          <path d="M17 21L24 12L31 21"></path>
+          <path d="M21 40V30H27V40"></path>
+          <path d="M24 12V7"></path>
+          <path d="M21 9H27"></path>
+        </svg>
+      </div>
+
+      <div class="timeline-copy">
+        <time datetime="2027-09-18">18. september 2027</time>
+        <h3>Vi gifter oss</h3>
+      </div>
+
+    </article>
+
+  </div>
+
+
+  <a class="section-jump" href="#program">
+    <span>Fortsett til programmet</span>
+    <i aria-hidden="true">↓</i>
+  </a>
+
+</section>
+
 
     <section
-      class="page-section"
+      class="screen-section program-section"
       id="program"
-      aria-labelledby="program-title"
     >
 
-      <div class="stationery-card content-card program-page">
+      <div class="compact-section-heading reveal">
 
-        <div class="paper-texture" aria-hidden="true"></div>
+        <p class="section-label">
+          Bryllupsdagen
+        </p>
 
-        <div class="section-heading">
-
-          <p class="section-label">
-            Bryllupsdagen
-          </p>
-
-          <h2 id="program-title">Program</h2>
-
-        </div>
-
-
-        <div class="program-grid">
-
-          <article class="program-item reveal">
-
-            <span class="item-number">01</span>
-            <time>13.30</time>
-
-            <div class="item-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M10 39H38"></path>
-                <path d="M14 39V19H34V39"></path>
-                <path d="M12 19L24 9L36 19"></path>
-                <path d="M24 9V5"></path>
-                <path d="M21 5H27"></path>
-              </svg>
-            </div>
-
-            <h3>Vielse</h3>
-            <p>Havstein kirke</p>
-
-          </article>
-
-
-          <article class="program-item reveal">
-
-            <span class="item-number">02</span>
-            <time>Etter vielsen</time>
-
-            <div class="item-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <rect x="7" y="15" width="34" height="19" rx="3"></rect>
-                <path d="M11 15V10H31L38 15"></path>
-                <circle cx="15" cy="36" r="3"></circle>
-                <circle cx="34" cy="36" r="3"></circle>
-                <path d="M12 21H36"></path>
-              </svg>
-            </div>
-
-            <h3>Felles transport</h3>
-            <p>Buss fra kirken til Harmonien</p>
-
-          </article>
-
-
-          <article class="program-item reveal">
-
-            <span class="item-number">03</span>
-            <time>Deretter</time>
-
-            <div class="item-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M11 12H37"></path>
-                <path d="M15 12L19 28H29L33 12"></path>
-                <path d="M24 28V39"></path>
-                <path d="M17 39H31"></path>
-              </svg>
-            </div>
-
-            <h3>Mottakelse</h3>
-            <p>Velkomst på Harmonien</p>
-
-          </article>
-
-
-          <article class="program-item reveal">
-
-            <span class="item-number">04</span>
-            <time>Kvelden</time>
-
-            <div class="item-icon">
-              <svg viewBox="0 0 48 48" aria-hidden="true">
-                <path d="M11 35H37"></path>
-                <path d="M14 35C14 25 18 19 24 19C30 19 34 25 34 35"></path>
-                <path d="M9 39H39"></path>
-                <path d="M24 13V9"></path>
-                <path d="M21 9H27"></path>
-              </svg>
-            </div>
-
-            <h3>Middag og fest</h3>
-            <p>Middag, taler og dans</p>
-
-          </article>
-
-        </div>
-
-
-        <a class="card-next-link" href="#praktisk">
-          <span>Fortsett til praktisk informasjon</span>
-          <i aria-hidden="true">↓</i>
-        </a>
+        <h2>Program</h2>
 
       </div>
+
+
+      <div class="program-grid">
+
+        <article class="program-card reveal">
+
+          <span class="program-number">01</span>
+          <time>13.30</time>
+
+          <div class="program-icon">
+            <svg viewBox="0 0 48 48">
+              <path d="M12 40V21H36V40"></path>
+              <path d="M9 40H39"></path>
+              <path d="M17 21L24 12L31 21"></path>
+              <path d="M21 40V30H27V40"></path>
+              <path d="M24 12V7"></path>
+              <path d="M21 9H27"></path>
+            </svg>
+          </div>
+
+          <h3>Vielse</h3>
+          <p>Havstein kirke</p>
+
+        </article>
+
+
+        <article class="program-card reveal">
+
+          <span class="program-number">02</span>
+          <time>Etter vielsen</time>
+
+          <div class="program-icon">
+            <svg viewBox="0 0 48 48">
+              <rect x="7" y="15" width="34" height="19" rx="3"></rect>
+              <path d="M11 15V10H31L38 15"></path>
+              <circle cx="15" cy="36" r="3"></circle>
+              <circle cx="34" cy="36" r="3"></circle>
+              <path d="M12 21H36"></path>
+            </svg>
+          </div>
+
+          <h3>Felles transport</h3>
+          <p>Buss fra kirken til Harmonien</p>
+
+        </article>
+
+
+        <article class="program-card reveal">
+
+          <span class="program-number">03</span>
+          <time>Deretter</time>
+
+          <div class="program-icon">
+            <svg viewBox="0 0 48 48">
+              <path d="M11 12H37"></path>
+              <path d="M15 12L19 28H29L33 12"></path>
+              <path d="M24 28V39"></path>
+              <path d="M17 39H31"></path>
+            </svg>
+          </div>
+
+          <h3>Mottakelse</h3>
+          <p>Velkomst på Harmonien</p>
+
+        </article>
+
+
+        <article class="program-card reveal">
+
+          <span class="program-number">04</span>
+          <time>Kvelden</time>
+
+          <div class="program-icon">
+            <svg viewBox="0 0 48 48">
+              <path d="M11 35H37"></path>
+              <path d="M14 35C14 25 18 19 24 19C30 19 34 25 34 35"></path>
+              <path d="M9 39H39"></path>
+              <path d="M24 13V9"></path>
+              <path d="M21 9H27"></path>
+            </svg>
+          </div>
+
+          <h3>Middag og fest</h3>
+          <p>Middag, taler og dans</p>
+
+        </article>
+
+      </div>
+
+
+      <a class="section-jump" href="#praktisk">
+        <span>Fortsett til praktisk informasjon</span>
+        <i aria-hidden="true">↓</i>
+      </a>
 
     </section>
 
 
-    <!-- PRAKTISK -->
-
     <section
-      class="page-section"
+      class="screen-section practical-section"
       id="praktisk"
-      aria-labelledby="practical-title"
     >
 
-      <div class="stationery-card content-card practical-page">
+      <div class="compact-section-heading reveal">
 
-        <div class="paper-texture" aria-hidden="true"></div>
+        <p class="section-label">
+          Alt du trenger å vite
+        </p>
 
-        <div class="section-heading">
-
-          <p class="section-label">
-            Alt du trenger å vite
-          </p>
-
-          <h2 id="practical-title">
-            Praktisk informasjon
-          </h2>
-
-        </div>
-
-
-        <div class="practical-grid">
-
-          <article class="practical-item reveal">
-
-            <span class="item-number">01</span>
-            <h3>Sted</h3>
-
-            <p>
-              Vielsen er i Havstein kirke klokken 13.30.
-              Mottakelse, middag og fest holdes på Harmonien.
-            </p>
-
-          </article>
-
-
-          <article class="practical-item reveal">
-
-            <span class="item-number">02</span>
-            <h3>Antrekk</h3>
-
-            <p>
-              Kleskoden er mørk dress.
-              Vi ber om at hvitt forbeholdes bruden.
-            </p>
-
-          </article>
-
-
-          <article class="practical-item reveal">
-
-            <span class="item-number">03</span>
-            <h3>Transport</h3>
-
-            <p>
-              Felles buss går fra Havstein kirke til Harmonien.
-              Informasjon om avgangstid kommer senere.
-            </p>
-
-          </article>
-
-
-          <article class="practical-item reveal">
-
-            <span class="item-number">04</span>
-            <h3>Overnatting</h3>
-
-            <p>
-              Vi anbefaler Scandic Bakklandet.
-              Mer informasjon om eventuell avtalepris kommer.
-            </p>
-
-          </article>
-
-        </div>
-
-
-        <a class="card-next-link" href="#gaveonsker">
-          <span>Fortsett til gaveønskene</span>
-          <i aria-hidden="true">↓</i>
-        </a>
+        <h2>Praktisk informasjon</h2>
 
       </div>
+
+
+      <div class="information-grid">
+
+        <article class="information-card reveal">
+
+          <span>01</span>
+          <h3>Sted</h3>
+
+          <p>
+            Vielsen er i Havstein kirke klokken 13.30.
+            Mottakelse, middag og fest holdes på Harmonien.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span>02</span>
+          <h3>Antrekk</h3>
+
+          <p>
+            Kleskoden er mørk dress.
+            Vi ber om at hvitt forbeholdes bruden.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span>03</span>
+          <h3>Transport</h3>
+
+          <p>
+            Felles buss går fra Havstein kirke til Harmonien.
+            Parkering ved Harmonien avtales på forhånd.
+          </p>
+
+        </article>
+
+
+        <article class="information-card reveal">
+
+          <span>04</span>
+          <h3>Overnatting</h3>
+
+          <p>
+            Vi anbefaler Scandic Bakklandet.
+            Oppgi bryllupet til Pernille & Andreas
+            for avtalt pris.
+          </p>
+
+        </article>
+
+      </div>
+
+
+      <a class="section-jump" href="#gaveonsker">
+        <span>Fortsett til gaveønskene</span>
+        <i aria-hidden="true">↓</i>
+      </a>
 
     </section>
 
 
-    <!-- GAVEØNSKER -->
-
     <section
-      class="page-section"
+      class="screen-section gifts-section"
       id="gaveonsker"
-      aria-labelledby="gifts-title"
     >
 
-      <div class="stationery-card content-card gifts-page">
+      <div class="gifts-content reveal">
 
-        <div class="paper-texture" aria-hidden="true"></div>
+        <p class="section-label">
+          Gaver
+        </p>
 
-        <div class="gifts-content reveal">
+        <h2>Gaveønsker</h2>
 
-          <p class="section-label">
-            Gaver
-          </p>
+        <p class="gifts-lead">
+          Det viktigste for oss er at dere ønsker
+          å feire dagen sammen med oss.
+        </p>
 
-          <h2 id="gifts-title">
-            Gaveønsker
-          </h2>
+        <p>
+          For dem som ønsker å gi en gave, samler vi
+          ønskene våre i en digital ønskeliste. Der vil
+          det være mulig å se hvilke ønsker som allerede
+          er reservert.
+        </p>
 
-          <p class="gifts-lead">
-            Det viktigste for oss er at dere ønsker
-            å feire dagen sammen med oss.
-          </p>
+        <p>
+          Pengegaver og bidrag til våre fremtidige planer
+          og opplevelser sammen blir også satt stor pris på.
+        </p>
 
-          <p>
-            For dem som ønsker å gi en gave, samler vi
-            ønskene våre i en digital ønskeliste. Der vil
-            det være mulig å se hvilke ønsker som allerede
-            er reservert.
-          </p>
-
-          <p>
-            Pengegaver og bidrag til våre fremtidige planer
-            og opplevelser sammen blir også satt stor pris på.
-          </p>
-
-          <a
-            class="primary-button disabled-button"
-            href="#gaveonsker"
-            aria-disabled="true"
-            data-gift-link
-          >
-            <span>Se våre gaveønsker</span>
-            <i aria-hidden="true">→</i>
-          </a>
-
-          <small>
-            Ønskelisten publiseres senere
-          </small>
-
-        </div>
-
-
-        <a class="card-next-link" href="#rsvp">
-          <span>Fortsett til RSVP</span>
-          <i aria-hidden="true">↓</i>
+        <a
+          class="gift-button disabled-link"
+          href="#gaveonsker"
+          aria-disabled="true"
+          data-gift-link
+        >
+          <span>Se våre gaveønsker</span>
+          <i aria-hidden="true">→</i>
         </a>
 
+        <small class="gift-link-note">
+          Ønskelisten publiseres senere
+        </small>
+
       </div>
+
+
+      <a class="section-jump light-jump" href="#rsvp">
+        <span>Fortsett til RSVP</span>
+        <i aria-hidden="true">↓</i>
+      </a>
 
     </section>
 
 
-    <!-- RSVP -->
-
     <section
-      class="page-section"
+      class="screen-section rsvp-section"
       id="rsvp"
-      aria-labelledby="rsvp-title"
     >
 
-      <div class="stationery-card content-card rsvp-page">
+      <div class="rsvp-card reveal">
 
-        <div class="paper-texture" aria-hidden="true"></div>
+        <p class="section-label">
+          Vi håper du kommer
+        </p>
 
-        <div class="rsvp-content reveal">
+        <h2>RSVP</h2>
 
-          <p class="section-label">
-            Vi håper du kommer
-          </p>
+        <p>
+          Når påmeldingen åpner, kan dere svare
+          direkte her på nettsiden.
+        </p>
 
-          <h2 id="rsvp-title">RSVP</h2>
-
-          <p>
-            Når påmeldingen åpner, kan dere svare
-            direkte her på nettsiden.
-          </p>
-
-          <button
-            class="primary-button"
-            type="button"
-            data-open-rsvp
-          >
-            Åpne svarskjema
-          </button>
-
-        </div>
-
-
-        <footer class="card-footer">
-
-          <p class="footer-names">
-            Pernille & Andreas
-          </p>
-
-          <p>18. september 2027</p>
-          <p>Harmonien · Trondheim</p>
-
-        </footer>
-
-
-        <a class="card-next-link card-top-link" href="#invitasjon">
-          <span>Tilbake til invitasjonen</span>
-          <i aria-hidden="true">↑</i>
-        </a>
+        <button
+          type="button"
+          class="rsvp-button"
+          data-open-rsvp
+        >
+          Åpne svarskjema
+        </button>
 
       </div>
+
+
+      <a class="section-jump" href="#invitasjon">
+        <span>Tilbake til toppen</span>
+        <i aria-hidden="true">↑</i>
+      </a>
 
     </section>
 
   </main>
 
 
-  <!-- RSVP-SKJEMA -->
+  <footer class="site-footer">
+
+    <p class="footer-names">
+      Pernille & Andreas
+    </p>
+
+    <p>18. september 2027</p>
+    <p>Harmonien · Trondheim</p>
+
+  </footer>
+
 
   <div
     class="rsvp-modal"

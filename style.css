@@ -3361,3 +3361,89 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* =========================================================
+   TRYGG BUNNSONE FOR SEKSJONSLENKER PÅ MOBIL
+   Sørger for at "fortsett"-knappene alltid er synlige
+   over Safari sin nederste nettleserbar
+   ========================================================= */
+
+@media (max-width: 760px) {
+
+  :root {
+    --mobile-browser-clearance: 92px;
+  }
+
+  .screen-section {
+    min-height: 100svh;
+
+    padding-bottom:
+      calc(
+        var(--mobile-browser-clearance) +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .screen-section .section-jump {
+    position: absolute;
+    left: 50%;
+    bottom:
+      calc(
+        var(--mobile-browser-clearance) +
+        env(safe-area-inset-bottom)
+      );
+
+    margin: 0;
+    padding: 0;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+  }
+
+  /* Gir plass til lenken uten at innholdet overlapper den */
+
+  .story-section .editorial-timeline,
+  .program-section .program-grid,
+  .practical-section .information-grid {
+    margin-bottom: 42px;
+  }
+
+  .gifts-section .gifts-content {
+    margin-bottom: 48px;
+  }
+
+  .rsvp-section {
+    padding-bottom:
+      calc(
+        var(--mobile-browser-clearance) +
+        env(safe-area-inset-bottom)
+      );
+  }
+
+  .rsvp-section .rsvp-card {
+    margin-bottom: 46px;
+  }
+
+}
+
+
+/* Litt mindre sikkerhetsavstand på korte skjermer */
+
+@media (max-width: 760px) and (max-height: 800px) {
+
+  :root {
+    --mobile-browser-clearance: 78px;
+  }
+
+  .story-section .editorial-timeline,
+  .program-section .program-grid,
+  .practical-section .information-grid {
+    margin-bottom: 32px;
+  }
+
+  .gifts-section .gifts-content,
+  .rsvp-section .rsvp-card {
+    margin-bottom: 36px;
+  }
+
+}

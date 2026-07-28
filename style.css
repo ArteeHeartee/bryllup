@@ -3723,3 +3723,582 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* =========================================================
+   DESKTOP: ALLE KAPITLER SOM SIDER I DET SAMME KORTET
+   Påvirker kun skjermer bredere enn 760 px.
+   Mobilvisningen beholdes uendret.
+   ========================================================= */
+
+@media (min-width: 761px) {
+
+  :root {
+    --desktop-card-width: min(1040px, calc(100vw - 120px));
+    --desktop-card-height: min(700px, calc(100svh - var(--header-height) - 82px));
+    --desktop-card-border: rgba(76, 55, 47, 0.18);
+    --desktop-card-shadow:
+      0 24px 60px rgba(49, 37, 31, 0.08);
+  }
+
+  body {
+    background:
+      radial-gradient(
+        circle at 50% 30%,
+        rgba(255, 255, 255, 0.72),
+        rgba(248, 244, 238, 0.88) 55%,
+        rgba(242, 237, 230, 0.94) 100%
+      );
+  }
+
+  main {
+    background: transparent;
+  }
+
+  /* Felles oppsett for hvert kapittel */
+
+  .story-section,
+  .program-section,
+  .practical-section,
+  .gifts-section {
+    position: relative;
+
+    width: var(--desktop-card-width);
+    height: var(--desktop-card-height);
+    min-height: 560px;
+
+    margin:
+      calc(var(--header-height) + 38px)
+      auto
+      42px;
+
+    padding:
+      clamp(34px, 4vh, 52px)
+      clamp(42px, 5vw, 74px)
+      clamp(52px, 6vh, 76px);
+
+    overflow: hidden;
+
+    background: var(--paper-light);
+
+    border: 1px solid var(--desktop-card-border);
+
+    box-shadow: var(--desktop-card-shadow);
+
+    isolation: isolate;
+  }
+
+  /* Dobbel, diskré kortkant */
+
+  .story-section::before,
+  .program-section::before,
+  .practical-section::before,
+  .gifts-section::before {
+    content: "";
+
+    position: absolute;
+    inset: 10px;
+
+    z-index: -1;
+
+    border: 1px solid rgba(76, 55, 47, 0.13);
+
+    pointer-events: none;
+  }
+
+  /* Sørger for riktig landing under den faste toppbaren */
+
+  #historien,
+  #program,
+  #praktisk,
+  #gaveonsker,
+  #rsvp {
+    scroll-margin-top:
+      calc(
+        var(--header-height) +
+        28px
+      );
+  }
+
+  /* Felles overskrifter */
+
+  .story-section .compact-section-heading,
+  .program-section .compact-section-heading,
+  .practical-section .compact-section-heading {
+    margin:
+      0 auto
+      clamp(18px, 2.5vh, 30px);
+
+    text-align: center;
+  }
+
+  .story-section .compact-section-heading h2,
+  .program-section .compact-section-heading h2,
+  .practical-section .compact-section-heading h2 {
+    margin: 0;
+
+    font-size:
+      clamp(
+        3.25rem,
+        5.2vw,
+        5.8rem
+      );
+
+    line-height: 0.92;
+  }
+
+  /* Hurtiglenken nederst på hvert kort */
+
+  .story-section .section-jump,
+  .program-section .section-jump,
+  .practical-section .section-jump,
+  .gifts-section .section-jump {
+    position: absolute;
+
+    left: 50%;
+    bottom: 20px;
+
+    z-index: 5;
+
+    margin: 0;
+    padding: 0;
+
+    transform: translateX(-50%);
+
+    white-space: nowrap;
+  }
+
+
+  /* =====================================================
+     HISTORIEN
+     ===================================================== */
+
+  .story-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .story-section .compact-section-heading {
+    margin-bottom: 22px;
+  }
+
+  .editorial-timeline {
+    width: 100%;
+    max-width: none;
+
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0, 1fr)
+      );
+
+    column-gap: 24px;
+    row-gap: 0;
+  }
+
+  .editorial-timeline::before {
+    display: none;
+  }
+
+  .timeline-event {
+    min-height: 118px;
+
+    padding:
+      16px
+      4px;
+
+    grid-template-columns:
+      44px
+      minmax(0, 1fr);
+
+    gap: 13px;
+
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+
+    background: transparent;
+  }
+
+  .timeline-event:nth-child(n + 5) {
+    border-top: 0;
+  }
+
+  .timeline-copy h3 {
+    font-size:
+      clamp(
+        1.15rem,
+        1.6vw,
+        1.55rem
+      );
+  }
+
+
+  /* =====================================================
+     PROGRAM
+     ===================================================== */
+
+  .program-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    background: var(--blush);
+  }
+
+  .program-grid {
+    width: 100%;
+    flex: 1;
+
+    display: grid;
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0, 1fr)
+      );
+
+    margin: 0 auto 36px;
+  }
+
+  .program-card {
+    min-height: 0;
+    height: 100%;
+
+    padding:
+      clamp(24px, 3vh, 38px)
+      clamp(18px, 2vw, 30px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-top: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    border-left: 1px solid var(--line-dark);
+  }
+
+  .program-card:last-child {
+    border-right: 1px solid var(--line-dark);
+  }
+
+
+  /* =====================================================
+     PRAKTISK INFORMASJON
+     ===================================================== */
+
+  .practical-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+
+  .information-grid {
+    width: 100%;
+    flex: 1;
+
+    display: grid;
+    grid-template-columns:
+      repeat(
+        4,
+        minmax(0, 1fr)
+      );
+
+    margin: 0 auto 36px;
+  }
+
+  .information-card {
+    min-height: 0;
+    height: 100%;
+
+    padding:
+      clamp(28px, 4vh, 46px)
+      clamp(18px, 2.2vw, 34px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    border-top: 1px solid var(--line-dark);
+    border-bottom: 1px solid var(--line-dark);
+    border-left: 1px solid var(--line-dark);
+
+    text-align: center;
+  }
+
+  .information-card:last-child {
+    border-right: 1px solid var(--line-dark);
+  }
+
+
+  /* =====================================================
+     GAVEØNSKER
+     Burgunderfargen ligger inne i kortet.
+     ===================================================== */
+
+  .gifts-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--paper-light);
+    background: var(--burgundy);
+  }
+
+  .gifts-section::before {
+    border-color: rgba(255, 248, 242, 0.22);
+  }
+
+  .gifts-content {
+    width: min(760px, 86%);
+
+    margin:
+      0 auto
+      34px;
+
+    text-align: center;
+  }
+
+  .gifts-content h2 {
+    margin: 0;
+
+    font-size:
+      clamp(
+        3.8rem,
+        6vw,
+        6.6rem
+      );
+
+    line-height: 0.92;
+  }
+
+  .gifts-content .gifts-lead {
+    margin-top: 30px;
+  }
+
+  .gifts-content p {
+    margin-top: 22px;
+  }
+
+  .gift-button {
+    width: min(570px, 100%);
+
+    margin:
+      30px auto
+      0;
+  }
+
+  .gifts-section .section-jump {
+    color: var(--paper-light);
+  }
+
+
+  /* =====================================================
+     RSVP OG FOOTER SOM ETT SAMLET KORT
+     ===================================================== */
+
+  .rsvp-section {
+    position: relative;
+
+    width: var(--desktop-card-width);
+    height:
+      calc(
+        var(--desktop-card-height) - 190px
+      );
+
+    min-height: 410px;
+
+    margin:
+      calc(var(--header-height) + 38px)
+      auto
+      0;
+
+    padding:
+      22px
+      22px
+      42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: var(--paper-light);
+
+    border:
+      1px solid
+      var(--desktop-card-border);
+
+    border-bottom: 0;
+
+    box-shadow:
+      0 20px 60px
+      rgba(49, 37, 31, 0.08);
+  }
+
+  .rsvp-section::before {
+    content: "";
+
+    position: absolute;
+    inset:
+      10px
+      10px
+      0;
+
+    border:
+      1px solid
+      rgba(76, 55, 47, 0.13);
+
+    border-bottom: 0;
+
+    pointer-events: none;
+  }
+
+  .rsvp-card {
+    width:
+      calc(
+        100% - 42px
+      );
+
+    height:
+      calc(
+        100% - 30px
+      );
+
+    margin: 0;
+
+    padding:
+      clamp(42px, 6vh, 70px)
+      clamp(40px, 7vw, 100px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--blush);
+
+    border:
+      1px solid
+      rgba(111, 51, 65, 0.22);
+
+    box-shadow: none;
+  }
+
+  .rsvp-card h2 {
+    font-size:
+      clamp(
+        4.6rem,
+        7vw,
+        7.2rem
+      );
+
+    line-height: 0.9;
+  }
+
+  .rsvp-section .section-jump {
+    display: none;
+  }
+
+  /* Footeren kobles direkte til RSVP-kortet */
+
+  .site-footer {
+    position: relative;
+
+    width: var(--desktop-card-width);
+    height: 190px;
+    min-height: 190px;
+
+    margin:
+      0 auto
+      42px;
+
+    padding:
+      25px
+      30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    background: var(--paper);
+
+    border:
+      1px solid
+      var(--desktop-card-border);
+
+    border-top:
+      1px solid
+      var(--line);
+
+    box-shadow:
+      0 24px 60px
+      rgba(49, 37, 31, 0.08);
+  }
+
+  .site-footer::before {
+    content: "";
+
+    position: absolute;
+    inset:
+      0
+      10px
+      10px;
+
+    width: auto;
+    height: auto;
+
+    margin: 0;
+
+    background: transparent;
+
+    border:
+      1px solid
+      rgba(76, 55, 47, 0.13);
+
+    border-top: 0;
+
+    pointer-events: none;
+  }
+
+  .site-footer .footer-name,
+  .site-footer h2,
+  .site-footer h3 {
+    position: relative;
+    z-index: 2;
+  }
+
+
+  /* =====================================================
+     SVÆRT BREDE SKJERMER
+     Kortet skal fortsatt føles stort og lesbart.
+     ===================================================== */
+
+  @media (min-width: 1500px) {
+
+    :root {
+      --desktop-card-width:
+        min(
+          1120px,
+          calc(100vw - 220px)
+        );
+
+      --desktop-card-height:
+        min(
+          740px,
+          calc(
+            100svh -
+            var(--header-height) -
+            88px
+          )
+        );
+    }
+
+  }
+
+}

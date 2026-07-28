@@ -5864,19 +5864,27 @@ body.invitation-open .wax-seal {
 
 }
 /* ==================================================
-   MOBIL: HORISONTAL SVEIP MELLOM KORT
+   MOBIL: KUN HORISONTAL SVEIP MELLOM KORT
    Desktop fra 761 px påvirkes ikke.
 ================================================== */
 
 @media (max-width: 760px) {
 
+  html,
   body.mobile-page-mode {
+    width: 100%;
+    height: 100%;
     height: 100svh;
 
-    overflow: hidden;
+    overflow: hidden !important;
 
-    overscroll-behavior:
-      none;
+    overscroll-behavior: none;
+  }
+
+
+  body.mobile-page-mode {
+    position: fixed;
+    inset: 0;
   }
 
 
@@ -5888,18 +5896,20 @@ body.invitation-open .wax-seal {
       0
       0;
 
-    overflow: hidden;
+    width: 100%;
+    height:
+      calc(
+        100svh -
+        var(--header-height)
+      );
+
+    overflow: hidden !important;
 
     perspective: 1350px;
 
     background: var(--paper);
   }
 
-
-  /*
-    Invitasjonen bruker hele skjermen mens den er
-    lukket. Etter åpning plasseres den under headeren.
-  */
 
   body.mobile-page-mode
   .invitation-section,
@@ -5917,20 +5927,15 @@ body.invitation-open .wax-seal {
     height: 100%;
 
     min-height: 0;
+    max-height: 100%;
 
     margin: 0;
 
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: hidden !important;
 
-    -webkit-overflow-scrolling:
-      touch;
+    overscroll-behavior: none;
 
-    overscroll-behavior-y:
-      contain;
-
-    touch-action:
-      pan-y;
+    touch-action: none;
 
     opacity: 1;
 
@@ -5966,14 +5971,7 @@ body.invitation-open .wax-seal {
       ),
       opacity 250ms ease;
 
-    will-change:
-      transform;
-  }
-
-
-  body.mobile-page-mode
-  .invitation-section {
-    padding: 0;
+    will-change: transform;
   }
 
 
@@ -5981,41 +5979,20 @@ body.invitation-open .wax-seal {
   .screen-section {
     padding-top:
       clamp(
-        34px,
-        7vh,
-        72px
+        24px,
+        4.5vh,
+        48px
       );
 
     padding-bottom:
       calc(
-        58px +
+        38px +
         env(
           safe-area-inset-bottom
         )
       );
   }
 
-
-  body.mobile-page-mode
-  .rsvp-footer-card {
-    display: block;
-  }
-
-
-  body.mobile-page-mode
-  .rsvp-footer-card
-  .rsvp-section {
-    min-height:
-      calc(
-        100svh -
-        var(--header-height)
-      );
-  }
-
-
-  /*
-    Bare det aktive kortet kan trykkes og scrolles.
-  */
 
   body.mobile-page-mode
   .mobile-page-before,
@@ -6036,11 +6013,6 @@ body.invitation-open .wax-seal {
   }
 
 
-  /*
-    Under en aktiv sveipebevegelse skal både det
-    aktive kortet og nabokortet følge fingeren.
-  */
-
   body.mobile-page-mode
   .mobile-page-dragging {
     transition: none !important;
@@ -6057,28 +6029,17 @@ body.invitation-open .wax-seal {
   }
 
 
-  /*
-    Svak rotasjon gir følelsen av et fysisk kort.
-  */
-
   body.mobile-page-drag-left
   .mobile-page-active {
-    rotate:
-      y -1.8deg;
+    rotate: y -1.7deg;
   }
 
 
   body.mobile-page-drag-right
   .mobile-page-active {
-    rotate:
-      y 1.8deg;
+    rotate: y 1.7deg;
   }
 
-
-  /*
-    Nabokortet blir litt mørkere og mindre helt til
-    det trekkes inn mot midten.
-  */
 
   body.mobile-page-drag-left
   .mobile-page-after,
@@ -6087,68 +6048,63 @@ body.invitation-open .wax-seal {
   .mobile-page-before {
     z-index: 20;
 
-    opacity: .94;
+    opacity: .96;
 
-    scale: .985;
+    scale: .987;
   }
 
-
-  /*
-    Første overgang fra selve invitasjonen er litt
-    roligere enn de øvrige sidebyttene.
-  */
 
   body.mobile-first-page-turn
   .invitation-section,
 
   body.mobile-first-page-turn
   .screen-section {
-    transition-duration:
-      540ms;
+    transition-duration: 540ms;
   }
 
 
   /*
-    Hvert kort får sin egen vertikale scrolling.
-  */
-
-  body.mobile-page-mode
-  .mobile-page-active {
-    scrollbar-width: none;
-  }
-
-
-  body.mobile-page-mode
-  .mobile-page-active::-webkit-scrollbar {
-    display: none;
-  }
-
-
-  /*
-    Mobilens eksisterende bunnlenker beholdes.
+    Skjuler alle gamle «Fortsett til ...»-lenker
+    kun i mobilens sveipevisning.
   */
 
   body.mobile-page-mode
   .section-jump {
-    display: flex;
+    display: none !important;
   }
 
 
   /*
-    RSVP-footeren skal fortsette under RSVP-kortet
-    inne i samme sveipbare side.
+    RSVP beholder skjemaet, men ikke den gamle
+    avslutningsfooteren under kortet.
   */
+
+  body.mobile-page-mode
+  .rsvp-footer-card {
+    display: block;
+  }
+
+
+  body.mobile-page-mode
+  .rsvp-footer-card
+  .rsvp-section {
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+
+    overflow: hidden !important;
+  }
+
 
   body.mobile-page-mode
   .rsvp-footer-card
   > .site-footer {
-    display: flex;
+    display: none !important;
   }
 
 
   /*
-    Hindrer at gamle scroll-margin-regler påvirker
-    sideplasseringen.
+    Ingen gamle scroll-regler skal påvirke sidene.
   */
 
   body.mobile-page-mode
@@ -6172,11 +6128,6 @@ body.invitation-open .wax-seal {
   }
 
 
-  /*
-    Deaktiver animasjon kort ved oppstart og ved
-    overgang mellom desktop og mobil.
-  */
-
   body.mobile-page-no-animation
   .invitation-section,
 
@@ -6190,18 +6141,16 @@ body.invitation-open .wax-seal {
 
 
   /*
-    Når konvolutten er lukket, beholder den den
-    eksisterende fullskjermsvisningen uten sveip.
+    Lukket konvolutt fyller skjermen og kan ikke
+    sveipes.
   */
-
-  body.invitation-closed.mobile-page-mode {
-    overflow: hidden;
-  }
-
 
   body.invitation-closed.mobile-page-mode
   main {
     inset: 0;
+
+    width: 100%;
+    height: 100svh;
   }
 
 
@@ -6209,9 +6158,9 @@ body.invitation-open .wax-seal {
   .invitation-section {
     height: 100svh;
 
-    overflow: hidden;
+    overflow: hidden !important;
 
-    touch-action: auto;
+    touch-action: manipulation;
 
     transform: none;
   }
@@ -6227,13 +6176,260 @@ body.invitation-open .wax-seal {
     pointer-events: none;
   }
 
+
+  /*
+    «Se invitasjonen» plasseres under hamburgeren.
+  */
+
+  body.invitation-open
+  .header-actions {
+    position: relative;
+
+    width: 58px;
+    height: 58px;
+
+    flex: 0 0 58px;
+  }
+
+
+  body.invitation-open
+  .header-actions
+  .menu-toggle {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+  }
+
+
+  body.invitation-open
+  .header-actions
+  .reopen-button {
+    position: absolute;
+
+    top: 39px;
+    right: 0;
+
+    display: block !important;
+
+    width: max-content;
+
+    padding: 0;
+
+    color: var(--burgundy);
+    background: transparent;
+
+    font-family:
+      "Montserrat",
+      sans-serif;
+
+    font-size: .37rem;
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: .13em;
+    text-transform: uppercase;
+
+    border: 0;
+
+    white-space: nowrap;
+  }
+
+
+  /*
+    Liten sveipeillustrasjon.
+  */
+
+  .mobile-swipe-hint {
+    position: fixed;
+
+    left: 50%;
+
+    bottom:
+      calc(
+        13px +
+        env(
+          safe-area-inset-bottom
+        )
+      );
+
+    z-index: 95;
+
+    width: 76px;
+    height: 29px;
+
+    display: grid;
+
+    grid-template-columns:
+      15px
+      1fr
+      15px;
+
+    grid-template-rows:
+      16px
+      10px;
+
+    align-items: center;
+
+    color:
+      rgba(101, 47, 59, .55);
+
+    opacity: 0;
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transform:
+      translate3d(
+        -50%,
+        5px,
+        0
+      );
+
+    transition:
+      opacity .35s ease,
+      transform .35s ease,
+      visibility 0s linear .35s;
+  }
+
+
+  .mobile-swipe-hint.visible {
+    opacity: .76;
+    visibility: visible;
+
+    transform:
+      translate3d(
+        -50%,
+        0,
+        0
+      );
+
+    transition-delay: 0s;
+  }
+
+
+  .mobile-swipe-hint-left,
+  .mobile-swipe-hint-right {
+    font-family:
+      "EB Garamond",
+      serif;
+
+    font-size: 1.25rem;
+
+    line-height: 1;
+
+    text-align: center;
+  }
+
+
+  .mobile-swipe-hint-line {
+    position: relative;
+
+    display: block;
+
+    height: 1px;
+
+    background: currentColor;
+  }
+
+
+  .mobile-swipe-hint-line i {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    width: 6px;
+    height: 6px;
+
+    background: currentColor;
+
+    border-radius: 50%;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
+
+    animation:
+      mobile-swipe-dot
+      2.2s
+      ease-in-out
+      infinite;
+  }
+
+
+  .mobile-swipe-hint small {
+    grid-column: 1 / -1;
+
+    display: block;
+
+    font-family:
+      "Montserrat",
+      sans-serif;
+
+    font-size: .29rem;
+    font-weight: 500;
+
+    line-height: 1;
+
+    letter-spacing: .2em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+
+  .mobile-swipe-hint.no-previous
+  .mobile-swipe-hint-left {
+    opacity: .18;
+  }
+
+
+  .mobile-swipe-hint.no-next
+  .mobile-swipe-hint-right {
+    opacity: .18;
+  }
+
+
+  body.mobile-page-dark
+  .mobile-swipe-hint {
+    color:
+      rgba(255, 255, 255, .72);
+  }
+
+
+  body.invitation-closed
+  .mobile-swipe-hint {
+    opacity: 0;
+    visibility: hidden;
+  }
+
+
+  @keyframes mobile-swipe-dot {
+
+    0%,
+    100% {
+      transform:
+        translate(
+          -14px,
+          -50%
+        );
+    }
+
+    50% {
+      transform:
+        translate(
+          8px,
+          -50%
+        );
+    }
+
+  }
+
 }
 
-
-/*
-  Brukere som har bedt om redusert bevegelse får
-  enkel sidebytting uten rotasjon eller lang animasjon.
-*/
 
 @media
   (max-width: 760px)
@@ -6248,8 +6444,7 @@ body.invitation-open .wax-seal {
 
   body.mobile-page-mode
   .rsvp-footer-card {
-    transition-duration:
-      120ms;
+    transition-duration: 120ms;
   }
 
 
@@ -6259,6 +6454,17 @@ body.invitation-open .wax-seal {
   body.mobile-page-drag-right
   .mobile-page-active {
     rotate: none;
+  }
+
+
+  .mobile-swipe-hint-line i {
+    animation: none;
+
+    transform:
+      translate(
+        -50%,
+        -50%
+      );
   }
 
 }

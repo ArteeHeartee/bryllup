@@ -232,62 +232,14 @@ const getHeaderOffset = () => {
 
 const scrollToSection = (target) => {
 
-    if (!target) {
-        return;
-    }
-
-    const targetPosition =
-        target.getBoundingClientRect().top +
-        window.scrollY -
-        getHeaderOffset();
-
-    window.scrollTo({
-        top: Math.max(targetPosition, 0),
-        behavior: "smooth"
-    });
-
-};
-
-  const targetTop =
-    target.getBoundingClientRect().top +
-    window.scrollY;
-
-  const isDesktop =
-    window.matchMedia(
-      "(min-width: 761px)"
-    ).matches;
-
-  let targetPosition;
-
-  if (
-    isDesktop &&
-    target.classList.contains(
-      "screen-section"
-    )
-  ) {
-
-    const availableHeight =
-      window.innerHeight -
-      getHeaderOffset();
-
-    targetPosition =
-      targetTop -
-      getHeaderOffset() -
-      Math.max(
-        (
-          availableHeight -
-          target.offsetHeight
-        ) / 2,
-        0
-      );
-
-  } else {
-
-    targetPosition =
-      targetTop -
-      getHeaderOffset();
-
+  if (!target) {
+    return;
   }
+
+  const targetPosition =
+    target.getBoundingClientRect().top +
+    window.scrollY -
+    getHeaderOffset();
 
   window.scrollTo({
     top: Math.max(targetPosition, 0),
@@ -453,7 +405,6 @@ window.addEventListener(
 /*
   NEDTELLING
 */
-
 const daysElement =
   document.querySelector(
     "[data-days]"
@@ -803,7 +754,6 @@ document.addEventListener(
 /*
   RSVP-SKJEMA
 */
-
 const rsvpForm =
   document.querySelector(
     "[data-rsvp-form]"

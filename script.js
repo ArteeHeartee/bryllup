@@ -1903,3 +1903,1025 @@ const createDesktopPageControls = () => {
 
 
 createDesktopPageControls();
+/*
+  ==================================================
+  MOBIL: SVEIP MELLOM INVITASJONSSIDENE
+  Gjelder kun skjermer opptil 760 px.
+  ==================================================
+*/
+
+const mobilePageMedia =
+  window.matchMedia("(max-width: 760px)");
+
+const mobilePageIds = [
+  "invitasjon",
+  "historien",
+  "program",
+  "praktisk",
+  "gaveonsker",
+  "rsvp"
+];
+
+let activeMobilePageId =
+  "invitasjon";
+
+let mobileSwipeStartX = 0;
+let mobileSwipeStartY = 0;
+let mobileSwipeCurrentX = 0;
+
+let mobileSwipePointerId = null;
+let mobileSwipeDirectionLocked = false;
+let mobileSwipeIsHorizontal = false;
+let mobileSwipeIsDragging = false;
+
+let mobileSwipeWidth =
+  window.innerWidth;
+
+let mobileFirstInvitationSwipe = true;
+
+
+const getMobilePage = (
+  pageId
+) => {
+
+  return document.getElementById(
+    pageId
+  );
+
+};
+
+
+const getMobilePageIndex = (
+  pageId
+) => {
+
+  return mobilePageIds.indexOf(
+    pageId
+  );
+
+};
+
+
+const cleanMobilePageId = (
+  hash
+) => {
+
+  const pageId =
+    String(hash || "")
+      .replace(/^#/, "");
+
+  if (
+    mobilePageIds.includes(pageId)
+  ) {
+    return pageId;
+  }
+
+  return "invitasjon";
+
+};
+
+
+const setMobilePagePosition = (
+  page,
+  position,
+  dragOffset = 0
+) => {
+
+  if (!page) {
+    return;
+  }
+
+  page.style.setProperty(
+    "--mobile-page-position",
+    position
+  );
+
+  page.style.setProperty(
+    "--mobile-drag-offset",
+    `${dragOffset}px`
+  );
+
+};
+
+
+const resetMobilePageInlineStyles = () => {
+
+  mobilePageIds.forEach(
+    (pageId) => {
+
+      const page =
+        getMobilePage(pageId);
+
+      if (!page) {
+        return;
+      }
+
+      page.style.removeProperty(
+        "--mobile-page-position"
+      );
+
+      page.style.removeProperty(
+        "--mobile-drag-offset"
+      );
+
+      page.classList.remove(
+        "mobile-page-active",
+        "mobile-page-before",
+        "mobile-page-after",
+        "mobile-page-dragging"
+      );
+
+      page.removeAttribute(
+        "aria-hidden"
+      );
+
+    }
+  );
+
+};
+
+
+const updateMobilePageClasses = (
+  activePageId
+) => {
+
+  const activeIndex =
+    getMobilePageIndex(
+      activePageId
+    );
+
+  mobilePageIds.forEach(
+    (pageId, pageIndex) => {
+
+      const page =
+        getMobilePage(pageId);
+
+      if (!page) {
+        return;
+      }
+
+      page.classList.remove(
+        "mobile-page-active",
+        "mobile-page-before",
+        "mobile-page-after",
+        "mobile-page-dragging"
+      );
+
+      page.style.removeProperty(
+        "--mobile-drag-offset"
+      );
+
+      if (
+        pageId === activePageId
+      ) {
+
+        page.classList.add(
+          "mobile-page-active"
+        );
+
+        setMobilePagePosition(
+          page,
+          0
+        );
+
+        page.setAttribute(
+          "aria-hidden",
+          "false"
+        );
+
+      } else if (
+        pageIndex < activeIndex
+      ) {
+
+        page.classList.add(
+          "mobile-page-before"
+        );
+
+        setMobilePagePosition(
+          page,
+          -1
+        );
+
+        page.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+      } else {
+
+        page.classList.add(
+          "mobile-page-after"
+        );
+
+        setMobilePagePosition(
+          page,
+          1
+        );
+
+        page.setAttribute(
+          "aria-hidden",
+          "true"
+        );
+
+      }
+
+    }
+  );
+
+};
+
+
+const updateMobileActiveNavigation = (
+  pageId
+) => {
+
+  setActiveNavigation(pageId);
+
+};
+
+
+const showMobilePage = (
+  pageId,
+  options = {}
+) => {
+
+  if (!mobilePageMedia.matches) {
+    return;
+  }
+
+  const {
+    updateHash = true,
+    animate = true
+  } = options;
+
+  const nextPageId =
+    cleanMobilePageId(pageId);
+
+  const nextPage =
+    getMobilePage(nextPageId);
+
+  if (!nextPage) {
+    return;
+  }
+
+  if (
+    nextPageId !== "invitasjon" &&
+    body.classList.contains(
+      "invitation-closed"
+    )
+  ) {
+
+    openInvitation();
+
+  }
+
+  if (!animate) {
+
+    body.classList.add(
+      "mobile-page-no-animation"
+    );
+
+  }
+
+  activeMobilePageId =
+    nextPageId;
+
+  body.classList.add(
+    "mobile-page-mode"
+  );
+
+  body.classList.remove(
+    "mobile-page-dragging",
+    "mobile-page-drag-left",
+    "mobile-page-drag-right"
+  );
+
+  updateMobilePageClasses(
+    activeMobilePageId
+  );
+
+  updateMobileActiveNavigation(
+    activeMobilePageId
+  );
+
+  const activePage =
+    getMobilePage(
+      activeMobilePageId
+    );
+
+  if (activePage) {
+
+    activePage.scrollTop = 0;
+
+  }
+
+  if (
+    updateHash &&
+    window.history &&
+    window.history.replaceState
+  ) {
+
+    window.history.replaceState(
+      null,
+      "",
+      `#${activeMobilePageId}`
+    );
+
+  }
+
+  if (!animate) {
+
+    window.requestAnimationFrame(
+      () => {
+
+        window.requestAnimationFrame(
+          () => {
+
+            body.classList.remove(
+              "mobile-page-no-animation"
+            );
+
+          }
+        );
+
+      }
+    );
+
+  }
+
+};
+
+
+const initializeMobilePages = () => {
+
+  if (!mobilePageMedia.matches) {
+
+    body.classList.remove(
+      "mobile-page-mode",
+      "mobile-page-no-animation",
+      "mobile-page-dragging",
+      "mobile-page-drag-left",
+      "mobile-page-drag-right"
+    );
+
+    resetMobilePageInlineStyles();
+
+    return;
+  }
+
+  mobileSwipeWidth =
+    window.innerWidth;
+
+  const initialPageId =
+    body.classList.contains(
+      "invitation-closed"
+    )
+      ? "invitasjon"
+      : cleanMobilePageId(
+          window.location.hash
+        );
+
+  showMobilePage(
+    initialPageId,
+    {
+      updateHash: false,
+      animate: false
+    }
+  );
+
+};
+
+
+const getMobileNeighbourPages = () => {
+
+  const currentIndex =
+    getMobilePageIndex(
+      activeMobilePageId
+    );
+
+  return {
+    current:
+      getMobilePage(
+        activeMobilePageId
+      ),
+
+    previous:
+      currentIndex > 0
+        ? getMobilePage(
+            mobilePageIds[
+              currentIndex - 1
+            ]
+          )
+        : null,
+
+    next:
+      currentIndex <
+      mobilePageIds.length - 1
+        ? getMobilePage(
+            mobilePageIds[
+              currentIndex + 1
+            ]
+          )
+        : null
+  };
+
+};
+
+
+const updateMobileDrag = (
+  dragOffset
+) => {
+
+  const {
+    current,
+    previous,
+    next
+  } = getMobileNeighbourPages();
+
+  if (!current) {
+    return;
+  }
+
+  const limitedOffset =
+    Math.max(
+      -mobileSwipeWidth,
+      Math.min(
+        mobileSwipeWidth,
+        dragOffset
+      )
+    );
+
+  current.classList.add(
+    "mobile-page-dragging"
+  );
+
+  current.style.setProperty(
+    "--mobile-drag-offset",
+    `${limitedOffset}px`
+  );
+
+  if (
+    limitedOffset < 0 &&
+    next
+  ) {
+
+    next.classList.add(
+      "mobile-page-dragging"
+    );
+
+    next.style.setProperty(
+      "--mobile-drag-offset",
+      `${limitedOffset}px`
+    );
+
+    body.classList.add(
+      "mobile-page-drag-left"
+    );
+
+    body.classList.remove(
+      "mobile-page-drag-right"
+    );
+
+  } else if (
+    limitedOffset > 0 &&
+    previous
+  ) {
+
+    previous.classList.add(
+      "mobile-page-dragging"
+    );
+
+    previous.style.setProperty(
+      "--mobile-drag-offset",
+      `${limitedOffset}px`
+    );
+
+    body.classList.add(
+      "mobile-page-drag-right"
+    );
+
+    body.classList.remove(
+      "mobile-page-drag-left"
+    );
+
+  }
+
+};
+
+
+const finishMobileSwipe = (
+  dragOffset
+) => {
+
+  const currentIndex =
+    getMobilePageIndex(
+      activeMobilePageId
+    );
+
+  const threshold =
+    Math.min(
+      mobileSwipeWidth * .22,
+      105
+    );
+
+  const velocityAssistedThreshold =
+    55;
+
+  let targetIndex =
+    currentIndex;
+
+  if (
+    dragOffset <= -threshold ||
+    (
+      dragOffset <=
+      -velocityAssistedThreshold &&
+      Math.abs(dragOffset) >
+      Math.abs(
+        mobileSwipeCurrentX -
+        mobileSwipeStartX
+      ) * .8
+    )
+  ) {
+
+    targetIndex =
+      Math.min(
+        currentIndex + 1,
+        mobilePageIds.length - 1
+      );
+
+  } else if (
+    dragOffset >= threshold ||
+    (
+      dragOffset >=
+      velocityAssistedThreshold &&
+      Math.abs(dragOffset) >
+      Math.abs(
+        mobileSwipeCurrentX -
+        mobileSwipeStartX
+      ) * .8
+    )
+  ) {
+
+    targetIndex =
+      Math.max(
+        currentIndex - 1,
+        0
+      );
+
+  }
+
+  const changedPage =
+    targetIndex !== currentIndex;
+
+  body.classList.remove(
+    "mobile-page-dragging",
+    "mobile-page-drag-left",
+    "mobile-page-drag-right"
+  );
+
+  mobilePageIds.forEach(
+    (pageId) => {
+
+      const page =
+        getMobilePage(pageId);
+
+      if (!page) {
+        return;
+      }
+
+      page.classList.remove(
+        "mobile-page-dragging"
+      );
+
+      page.style.removeProperty(
+        "--mobile-drag-offset"
+      );
+
+    }
+  );
+
+  if (changedPage) {
+
+    const previousPageId =
+      activeMobilePageId;
+
+    const nextPageId =
+      mobilePageIds[targetIndex];
+
+    if (
+      previousPageId ===
+      "invitasjon" &&
+      mobileFirstInvitationSwipe
+    ) {
+
+      body.classList.add(
+        "mobile-first-page-turn"
+      );
+
+      mobileFirstInvitationSwipe =
+        false;
+
+      window.setTimeout(
+        () => {
+
+          body.classList.remove(
+            "mobile-first-page-turn"
+          );
+
+        },
+        620
+      );
+
+    }
+
+    showMobilePage(
+      nextPageId
+    );
+
+  } else {
+
+    updateMobilePageClasses(
+      activeMobilePageId
+    );
+
+  }
+
+};
+
+
+const startMobileSwipe = (
+  event
+) => {
+
+  if (
+    !mobilePageMedia.matches ||
+    !body.classList.contains(
+      "mobile-page-mode"
+    ) ||
+    body.classList.contains(
+      "invitation-closed"
+    ) ||
+    body.classList.contains(
+      "modal-open"
+    ) ||
+    body.classList.contains(
+      "menu-open"
+    )
+  ) {
+    return;
+  }
+
+  if (
+    event.pointerType === "mouse" &&
+    event.button !== 0
+  ) {
+    return;
+  }
+
+  const interactiveElement =
+    event.target.closest(
+      [
+        "button",
+        "a",
+        "input",
+        "textarea",
+        "select",
+        "label"
+      ].join(",")
+    );
+
+  if (interactiveElement) {
+    return;
+  }
+
+  mobileSwipePointerId =
+    event.pointerId;
+
+  mobileSwipeStartX =
+    event.clientX;
+
+  mobileSwipeStartY =
+    event.clientY;
+
+  mobileSwipeCurrentX =
+    event.clientX;
+
+  mobileSwipeDirectionLocked =
+    false;
+
+  mobileSwipeIsHorizontal =
+    false;
+
+  mobileSwipeIsDragging =
+    false;
+
+};
+
+
+const moveMobileSwipe = (
+  event
+) => {
+
+  if (
+    event.pointerId !==
+    mobileSwipePointerId
+  ) {
+    return;
+  }
+
+  const deltaX =
+    event.clientX -
+    mobileSwipeStartX;
+
+  const deltaY =
+    event.clientY -
+    mobileSwipeStartY;
+
+  mobileSwipeCurrentX =
+    event.clientX;
+
+  if (
+    !mobileSwipeDirectionLocked
+  ) {
+
+    if (
+      Math.abs(deltaX) < 8 &&
+      Math.abs(deltaY) < 8
+    ) {
+      return;
+    }
+
+    mobileSwipeDirectionLocked =
+      true;
+
+    mobileSwipeIsHorizontal =
+      Math.abs(deltaX) >
+      Math.abs(deltaY) * 1.15;
+
+  }
+
+  if (!mobileSwipeIsHorizontal) {
+    return;
+  }
+
+  const currentIndex =
+    getMobilePageIndex(
+      activeMobilePageId
+    );
+
+  const attemptingPrevious =
+    deltaX > 0;
+
+  const attemptingNext =
+    deltaX < 0;
+
+  const hasPrevious =
+    currentIndex > 0;
+
+  const hasNext =
+    currentIndex <
+    mobilePageIds.length - 1;
+
+  let adjustedDeltaX =
+    deltaX;
+
+  if (
+    attemptingPrevious &&
+    !hasPrevious
+  ) {
+
+    adjustedDeltaX =
+      deltaX * .18;
+
+  }
+
+  if (
+    attemptingNext &&
+    !hasNext
+  ) {
+
+    adjustedDeltaX =
+      deltaX * .18;
+
+  }
+
+  mobileSwipeIsDragging =
+    true;
+
+  body.classList.add(
+    "mobile-page-dragging"
+  );
+
+  event.preventDefault();
+
+  updateMobileDrag(
+    adjustedDeltaX
+  );
+
+};
+
+
+const endMobileSwipe = (
+  event
+) => {
+
+  if (
+    event.pointerId !==
+    mobileSwipePointerId
+  ) {
+    return;
+  }
+
+  const dragOffset =
+    mobileSwipeCurrentX -
+    mobileSwipeStartX;
+
+  if (
+    mobileSwipeIsDragging &&
+    mobileSwipeIsHorizontal
+  ) {
+
+    finishMobileSwipe(
+      dragOffset
+    );
+
+  }
+
+  mobileSwipePointerId = null;
+  mobileSwipeDirectionLocked = false;
+  mobileSwipeIsHorizontal = false;
+  mobileSwipeIsDragging = false;
+
+};
+
+
+document.addEventListener(
+  "pointerdown",
+  startMobileSwipe,
+  {
+    passive: true
+  }
+);
+
+
+document.addEventListener(
+  "pointermove",
+  moveMobileSwipe,
+  {
+    passive: false
+  }
+);
+
+
+document.addEventListener(
+  "pointerup",
+  endMobileSwipe,
+  {
+    passive: true
+  }
+);
+
+
+document.addEventListener(
+  "pointercancel",
+  endMobileSwipe,
+  {
+    passive: true
+  }
+);
+
+
+/*
+  Mobilens toppikoner og bunnlenker bytter side
+  uten at den gamle vertikale scrollingen kjøres.
+*/
+
+document.addEventListener(
+  "click",
+  (event) => {
+
+    if (
+      !mobilePageMedia.matches ||
+      !body.classList.contains(
+        "mobile-page-mode"
+      )
+    ) {
+      return;
+    }
+
+    const link =
+      event.target.closest(
+        'a[href^="#"]'
+      );
+
+    if (!link) {
+      return;
+    }
+
+    const href =
+      link.getAttribute("href");
+
+    const targetPageId =
+      cleanMobilePageId(href);
+
+    if (
+      !mobilePageIds.includes(
+        targetPageId
+      )
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    closeMenu();
+
+    showMobilePage(
+      targetPageId
+    );
+
+  },
+  true
+);
+
+
+if (openInvitationButton) {
+
+  openInvitationButton.addEventListener(
+    "click",
+    () => {
+
+      if (!mobilePageMedia.matches) {
+        return;
+      }
+
+      window.setTimeout(
+        () => {
+
+          showMobilePage(
+            "invitasjon",
+            {
+              updateHash: true,
+              animate: false
+            }
+          );
+
+        },
+        40
+      );
+
+    }
+  );
+
+}
+
+
+window.addEventListener(
+  "hashchange",
+  () => {
+
+    if (
+      !mobilePageMedia.matches ||
+      !body.classList.contains(
+        "mobile-page-mode"
+      )
+    ) {
+      return;
+    }
+
+    showMobilePage(
+      cleanMobilePageId(
+        window.location.hash
+      ),
+      {
+        updateHash: false
+      }
+    );
+
+  }
+);
+
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (!mobilePageMedia.matches) {
+      return;
+    }
+
+    mobileSwipeWidth =
+      window.innerWidth;
+
+  }
+);
+
+
+mobilePageMedia.addEventListener(
+  "change",
+  initializeMobilePages
+);
+
+
+initializeMobilePages();

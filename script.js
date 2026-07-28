@@ -1,531 +1,535 @@
-"use strict";
+const body =
+  document.body;
 
+const header =
+  document.querySelector(
+    "[data-header]"
+  );
 
-/* --------------------------------------------------
-   ELEMENTER
--------------------------------------------------- */
+const openInvitationButton =
+  document.querySelector(
+    "[data-open-invitation]"
+  );
 
-const body = document.body;
+const reopenInvitationButton =
+  document.querySelector(
+    "[data-reopen-invitation]"
+  );
 
-const siteHeader = document.querySelector("[data-header]");
+const menuToggle =
+  document.querySelector(
+    "[data-menu-toggle]"
+  );
 
-const openInvitationButton = document.querySelector(
-  "[data-open-invitation]"
-);
+const navigation =
+  document.querySelector(
+    "[data-navigation]"
+  );
 
-const reopenInvitationButton = document.querySelector(
-  "[data-reopen-invitation]"
-);
-
-const menuToggle = document.querySelector(
-  "[data-menu-toggle]"
-);
-
-const mainNavigation = document.querySelector(
-  "[data-navigation]"
-);
-
-const navigationLinks = document.querySelectorAll(
-  'a[href^="#"]'
-);
-
-const quickNavigationLinks = document.querySelectorAll(
-  ".quick-navigation a"
-);
-
-const pageSections = document.querySelectorAll(
-  ".page-section"
-);
-
-const revealElements = document.querySelectorAll(
-  ".reveal"
-);
-
-const openRsvpButton = document.querySelector(
-  "[data-open-rsvp]"
-);
-
-const rsvpModal = document.querySelector(
-  "[data-rsvp-modal]"
-);
-
-const closeRsvpButtons = document.querySelectorAll(
-  "[data-close-rsvp]"
-);
-
-const rsvpForm = document.querySelector(
-  "[data-rsvp-form]"
-);
-
-const formStatus = document.querySelector(
-  "[data-form-status]"
-);
-
-const giftLink = document.querySelector(
-  "[data-gift-link]"
-);
-
-
-/* --------------------------------------------------
-   HJELPEFUNKSJONER
--------------------------------------------------- */
-
-function elementExists(element) {
-  return element !== null;
-}
-
-
-function setBodyState(className, isActive) {
-  body.classList.toggle(className, isActive);
-}
-
-
-function getHeaderHeight() {
-  if (!elementExists(siteHeader)) {
-    return 0;
-  }
-
-  return siteHeader.getBoundingClientRect().height;
-}
-
-
-function scrollToSection(sectionId, behavior = "smooth") {
-  const target = document.querySelector(sectionId);
-
-  if (!elementExists(target)) {
-    return;
-  }
-
-  const headerOffset = body.classList.contains(
-    "invitation-open"
+const navLinks = [
+  ...document.querySelectorAll(
+    ".main-navigation a"
   )
-    ? getHeaderHeight()
-    : 0;
+];
 
-  const targetPosition =
-    target.getBoundingClientRect().top +
-    window.scrollY -
-    headerOffset;
+const quickLinks = [
+  ...document.querySelectorAll(
+    ".header-quick-navigation a"
+  )
+];
 
-  window.scrollTo({
-    top: Math.max(targetPosition, 0),
-    behavior
-  });
-}
+const RSVP_ENDPOINT =
+  "DIN_BACKEND_ADRESSE_KOMMER_HER";
 
 
-/* --------------------------------------------------
-   INVITASJON
--------------------------------------------------- */
+/*
+  INVITASJON
+*/
 
-function openInvitation() {
-  if (body.classList.contains("invitation-open")) {
-    return;
-  }
+const openInvitation = () => {
 
-  body.classList.remove("invitation-closed");
-  body.classList.add("invitation-open");
+  body.classList.remove(
+    "invitation-closed"
+  );
 
-  try {
-    sessionStorage.setItem(
-      "weddingInvitationOpened",
-      "true"
-    );
-  } catch (error) {
-    console.warn(
-      "Kunne ikke lagre invitasjonsstatus.",
-      error
-    );
-  }
+  body.classList.add(
+    "invitation-open"
+  );
 
-  window.setTimeout(() => {
-    body.style.overflow = "";
-  }, 1250);
-}
+};
 
 
-function closeInvitation() {
+const closeInvitation = () => {
+
   closeMenu();
-  closeRsvpModal();
-
-  body.classList.remove("invitation-open");
-  body.classList.add("invitation-closed");
 
   window.scrollTo({
     top: 0,
     behavior: "smooth"
   });
 
-  try {
-    sessionStorage.removeItem(
-      "weddingInvitationOpened"
+
+  window.setTimeout(() => {
+
+    body.classList.remove(
+      "invitation-open"
     );
-  } catch (error) {
-    console.warn(
-      "Kunne ikke nullstille invitasjonsstatus.",
-      error
+
+    body.classList.add(
+      "invitation-closed"
     );
-  }
-}
+
+  }, 350);
+
+};
 
 
-function restoreInvitationState() {
-  let hasOpenedInvitation = false;
+if (openInvitationButton) {
 
-  try {
-    hasOpenedInvitation =
-      sessionStorage.getItem(
-        "weddingInvitationOpened"
-      ) === "true";
-  } catch (error) {
-    hasOpenedInvitation = false;
-  }
-
-  const hasSectionHash =
-    window.location.hash &&
-    window.location.hash !== "#invitasjon";
-
-  if (hasOpenedInvitation || hasSectionHash) {
-    body.classList.remove("invitation-closed");
-    body.classList.add("invitation-open");
-  }
-}
-
-
-if (elementExists(openInvitationButton)) {
   openInvitationButton.addEventListener(
     "click",
     openInvitation
   );
+
 }
 
 
-if (elementExists(reopenInvitationButton)) {
+if (reopenInvitationButton) {
+
   reopenInvitationButton.addEventListener(
     "click",
     closeInvitation
   );
+
 }
 
 
-/* --------------------------------------------------
-   MENY
--------------------------------------------------- */
+/*
+  HEADER
+*/
 
-function openMenu() {
-  if (
-    !elementExists(menuToggle) ||
-    !elementExists(mainNavigation)
-  ) {
+const updateHeader = () => {
+
+  if (!header) {
     return;
   }
 
-  mainNavigation.classList.add("open");
-  menuToggle.setAttribute(
-    "aria-expanded",
-    "true"
-  );
-  menuToggle.setAttribute(
-    "aria-label",
-    "Lukk meny"
+  header.classList.toggle(
+    "scrolled",
+    window.scrollY > 30
   );
 
-  setBodyState("menu-open", true);
-}
+};
 
+
+window.addEventListener(
+  "scroll",
+  updateHeader,
+  {
+    passive: true
+  }
+);
+
+
+/*
+  MOBILMENY
+*/
 
 function closeMenu() {
-  if (
-    !elementExists(menuToggle) ||
-    !elementExists(mainNavigation)
-  ) {
+
+  if (!menuToggle || !navigation) {
     return;
   }
 
-  mainNavigation.classList.remove("open");
   menuToggle.setAttribute(
     "aria-expanded",
     "false"
   );
-  menuToggle.setAttribute(
-    "aria-label",
-    "Åpne meny"
+
+  navigation.classList.remove(
+    "open"
   );
 
-  setBodyState("menu-open", false);
+  body.classList.remove(
+    "menu-open"
+  );
+
 }
 
 
-function toggleMenu() {
-  if (!elementExists(mainNavigation)) {
+if (menuToggle && navigation) {
+
+  menuToggle.addEventListener(
+    "click",
+    () => {
+
+      const isOpen =
+        menuToggle.getAttribute(
+          "aria-expanded"
+        ) === "true";
+
+      menuToggle.setAttribute(
+        "aria-expanded",
+        String(!isOpen)
+      );
+
+      navigation.classList.toggle(
+        "open",
+        !isOpen
+      );
+
+      body.classList.toggle(
+        "menu-open",
+        !isOpen
+      );
+
+    }
+  );
+
+}
+
+
+navLinks.forEach((link) => {
+
+  link.addEventListener(
+    "click",
+    closeMenu
+  );
+
+});
+
+
+window.addEventListener(
+  "resize",
+  () => {
+
+    if (window.innerWidth > 760) {
+      closeMenu();
+    }
+
+  }
+);
+
+
+/*
+  KORREKT SCROLLPLASSERING
+
+  Vi beregner headerens faktiske høyde,
+  slik at seksjonene alltid havner rett
+  under toppbaren.
+*/
+
+const getHeaderOffset = () => {
+
+  if (!header) {
+    return 0;
+  }
+
+  return header.getBoundingClientRect().height;
+
+};
+
+
+const scrollToSection = (
+  target
+) => {
+
+  if (!target) {
     return;
   }
 
-  if (mainNavigation.classList.contains("open")) {
-    closeMenu();
-  } else {
-    openMenu();
-  }
-}
+  const targetPosition =
+    target.getBoundingClientRect().top +
+    window.scrollY -
+    getHeaderOffset();
 
 
-if (elementExists(menuToggle)) {
-  menuToggle.addEventListener(
-    "click",
-    toggleMenu
-  );
-}
-
-
-/* --------------------------------------------------
-   INTERN NAVIGASJON
--------------------------------------------------- */
-
-navigationLinks.forEach((link) => {
-  link.addEventListener("click", (event) => {
-    const sectionId = link.getAttribute("href");
-
-    if (
-      !sectionId ||
-      sectionId === "#" ||
-      !sectionId.startsWith("#")
-    ) {
-      return;
-    }
-
-    const target = document.querySelector(sectionId);
-
-    if (!elementExists(target)) {
-      return;
-    }
-
-    event.preventDefault();
-
-    if (
-      !body.classList.contains(
-        "invitation-open"
-      )
-    ) {
-      openInvitation();
-    }
-
-    closeMenu();
-
-    history.pushState(
-      null,
-      "",
-      sectionId
-    );
-
-    window.setTimeout(() => {
-      scrollToSection(sectionId);
-    }, 70);
+  window.scrollTo({
+    top: Math.max(targetPosition, 0),
+    behavior: "smooth"
   });
+
+};
+
+
+const internalJumpLinks = [
+  ...document.querySelectorAll(
+    'a[href^="#"]'
+  )
+];
+
+
+internalJumpLinks.forEach((link) => {
+
+  link.addEventListener(
+    "click",
+    (event) => {
+
+      const href =
+        link.getAttribute("href");
+
+
+      if (
+        !href ||
+        href === "#"
+      ) {
+        return;
+      }
+
+
+      const target =
+        document.querySelector(href);
+
+
+      if (!target) {
+        return;
+      }
+
+
+      event.preventDefault();
+
+      closeMenu();
+
+      scrollToSection(target);
+
+
+      if (
+        window.history &&
+        window.history.replaceState
+      ) {
+
+        window.history.replaceState(
+          null,
+          "",
+          href
+        );
+
+      }
+
+    }
+  );
+
 });
 
 
-window.addEventListener("popstate", () => {
-  const sectionId =
-    window.location.hash || "#invitasjon";
+/*
+  AKTIV NAVIGASJON
+*/
 
-  scrollToSection(sectionId);
-});
+const navigationSections = [
+  ...document.querySelectorAll(
+    "main section[id]"
+  )
+];
 
 
-/* --------------------------------------------------
-   AKTIV SEKSJON I NAVIGASJONEN
--------------------------------------------------- */
+const setActiveNavigation = (
+  sectionId
+) => {
 
-function updateActiveNavigation(sectionId) {
-  quickNavigationLinks.forEach((link) => {
+  const allLinks = [
+    ...navLinks,
+    ...quickLinks
+  ];
+
+
+  allLinks.forEach((link) => {
+
     const isActive =
-      link.getAttribute("href") === sectionId;
+      link.getAttribute("href") ===
+      `#${sectionId}`;
 
     link.classList.toggle(
       "active",
       isActive
     );
 
-    if (isActive) {
-      link.setAttribute(
-        "aria-current",
-        "page"
-      );
-    } else {
-      link.removeAttribute(
-        "aria-current"
-      );
-    }
   });
-}
+
+};
 
 
-if (
-  "IntersectionObserver" in window &&
-  pageSections.length > 0
-) {
-  const sectionObserver =
-    new IntersectionObserver(
-      (entries) => {
-        const visibleEntries = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (first, second) =>
-              second.intersectionRatio -
-              first.intersectionRatio
-          );
+const updateActiveSection = () => {
 
-        if (visibleEntries.length === 0) {
-          return;
-        }
+  const headerOffset =
+    getHeaderOffset();
 
-        const activeSection =
-          visibleEntries[0].target;
+  const referencePoint =
+    window.scrollY +
+    headerOffset +
+    window.innerHeight * .22;
 
-        updateActiveNavigation(
-          `#${activeSection.id}`
-        );
-      },
-      {
-        root: null,
-        rootMargin: "-30% 0px -50% 0px",
-        threshold: [0.05, 0.25, 0.5]
+  let currentSection =
+    navigationSections[0];
+
+
+  navigationSections.forEach(
+    (section) => {
+
+      if (
+        section.offsetTop <=
+        referencePoint
+      ) {
+
+        currentSection = section;
+
       }
+
+    }
+  );
+
+
+  if (currentSection) {
+
+    setActiveNavigation(
+      currentSection.id
     );
 
-  pageSections.forEach((section) => {
-    sectionObserver.observe(section);
-  });
-} else {
-  updateActiveNavigation(
-    window.location.hash || "#invitasjon"
-  );
-}
-
-
-/* --------------------------------------------------
-   HEADER VED SCROLL
--------------------------------------------------- */
-
-function updateHeaderAppearance() {
-  if (!elementExists(siteHeader)) {
-    return;
   }
 
-  siteHeader.classList.toggle(
-    "scrolled",
-    window.scrollY > 20
-  );
-}
+};
 
 
 window.addEventListener(
   "scroll",
-  updateHeaderAppearance,
-  { passive: true }
+  updateActiveSection,
+  {
+    passive: true
+  }
 );
 
 
-/* --------------------------------------------------
-   NEDTELLING
--------------------------------------------------- */
-
-const weddingDate = new Date(
-  "2027-09-18T13:30:00+02:00"
+window.addEventListener(
+  "resize",
+  updateActiveSection
 );
 
-const countdownDays =
-  document.querySelector("[data-days]");
 
-const countdownHours =
-  document.querySelector("[data-hours]");
+/*
+  NEDTELLING
+*/
 
-const countdownMinutes =
-  document.querySelector("[data-minutes]");
+const daysElement =
+  document.querySelector(
+    "[data-days]"
+  );
 
-const countdownSeconds =
-  document.querySelector("[data-seconds]");
+const hoursElement =
+  document.querySelector(
+    "[data-hours]"
+  );
+
+const minutesElement =
+  document.querySelector(
+    "[data-minutes]"
+  );
+
+const secondsElement =
+  document.querySelector(
+    "[data-seconds]"
+  );
 
 
-function formatCountdownValue(
-  value,
-  minimumLength = 2
-) {
-  return String(value).padStart(
-    minimumLength,
+const weddingDate =
+  new Date(
+    "2027-09-18T13:30:00+02:00"
+  );
+
+
+const padNumber = (
+  number,
+  length = 2
+) => {
+
+  return String(number).padStart(
+    length,
     "0"
   );
-}
+
+};
 
 
-function updateCountdown() {
-  const currentTime = new Date();
-  const remainingTime =
+const updateCountdown = () => {
+
+  if (
+    !daysElement ||
+    !hoursElement ||
+    !minutesElement ||
+    !secondsElement
+  ) {
+    return;
+  }
+
+
+  const difference =
     weddingDate.getTime() -
-    currentTime.getTime();
+    Date.now();
 
-  if (remainingTime <= 0) {
-    if (elementExists(countdownDays)) {
-      countdownDays.textContent = "000";
-    }
 
-    if (elementExists(countdownHours)) {
-      countdownHours.textContent = "00";
-    }
+  if (difference <= 0) {
 
-    if (elementExists(countdownMinutes)) {
-      countdownMinutes.textContent = "00";
-    }
-
-    if (elementExists(countdownSeconds)) {
-      countdownSeconds.textContent = "00";
-    }
+    daysElement.textContent = "000";
+    hoursElement.textContent = "00";
+    minutesElement.textContent = "00";
+    secondsElement.textContent = "00";
 
     return;
   }
 
-  const totalSeconds = Math.floor(
-    remainingTime / 1000
-  );
 
-  const days = Math.floor(
-    totalSeconds / 86400
-  );
+  const totalSeconds =
+    Math.floor(
+      difference / 1000
+    );
 
-  const hours = Math.floor(
-    (totalSeconds % 86400) / 3600
-  );
 
-  const minutes = Math.floor(
-    (totalSeconds % 3600) / 60
-  );
+  const days =
+    Math.floor(
+      totalSeconds / 86400
+    );
+
+
+  const hours =
+    Math.floor(
+      (
+        totalSeconds %
+        86400
+      ) /
+      3600
+    );
+
+
+  const minutes =
+    Math.floor(
+      (
+        totalSeconds %
+        3600
+      ) /
+      60
+    );
+
 
   const seconds =
     totalSeconds % 60;
 
-  if (elementExists(countdownDays)) {
-    countdownDays.textContent =
-      formatCountdownValue(days, 3);
-  }
 
-  if (elementExists(countdownHours)) {
-    countdownHours.textContent =
-      formatCountdownValue(hours);
-  }
+  daysElement.textContent =
+    padNumber(days, 3);
 
-  if (elementExists(countdownMinutes)) {
-    countdownMinutes.textContent =
-      formatCountdownValue(minutes);
-  }
+  hoursElement.textContent =
+    padNumber(hours);
 
-  if (elementExists(countdownSeconds)) {
-    countdownSeconds.textContent =
-      formatCountdownValue(seconds);
-  }
-}
+  minutesElement.textContent =
+    padNumber(minutes);
+
+  secondsElement.textContent =
+    padNumber(seconds);
+
+};
 
 
 updateCountdown();
+
 
 window.setInterval(
   updateCountdown,
@@ -533,18 +537,25 @@ window.setInterval(
 );
 
 
-/* --------------------------------------------------
-   SCROLLANIMASJONER
--------------------------------------------------- */
+/*
+  SCROLLANIMASJONER
+*/
 
-if (
-  "IntersectionObserver" in window &&
-  revealElements.length > 0
-) {
+const revealElements = [
+  ...document.querySelectorAll(
+    ".reveal"
+  )
+];
+
+
+if ("IntersectionObserver" in window) {
+
   const revealObserver =
     new IntersectionObserver(
       (entries, observer) => {
+
         entries.forEach((entry) => {
+
           if (!entry.isIntersecting) {
             return;
           }
@@ -556,353 +567,510 @@ if (
           observer.unobserve(
             entry.target
           );
+
         });
+
       },
       {
-        threshold: 0.15,
-        rootMargin: "0px 0px -40px 0px"
+        threshold: .08
       }
     );
 
-  revealElements.forEach((element) => {
-    revealObserver.observe(element);
-  });
-} else {
-  revealElements.forEach((element) => {
-    element.classList.add("visible");
-  });
-}
 
+  revealElements.forEach(
+    (element) => {
 
-/* --------------------------------------------------
-   RSVP-MODAL
--------------------------------------------------- */
+      revealObserver.observe(
+        element
+      );
 
-let elementFocusedBeforeModal = null;
-
-
-function getFocusableModalElements() {
-  if (!elementExists(rsvpModal)) {
-    return [];
-  }
-
-  return Array.from(
-    rsvpModal.querySelectorAll(
-      [
-        "button:not([disabled])",
-        "input:not([disabled])",
-        "textarea:not([disabled])",
-        "select:not([disabled])",
-        'a[href]:not([aria-disabled="true"])'
-      ].join(",")
-    )
-  ).filter(
-    (element) =>
-      element.offsetParent !== null
+    }
   );
+
+} else {
+
+  revealElements.forEach(
+    (element) => {
+
+      element.classList.add(
+        "visible"
+      );
+
+    }
+  );
+
 }
 
 
-function openRsvpModal() {
-  if (!elementExists(rsvpModal)) {
+/*
+  GAVEKNAPP
+*/
+
+const giftLink =
+  document.querySelector(
+    "[data-gift-link]"
+  );
+
+
+if (giftLink) {
+
+  giftLink.addEventListener(
+    "click",
+    (event) => {
+
+      if (
+        giftLink.classList.contains(
+          "disabled-link"
+        )
+      ) {
+
+        event.preventDefault();
+
+      }
+
+    }
+  );
+
+}
+
+
+/*
+  RSVP POPUP
+*/
+
+const rsvpModal =
+  document.querySelector(
+    "[data-rsvp-modal]"
+  );
+
+const openRsvpButton =
+  document.querySelector(
+    "[data-open-rsvp]"
+  );
+
+const closeRsvpButtons = [
+  ...document.querySelectorAll(
+    "[data-close-rsvp]"
+  )
+];
+
+
+const openRsvpModal = () => {
+
+  if (!rsvpModal) {
     return;
   }
 
-  closeMenu();
+  rsvpModal.classList.add(
+    "open"
+  );
 
-  elementFocusedBeforeModal =
-    document.activeElement;
-
-  rsvpModal.classList.add("open");
   rsvpModal.setAttribute(
     "aria-hidden",
     "false"
   );
 
-  setBodyState("modal-open", true);
+  body.classList.add(
+    "modal-open"
+  );
 
-  const focusableElements =
-    getFocusableModalElements();
-
-  const firstFormField =
-    rsvpModal.querySelector(
-      'input:not([type="radio"]), textarea'
-    );
 
   window.setTimeout(() => {
-    if (elementExists(firstFormField)) {
-      firstFormField.focus();
-    } else if (focusableElements.length > 0) {
-      focusableElements[0].focus();
+
+    const firstField =
+      rsvpModal.querySelector(
+        "input, textarea"
+      );
+
+    if (firstField) {
+      firstField.focus();
     }
-  }, 150);
-}
+
+  }, 350);
+
+};
 
 
-function closeRsvpModal() {
-  if (!elementExists(rsvpModal)) {
+const closeRsvpModal = () => {
+
+  if (!rsvpModal) {
     return;
   }
 
-  rsvpModal.classList.remove("open");
+  rsvpModal.classList.remove(
+    "open"
+  );
+
   rsvpModal.setAttribute(
     "aria-hidden",
     "true"
   );
 
-  setBodyState("modal-open", false);
+  body.classList.remove(
+    "modal-open"
+  );
 
-  if (
-    elementFocusedBeforeModal instanceof
-    HTMLElement
-  ) {
-    elementFocusedBeforeModal.focus();
+
+  if (openRsvpButton) {
+    openRsvpButton.focus();
   }
-}
+
+};
 
 
-if (elementExists(openRsvpButton)) {
+if (openRsvpButton) {
+
   openRsvpButton.addEventListener(
     "click",
     openRsvpModal
   );
+
 }
 
 
-closeRsvpButtons.forEach((button) => {
-  button.addEventListener(
-    "click",
-    closeRsvpModal
-  );
-});
+closeRsvpButtons.forEach(
+  (button) => {
 
+    button.addEventListener(
+      "click",
+      closeRsvpModal
+    );
 
-/* --------------------------------------------------
-   TASTATURNAVIGASJON
--------------------------------------------------- */
-
-document.addEventListener(
-  "keydown",
-  (event) => {
-    if (event.key === "Escape") {
-      if (
-        elementExists(rsvpModal) &&
-        rsvpModal.classList.contains("open")
-      ) {
-        closeRsvpModal();
-        return;
-      }
-
-      if (
-        elementExists(mainNavigation) &&
-        mainNavigation.classList.contains(
-          "open"
-        )
-      ) {
-        closeMenu();
-      }
-
-      return;
-    }
-
-    if (
-      event.key !== "Tab" ||
-      !elementExists(rsvpModal) ||
-      !rsvpModal.classList.contains("open")
-    ) {
-      return;
-    }
-
-    const focusableElements =
-      getFocusableModalElements();
-
-    if (focusableElements.length === 0) {
-      return;
-    }
-
-    const firstElement =
-      focusableElements[0];
-
-    const lastElement =
-      focusableElements[
-        focusableElements.length - 1
-      ];
-
-    if (
-      event.shiftKey &&
-      document.activeElement === firstElement
-    ) {
-      event.preventDefault();
-      lastElement.focus();
-    } else if (
-      !event.shiftKey &&
-      document.activeElement === lastElement
-    ) {
-      event.preventDefault();
-      firstElement.focus();
-    }
   }
 );
 
 
-/* --------------------------------------------------
-   RSVP-SKJEMA
--------------------------------------------------- */
+document.addEventListener(
+  "keydown",
+  (event) => {
 
-function createRsvpSummary(formData) {
-  return {
-    participantCount:
-      formData.get("participantCount"),
+    if (event.key !== "Escape") {
+      return;
+    }
 
-    participantNames:
-      formData.get("participantNames"),
+    closeMenu();
+    closeRsvpModal();
 
-    phone:
-      formData.get("phone"),
-
-    email:
-      formData.get("email"),
-
-    allergies:
-      formData.get("allergies"),
-
-    dietaryPreferences:
-      formData.get(
-        "dietaryPreferences"
-      ),
-
-    alcoholFree:
-      formData.get("alcoholFree"),
-
-    additionalInformation:
-      formData.get(
-        "additionalInformation"
-      ),
-
-    submittedAt:
-      new Date().toISOString()
-  };
-}
+  }
+);
 
 
-if (elementExists(rsvpForm)) {
+/*
+  RSVP-SKJEMA
+*/
+
+const rsvpForm =
+  document.querySelector(
+    "[data-rsvp-form]"
+  );
+
+const formStatus =
+  document.querySelector(
+    "[data-form-status]"
+  );
+
+
+const setFormStatus = (
+  message,
+  type = ""
+) => {
+
+  if (!formStatus) {
+    return;
+  }
+
+  formStatus.textContent =
+    message;
+
+  formStatus.className =
+    "form-status";
+
+  if (type) {
+
+    formStatus.classList.add(
+      type
+    );
+
+  }
+
+};
+
+
+const formDataToObject = (
+  formData
+) => {
+
+  const result = {};
+
+
+  formData.forEach(
+    (value, key) => {
+
+      result[key] = value;
+
+    }
+  );
+
+
+  return result;
+
+};
+
+
+if (rsvpForm) {
+
   rsvpForm.addEventListener(
     "submit",
-    (event) => {
+    async (event) => {
+
       event.preventDefault();
 
+
       if (!rsvpForm.checkValidity()) {
+
         rsvpForm.reportValidity();
+
         return;
+
       }
+
 
       const submitButton =
         rsvpForm.querySelector(
-          'button[type="submit"]'
+          ".form-submit"
         );
+
 
       const formData =
         new FormData(rsvpForm);
 
-      const rsvpSummary =
-        createRsvpSummary(formData);
 
-      if (elementExists(submitButton)) {
-        submitButton.disabled = true;
-        submitButton.textContent =
-          "Behandler svar";
-      }
-
-      if (elementExists(formStatus)) {
-        formStatus.textContent = "";
-      }
-
-      /*
-        Foreløpig lagres svaret bare lokalt i
-        nettleseren. Når dere velger løsning for
-        mottak av svar, kan denne delen kobles til
-        for eksempel Google Apps Script, Formspree
-        eller en egen database.
-      */
-
-      window.setTimeout(() => {
-        try {
-          localStorage.setItem(
-            "weddingRsvpDraft",
-            JSON.stringify(rsvpSummary)
-          );
-        } catch (error) {
-          console.warn(
-            "Kunne ikke lagre RSVP lokalt.",
-            error
-          );
-        }
-
-        if (elementExists(formStatus)) {
-          formStatus.textContent =
-            "Opplysningene er registrert i denne nettleseren. Skjemaet må kobles til en mottaksløsning før publisering.";
-        }
-
-        if (elementExists(submitButton)) {
-          submitButton.disabled = false;
-          submitButton.textContent =
-            "Send svar";
-        }
-      }, 650);
-    }
-  );
-}
+      const payload =
+        formDataToObject(formData);
 
 
-/* --------------------------------------------------
-   GAVEØNSKER
--------------------------------------------------- */
+      payload.submittedAt =
+        new Date().toISOString();
 
-if (elementExists(giftLink)) {
-  giftLink.addEventListener(
-    "click",
-    (event) => {
+
       if (
-        giftLink.getAttribute(
-          "aria-disabled"
-        ) === "true"
+        RSVP_ENDPOINT ===
+        "DIN_BACKEND_ADRESSE_KOMMER_HER"
       ) {
-        event.preventDefault();
+
+        console.table(payload);
+
+        setFormStatus(
+          "Skjemaet fungerer, men står foreløpig i testmodus. Svaret er derfor ikke sendt ennå.",
+          "error"
+        );
+
+        return;
+
       }
+
+
+      try {
+
+        submitButton.disabled =
+          true;
+
+        submitButton.textContent =
+          "Sender …";
+
+        setFormStatus(
+          "Sender svaret …"
+        );
+
+
+        const response =
+          await fetch(
+            RSVP_ENDPOINT,
+            {
+              method: "POST",
+
+              headers: {
+                "Content-Type":
+                  "application/json"
+              },
+
+              body:
+                JSON.stringify(payload)
+            }
+          );
+
+
+        if (!response.ok) {
+
+          throw new Error(
+            `Serveren svarte med status ${response.status}`
+          );
+
+        }
+
+
+        setFormStatus(
+          "Tusen takk! Svaret deres er registrert.",
+          "success"
+        );
+
+
+        rsvpForm.reset();
+
+
+        window.setTimeout(
+          closeRsvpModal,
+          2500
+        );
+
+      } catch (error) {
+
+        console.error(
+          "RSVP-feil:",
+          error
+        );
+
+
+        setFormStatus(
+          "Vi klarte ikke å sende svaret. Prøv igjen, eller ta kontakt med Pernille eller Andreas.",
+          "error"
+        );
+
+      } finally {
+
+        submitButton.disabled =
+          false;
+
+        submitButton.textContent =
+          "Send svar";
+
+      }
+
     }
   );
+
 }
 
 
-/* --------------------------------------------------
-   OPPSTART
--------------------------------------------------- */
+updateHeader();
+updateActiveSection();
+/*
+  GLIDENDE AKTIV MARKØR I HURTIGMENYEN
+*/
 
-function initializeWebsite() {
-  restoreInvitationState();
-  updateHeaderAppearance();
-
-  const currentSection =
-    window.location.hash || "#invitasjon";
-
-  updateActiveNavigation(
-    currentSection
+const quickNavigation =
+  document.querySelector(
+    "[data-quick-navigation]"
   );
 
-  window.setTimeout(() => {
-    if (
-      window.location.hash &&
-      body.classList.contains(
-        "invitation-open"
-      )
-    ) {
-      scrollToSection(
-        window.location.hash,
-        "auto"
-      );
+let activeMarker = null;
+
+
+const createActiveMarker = () => {
+
+  if (!quickNavigation) {
+    return;
+  }
+
+  activeMarker =
+    document.createElement("span");
+
+  activeMarker.className =
+    "header-active-marker";
+
+  activeMarker.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  quickNavigation.prepend(
+    activeMarker
+  );
+
+};
+
+
+const moveActiveMarker = () => {
+
+  if (
+    !quickNavigation ||
+    !activeMarker
+  ) {
+    return;
+  }
+
+  const activeLink =
+    quickNavigation.querySelector(
+      "a.active"
+    );
+
+  if (!activeLink) {
+
+    activeMarker.style.opacity = "0";
+
+    return;
+  }
+
+  const navigationRectangle =
+    quickNavigation.getBoundingClientRect();
+
+  const linkRectangle =
+    activeLink.getBoundingClientRect();
+
+  const markerX =
+    linkRectangle.left -
+    navigationRectangle.left +
+    (
+      linkRectangle.width -
+      activeMarker.offsetWidth
+    ) /
+    2;
+
+  activeMarker.style.opacity = "1";
+
+  activeMarker.style.transform =
+    `translate3d(${markerX}px, -50%, 0)`;
+
+};
+
+
+createActiveMarker();
+
+
+window.setTimeout(
+  moveActiveMarker,
+  100
+);
+
+
+window.addEventListener(
+  "resize",
+  moveActiveMarker
+);
+
+
+/*
+  Den eksisterende setActiveNavigation-funksjonen
+  endrer active-klassen. Denne observatøren oppdager
+  endringen og flytter markøren automatisk.
+*/
+
+if (quickNavigation) {
+
+  const navigationMarkerObserver =
+    new MutationObserver(
+      moveActiveMarker
+    );
+
+  navigationMarkerObserver.observe(
+    quickNavigation,
+    {
+      subtree: true,
+      attributes: true,
+      attributeFilter: [
+        "class"
+      ]
     }
-  }, 60);
+  );
+
 }
-
-
-initializeWebsite();

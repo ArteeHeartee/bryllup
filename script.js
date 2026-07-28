@@ -954,6 +954,8 @@ if (rsvpForm) {
 
 updateHeader();
 updateActiveSection();
+
+
 /*
   GLIDENDE AKTIV MARKØR I HURTIGMENYEN
 */

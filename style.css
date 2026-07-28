@@ -4497,3 +4497,109 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* ==================================================
+   DESKTOP: ÉN SIDE PER VISNING
+   Kun desktop. Mobilvisningen under 761 px er urørt.
+================================================== */
+
+@media (min-width: 761px) {
+
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--header-height);
+  }
+
+  body {
+    overscroll-behavior-y: contain;
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 0;
+  }
+
+  .invitation-section {
+    flex: 0 0 100svh;
+    min-height: 100svh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+  }
+
+  body.invitation-open .invitation-section {
+    padding-top: var(--header-height);
+  }
+
+  .screen-section {
+    --desktop-page-air:
+      max(
+        28px,
+        calc(
+          (
+            100svh -
+            var(--header-height) -
+            min(
+              var(--desktop-card-height),
+              calc(100svh - var(--header-height) - 68px)
+            )
+          ) / 2
+        )
+      );
+
+    flex: 0 0 auto;
+
+    margin:
+      var(--desktop-page-air)
+      auto;
+
+    scroll-margin-top: 0;
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+
+    transition:
+      opacity .28s ease,
+      transform .28s var(--ease),
+      box-shadow .28s ease;
+  }
+
+  .rsvp-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .rsvp-section .rsvp-card {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+
+  .rsvp-section .site-footer {
+    position: relative;
+    inset: auto;
+
+    width: min(520px, 100%);
+    min-height: 0;
+
+    margin: 18px auto 8px;
+    padding: 18px 0 0;
+
+    background: transparent;
+    border: 0;
+    border-top: 1px solid var(--line);
+    box-shadow: none;
+  }
+
+  .rsvp-section .site-footer::before {
+    display: none;
+  }
+
+  .rsvp-section .site-footer .footer-names {
+    margin-bottom: 5px;
+  }
+
+  .rsvp-section .section-jump {
+    margin-top: 8px;
+  }
+
+}

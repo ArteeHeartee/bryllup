@@ -34,16 +34,9 @@ const navLinks = [
 
 const quickLinks = [
   ...document.querySelectorAll(
-    ".quick-navigation a"
+    ".header-quick-navigation a"
   )
 ];
-
-
-/*
-  RSVP-BACKEND
-
-  Skjemaet står foreløpig i testmodus.
-*/
 
 const RSVP_ENDPOINT =
   "DIN_BACKEND_ADRESSE_KOMMER_HER";
@@ -219,6 +212,107 @@ window.addEventListener(
 
 
 /*
+  KORREKT SCROLLPLASSERING
+
+  Vi beregner headerens faktiske høyde,
+  slik at seksjonene alltid havner rett
+  under toppbaren.
+*/
+
+const getHeaderOffset = () => {
+
+  if (!header) {
+    return 0;
+  }
+
+  return header.getBoundingClientRect().height;
+
+};
+
+
+const scrollToSection = (
+  target
+) => {
+
+  if (!target) {
+    return;
+  }
+
+  const targetPosition =
+    target.getBoundingClientRect().top +
+    window.scrollY -
+    getHeaderOffset();
+
+
+  window.scrollTo({
+    top: Math.max(targetPosition, 0),
+    behavior: "smooth"
+  });
+
+};
+
+
+const internalJumpLinks = [
+  ...document.querySelectorAll(
+    'a[href^="#"]'
+  )
+];
+
+
+internalJumpLinks.forEach((link) => {
+
+  link.addEventListener(
+    "click",
+    (event) => {
+
+      const href =
+        link.getAttribute("href");
+
+
+      if (
+        !href ||
+        href === "#"
+      ) {
+        return;
+      }
+
+
+      const target =
+        document.querySelector(href);
+
+
+      if (!target) {
+        return;
+      }
+
+
+      event.preventDefault();
+
+      closeMenu();
+
+      scrollToSection(target);
+
+
+      if (
+        window.history &&
+        window.history.replaceState
+      ) {
+
+        window.history.replaceState(
+          null,
+          "",
+          href
+        );
+
+      }
+
+    }
+  );
+
+});
+
+
+/*
   AKTIV NAVIGASJON
 */
 
@@ -255,62 +349,64 @@ const setActiveNavigation = (
 };
 
 
-if ("IntersectionObserver" in window) {
+const updateActiveSection = () => {
 
-  const sectionObserver =
-    new IntersectionObserver(
-      (entries) => {
+  const headerOffset =
+    getHeaderOffset();
 
-        const visibleEntries =
-          entries
-            .filter(
-              (entry) =>
-                entry.isIntersecting
-            )
-            .sort(
-              (first, second) =>
-                second.intersectionRatio -
-                first.intersectionRatio
-            );
+  const referencePoint =
+    window.scrollY +
+    headerOffset +
+    window.innerHeight * .22;
 
-
-        if (!visibleEntries.length) {
-          return;
-        }
-
-
-        setActiveNavigation(
-          visibleEntries[0].target.id
-        );
-
-      },
-      {
-        rootMargin:
-          "-32% 0px -50% 0px",
-
-        threshold: [
-          0,
-          .15,
-          .35,
-          .55
-        ]
-      }
-    );
+  let currentSection =
+    navigationSections[0];
 
 
   navigationSections.forEach(
     (section) => {
-      sectionObserver.observe(section);
+
+      if (
+        section.offsetTop <=
+        referencePoint
+      ) {
+
+        currentSection = section;
+
+      }
+
     }
   );
 
-}
+
+  if (currentSection) {
+
+    setActiveNavigation(
+      currentSection.id
+    );
+
+  }
+
+};
+
+
+window.addEventListener(
+  "scroll",
+  updateActiveSection,
+  {
+    passive: true
+  }
+);
+
+
+window.addEventListener(
+  "resize",
+  updateActiveSection
+);
 
 
 /*
   NEDTELLING
-
-  18. september 2027 klokken 13.30.
 */
 
 const daysElement =
@@ -483,9 +579,11 @@ if ("IntersectionObserver" in window) {
 
   revealElements.forEach(
     (element) => {
+
       revealObserver.observe(
         element
       );
+
     }
   );
 
@@ -493,9 +591,11 @@ if ("IntersectionObserver" in window) {
 
   revealElements.forEach(
     (element) => {
+
       element.classList.add(
         "visible"
       );
+
     }
   );
 
@@ -523,7 +623,9 @@ if (giftLink) {
           "disabled-link"
         )
       ) {
+
         event.preventDefault();
+
       }
 
     }
@@ -638,10 +740,6 @@ closeRsvpButtons.forEach(
 );
 
 
-/*
-  ESCAPE
-*/
-
 document.addEventListener(
   "keydown",
   (event) => {
@@ -688,7 +786,11 @@ const setFormStatus = (
     "form-status";
 
   if (type) {
-    formStatus.classList.add(type);
+
+    formStatus.classList.add(
+      type
+    );
+
   }
 
 };
@@ -700,6 +802,7 @@ const formDataToObject = (
 
   const result = {};
 
+
   formData.forEach(
     (value, key) => {
 
@@ -707,6 +810,7 @@ const formDataToObject = (
 
     }
   );
+
 
   return result;
 
@@ -849,3 +953,4 @@ if (rsvpForm) {
 
 
 updateHeader();
+updateActiveSection();

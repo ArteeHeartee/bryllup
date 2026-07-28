@@ -4304,7 +4304,11 @@ body.invitation-open .wax-seal {
 }
 /* ==================================================
    DESKTOP: FELLES FYSISK INVITASJONSKORT
-   Mobilvisningen under 760 px er bevisst urørt.
+
+   Denne blokken erstatter alle tidligere desktop-
+   tillegg nederst i filen.
+
+   Mobilvisningen under 761 px berøres ikke.
 ================================================== */
 
 @media (min-width: 761px) {
@@ -4315,7 +4319,16 @@ body.invitation-open .wax-seal {
     --desktop-card-gap: 34px;
   }
 
+
+  html {
+    scroll-snap-type: none;
+    scroll-padding-top: var(--header-height);
+  }
+
+
   body {
+    overscroll-behavior-y: auto;
+
     background:
       radial-gradient(
         circle at 50% 18%,
@@ -4325,40 +4338,69 @@ body.invitation-open .wax-seal {
       );
   }
 
+
   main {
+    display: block;
     padding-bottom: var(--desktop-card-gap);
   }
 
-  /* Første visning er et lerret rundt konvolutten/kortet. */
+
+  /*
+    KONVOLUTT OG ÅPNET INVITASJON
+  */
+
   .invitation-section {
     min-height: 100svh;
+
     padding:
-      calc(var(--header-height) + var(--desktop-card-gap))
+      calc(
+        var(--header-height) +
+        var(--desktop-card-gap)
+      )
       32px
       var(--desktop-card-gap);
 
     background: transparent;
+
+    scroll-snap-align: none;
   }
+
 
   body.invitation-closed .invitation-section {
     padding-top: var(--desktop-card-gap);
   }
 
-  /* Invitasjonen og konvolutten deler nøyaktig samme geometri. */
+
+  body.invitation-open .invitation-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        var(--desktop-card-gap)
+      );
+  }
+
+
   .invitation-interior,
   .invitation-cover {
-    width: min(
-      var(--desktop-card-width),
-      calc(100vw - 64px)
-    );
+    width:
+      min(
+        var(--desktop-card-width),
+        calc(100vw - 64px)
+      );
 
-    height: min(
-      var(--desktop-card-height),
-      calc(100svh - var(--header-height) - 68px)
-    );
+    height:
+      min(
+        var(--desktop-card-height),
+        calc(
+          100svh -
+          var(--header-height) -
+          68px
+        )
+      );
 
     min-height: 610px;
   }
+
 
   .invitation-interior {
     position: relative;
@@ -4379,6 +4421,7 @@ body.invitation-open .wax-seal {
       box-shadow .8s var(--ease) .18s;
   }
 
+
   body.invitation-open .invitation-interior {
     opacity: 1;
 
@@ -4387,6 +4430,7 @@ body.invitation-open .wax-seal {
       scale(1);
   }
 
+
   .invitation-cover {
     inset: 50% auto auto 50%;
 
@@ -4394,7 +4438,7 @@ body.invitation-open .wax-seal {
       translate(-50%, -50%);
   }
 
-  /* Samme doble papirramme på konvolutt og åpnet invitasjon. */
+
   .invitation-cover::after {
     content: "";
 
@@ -4402,33 +4446,47 @@ body.invitation-open .wax-seal {
     inset: 9px;
     z-index: 145;
 
-    border: 1px solid rgba(101, 47, 59, .17);
+    border:
+      1px solid
+      rgba(101, 47, 59, .17);
 
     pointer-events: none;
   }
+
 
   body.invitation-open .invitation-cover {
     transform:
       translate(-50%, -50%);
   }
 
-  /* Alle etterfølgende sider er samme fysiske kort. */
-  .screen-section {
-    width: min(
-      var(--desktop-card-width),
-      calc(100vw - 64px)
-    );
 
-    height: min(
-      var(--desktop-card-height),
-      calc(100svh - var(--header-height) - 68px)
-    );
+  /*
+    FELLES KORTSTØRRELSE FOR ALLE KAPITLER
+  */
+
+  .screen-section {
+    width:
+      min(
+        var(--desktop-card-width),
+        calc(100vw - 64px)
+      );
+
+    height:
+      min(
+        var(--desktop-card-height),
+        calc(
+          100svh -
+          var(--header-height) -
+          68px
+        )
+      );
 
     min-height: 610px;
 
     margin:
       var(--desktop-card-gap)
-      auto 0;
+      auto
+      0;
 
     padding:
       clamp(34px, 4vw, 58px)
@@ -4437,7 +4495,9 @@ body.invitation-open .wax-seal {
 
     overflow: hidden;
 
-    border: 1px solid var(--line-dark);
+    border:
+      1px solid
+      var(--line-dark);
 
     box-shadow:
       0 28px 74px rgba(52, 40, 34, .14),
@@ -4446,8 +4506,12 @@ body.invitation-open .wax-seal {
     isolation: isolate;
 
     scroll-margin-top:
-      calc(var(--header-height) + var(--desktop-card-gap));
+      var(--header-height);
+
+    scroll-snap-align: none;
+    scroll-snap-stop: normal;
   }
+
 
   .screen-section::before {
     content: "";
@@ -4456,17 +4520,34 @@ body.invitation-open .wax-seal {
     inset: 9px;
     z-index: 2;
 
-    border: 1px solid rgba(101, 47, 59, .17);
+    border:
+      1px solid
+      rgba(101, 47, 59, .17);
 
     pointer-events: none;
   }
+
 
   .screen-section > * {
     position: relative;
     z-index: 3;
   }
 
-  /* Bakgrunnen ligger nå rundt kortet, ikke som fullskjermsflater. */
+
+  /*
+    Hvert kort starter rett under headeren når
+    ikonet eller kapittellenken trykkes.
+  */
+
+  .story-section,
+  .program-section,
+  .practical-section,
+  .gifts-section {
+    scroll-margin-top:
+      var(--header-height);
+  }
+
+
   .story-section,
   .program-section,
   .practical-section,
@@ -4475,12 +4556,18 @@ body.invitation-open .wax-seal {
     background-clip: padding-box;
   }
 
-  /* Innholdet må holde seg innenfor den felles kortflaten. */
+
+  /*
+    INNHOLDET SKAL HOLDE SEG INNENFOR KORTET
+  */
+
   .compact-section-heading {
     flex: 0 0 auto;
 
-    margin-bottom: clamp(18px, 2.5vh, 30px);
+    margin-bottom:
+      clamp(18px, 2.5vh, 30px);
   }
+
 
   .editorial-timeline,
   .compact-history-grid,
@@ -4490,111 +4577,160 @@ body.invitation-open .wax-seal {
     min-height: 0;
   }
 
+
   .section-jump {
     flex: 0 0 auto;
 
-    margin-top: clamp(13px, 2vh, 23px);
+    margin-top:
+      clamp(13px, 2vh, 23px);
   }
 
-}
 
+  /*
+    RSVP OG FOOTER
 
-  html {
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: var(--header-height);
+    #rsvp er ytterelementet som inneholder både
+    RSVP-kortet og avslutningen med navnene.
+  */
+
+  .rsvp-footer-card {
+    width: 100%;
+
+    margin: 0;
+    padding:
+      var(--desktop-card-gap)
+      0
+      0;
+
+    scroll-margin-top:
+      var(--header-height);
   }
 
-  body {
-    overscroll-behavior-y: contain;
-  }
 
-  main {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 0;
-  }
+  .rsvp-footer-card .rsvp-section {
+    margin-top: 0;
 
-  .invitation-section {
-    flex: 0 0 100svh;
-    min-height: 100svh;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
-  }
-
-  body.invitation-open .invitation-section {
-    padding-top: var(--header-height);
-  }
-
-  .screen-section {
-    --desktop-page-air:
-      max(
-        28px,
-        calc(
-          (
-            100svh -
-            var(--header-height) -
-            min(
-              var(--desktop-card-height),
-              calc(100svh - var(--header-height) - 68px)
-            )
-          ) / 2
-        )
-      );
-
-    flex: 0 0 auto;
-
-    margin:
-      var(--desktop-page-air)
-      auto;
-
-    scroll-margin-top: 0;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-
-    transition:
-      opacity .28s ease,
-      transform .28s var(--ease),
-      box-shadow .28s ease;
-  }
-
-  .rsvp-section {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
   }
 
+
   .rsvp-section .rsvp-card {
+    width: min(1024px, 92%);
+
     flex: 1 1 auto;
     min-height: 0;
+
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
 
-  .rsvp-section .site-footer {
-    position: relative;
-    inset: auto;
-
-    width: min(520px, 100%);
-    min-height: 0;
-
-    margin: 18px auto 8px;
-    padding: 18px 0 0;
-
-    background: transparent;
-    border: 0;
-    border-top: 1px solid var(--line);
-    box-shadow: none;
-  }
-
-  .rsvp-section .site-footer::before {
-    display: none;
-  }
-
-  .rsvp-section .site-footer .footer-names {
-    margin-bottom: 5px;
-  }
 
   .rsvp-section .section-jump {
-    margin-top: 8px;
+    margin-top: 12px;
+  }
+
+
+  .rsvp-footer-card > .site-footer {
+    position: relative;
+
+    width:
+      min(
+        var(--desktop-card-width),
+        calc(100vw - 64px)
+      );
+
+    min-height: 180px;
+
+    margin:
+      0
+      auto
+      var(--desktop-card-gap);
+
+    padding:
+      34px
+      30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: var(--espresso);
+    background: var(--paper-light);
+
+    border:
+      1px solid
+      var(--line-dark);
+
+    border-top: 0;
+
+    box-shadow:
+      0 28px 74px rgba(52, 40, 34, .10),
+      0 8px 22px rgba(52, 40, 34, .06);
+  }
+
+
+  .rsvp-footer-card > .site-footer::before {
+    content: "";
+
+    position: absolute;
+    inset:
+      0
+      9px
+      9px;
+
+    border:
+      1px solid
+      rgba(101, 47, 59, .17);
+
+    border-top: 0;
+
+    pointer-events: none;
+  }
+
+
+  .rsvp-footer-card > .site-footer p {
+    position: relative;
+    z-index: 2;
+  }
+
+
+  .rsvp-footer-card > .site-footer .footer-names {
+    margin-bottom: 9px !important;
+  }
+
+
+  /*
+    TILPASNING FOR EKSTRA BREDE SKJERMER
+  */
+
+  @media (min-width: 1500px) {
+
+    :root {
+      --desktop-card-width:
+        min(
+          1220px,
+          calc(100vw - 220px)
+        );
+
+      --desktop-card-height:
+        min(
+          740px,
+          calc(
+            100svh -
+            var(--header-height) -
+            88px
+          )
+        );
+    }
+
   }
 
 }

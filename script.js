@@ -32,14 +32,17 @@ const navLinks = [
   )
 ];
 
+const quickLinks = [
+  ...document.querySelectorAll(
+    ".quick-navigation a"
+  )
+];
+
 
 /*
   RSVP-BACKEND
 
   Skjemaet står foreløpig i testmodus.
-
-  Senere erstatter vi teksten under med adressen
-  til vår egen backend-funksjon.
 */
 
 const RSVP_ENDPOINT =
@@ -216,7 +219,7 @@ window.addEventListener(
 
 
 /*
-  AKTIVT MENYPUNKT
+  AKTIV NAVIGASJON
 */
 
 const navigationSections = [
@@ -226,39 +229,71 @@ const navigationSections = [
 ];
 
 
+const setActiveNavigation = (
+  sectionId
+) => {
+
+  const allLinks = [
+    ...navLinks,
+    ...quickLinks
+  ];
+
+
+  allLinks.forEach((link) => {
+
+    const isActive =
+      link.getAttribute("href") ===
+      `#${sectionId}`;
+
+    link.classList.toggle(
+      "active",
+      isActive
+    );
+
+  });
+
+};
+
+
 if ("IntersectionObserver" in window) {
 
   const sectionObserver =
     new IntersectionObserver(
       (entries) => {
 
-        entries.forEach((entry) => {
-
-          if (!entry.isIntersecting) {
-            return;
-          }
-
-          navLinks.forEach((link) => {
-
-            const isActive =
-              link.getAttribute("href") ===
-              `#${entry.target.id}`;
-
-            link.classList.toggle(
-              "active",
-              isActive
+        const visibleEntries =
+          entries
+            .filter(
+              (entry) =>
+                entry.isIntersecting
+            )
+            .sort(
+              (first, second) =>
+                second.intersectionRatio -
+                first.intersectionRatio
             );
 
-          });
 
-        });
+        if (!visibleEntries.length) {
+          return;
+        }
+
+
+        setActiveNavigation(
+          visibleEntries[0].target.id
+        );
 
       },
       {
         rootMargin:
-          "-36% 0px -55% 0px",
+          "-32% 0px -50% 0px",
 
-        threshold: 0
+        threshold: [
+          0,
+          .15,
+          .35,
+          .55
+        ]
       }
     );
 
@@ -441,7 +476,7 @@ if ("IntersectionObserver" in window) {
 
       },
       {
-        threshold: .1
+        threshold: .08
       }
     );
 
@@ -468,7 +503,7 @@ if ("IntersectionObserver" in window) {
 
 
 /*
-  GAVEKNAPP MED MIDLERTIDIG LENKE
+  GAVEKNAPP
 */
 
 const giftLink =
@@ -604,7 +639,7 @@ closeRsvpButtons.forEach(
 
 
 /*
-  ESCAPE LUKKER MENY OG POPUP
+  ESCAPE
 */
 
 document.addEventListener(
@@ -713,13 +748,6 @@ if (rsvpForm) {
       payload.submittedAt =
         new Date().toISOString();
 
-
-      /*
-        TESTMODUS
-
-        Frem til backend-adressen er lagt inn,
-        sendes ingen personopplysninger noe sted.
-      */
 
       if (
         RSVP_ENDPOINT ===

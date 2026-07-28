@@ -5175,16 +5175,11 @@ body.invitation-open .wax-seal {
 
 }
 /* ==================================================
-   DESKTOP: BLA DIREKTE PÅ KORTET
-   Mobil under 761 px berøres ikke.
+   DESKTOP: BLA DIREKTE PÅ DET AKTIVE KORTET
+   Mobil under 761 px påvirkes ikke.
 ================================================== */
 
 @media (min-width: 761px) {
-
-  /*
-    Navigasjonen nederst på kortene beholdes på mobil,
-    men skjules i desktop-visningen.
-  */
 
   body.desktop-page-mode
   .section-jump {
@@ -5193,66 +5188,37 @@ body.invitation-open .wax-seal {
 
 
   /*
-    Kontrollområdet dekker bare kortets høyde.
+    Kontrollene ligger nå inne i selve kortet.
   */
 
   .desktop-page-controls {
-    position: fixed;
-
-    top:
-      calc(
-        var(--header-height) +
-        var(--desktop-card-gap)
-      );
-
-    left: 50%;
-
-    z-index: 80;
-
-    width:
-      min(
-        var(--desktop-card-width),
-        calc(100vw - 64px)
-      );
-
-    height:
-      min(
-        var(--desktop-card-height),
-        calc(
-          100svh -
-          var(--header-height) -
-          68px
-        )
-      );
-
-    min-height: 610px;
-
-    transform: translateX(-50%);
+    position: absolute;
+    inset: 0;
+    z-index: 70;
 
     pointer-events: none;
   }
 
-
-  body.invitation-closed
-  .desktop-page-controls {
-    opacity: 0;
-    visibility: hidden;
-  }
-
-
-  /*
-    Klikkefeltene ligger oppå kortets venstre
-    og høyre kant.
-  */
 
   .desktop-page-control {
     position: absolute;
     top: 0;
     bottom: 0;
 
-    width: clamp(90px, 13%, 165px);
+    width:
+      clamp(
+        92px,
+        12.5%,
+        158px
+      );
 
-    padding: 0 22px;
+    padding:
+      0
+      clamp(
+        15px,
+        1.8vw,
+        26px
+      );
 
     display: flex;
     align-items: center;
@@ -5260,20 +5226,20 @@ body.invitation-open .wax-seal {
     gap: 10px;
 
     color: var(--burgundy);
-
     background: transparent;
 
     font-family:
       "Montserrat",
       sans-serif;
 
-    font-size: .47rem;
+    font-size: .46rem;
     font-weight: 500;
 
     letter-spacing: .17em;
     text-transform: uppercase;
 
     border: 0;
+    outline: 0;
 
     opacity: 0;
 
@@ -5282,7 +5248,7 @@ body.invitation-open .wax-seal {
 
     transition:
       opacity .22s ease,
-      background-color .25s ease;
+      background .25s ease;
   }
 
 
@@ -5294,8 +5260,8 @@ body.invitation-open .wax-seal {
     background:
       linear-gradient(
         90deg,
-        rgba(101, 47, 59, .13),
-        rgba(101, 47, 59, .025) 55%,
+        rgba(101, 47, 59, .14),
+        rgba(101, 47, 59, .035) 58%,
         transparent
       );
   }
@@ -5309,8 +5275,8 @@ body.invitation-open .wax-seal {
     background:
       linear-gradient(
         270deg,
-        rgba(101, 47, 59, .13),
-        rgba(101, 47, 59, .025) 55%,
+        rgba(101, 47, 59, .14),
+        rgba(101, 47, 59, .035) 58%,
         transparent
       );
   }
@@ -5319,6 +5285,13 @@ body.invitation-open .wax-seal {
   .desktop-page-control:hover,
   .desktop-page-control:focus-visible {
     opacity: 1;
+  }
+
+
+  .desktop-page-control:focus-visible {
+    box-shadow:
+      inset 0 0 0 1px
+      rgba(101, 47, 59, .28);
   }
 
 
@@ -5332,6 +5305,8 @@ body.invitation-open .wax-seal {
 
 
   .desktop-page-control-arrow {
+    flex: 0 0 auto;
+
     font-family:
       "EB Garamond",
       serif;
@@ -5360,53 +5335,14 @@ body.invitation-open .wax-seal {
 
 
   /*
-    Kortet beveger seg svakt mot den siden
-    brukeren er i ferd med å bla til.
+    Kortet reagerer svakt når en sidekant berøres.
   */
 
   body.desktop-page-hover-previous
-  .desktop-page-active:not(
-    .invitation-section
-  ) {
+  .screen-section.desktop-page-active {
     transform:
       translate3d(
-        calc(-50% + 8px),
-        0,
-        0
-      );
-
-    box-shadow:
-      -10px 28px 78px
-        rgba(52, 40, 34, .16),
-      0 8px 22px
-        rgba(52, 40, 34, .08);
-  }
-
-
-  body.desktop-page-hover-next
-  .desktop-page-active:not(
-    .invitation-section
-  ) {
-    transform:
-      translate3d(
-        calc(-50% - 8px),
-        0,
-        0
-      );
-
-    box-shadow:
-      10px 28px 78px
-        rgba(52, 40, 34, .16),
-      0 8px 22px
-        rgba(52, 40, 34, .08);
-  }
-
-
-  body.desktop-page-hover-previous
-  .invitation-section.desktop-page-active {
-    transform:
-      translate3d(
-        8px,
+        calc(-50% + 7px),
         0,
         0
       );
@@ -5414,10 +5350,10 @@ body.invitation-open .wax-seal {
 
 
   body.desktop-page-hover-next
-  .invitation-section.desktop-page-active {
+  .screen-section.desktop-page-active {
     transform:
       translate3d(
-        -8px,
+        calc(-50% - 7px),
         0,
         0
       );
@@ -5428,7 +5364,7 @@ body.invitation-open .wax-seal {
   .rsvp-footer-card.desktop-page-active {
     transform:
       translate3d(
-        calc(-50% + 8px),
+        calc(-50% + 7px),
         0,
         0
       );
@@ -5439,7 +5375,7 @@ body.invitation-open .wax-seal {
   .rsvp-footer-card.desktop-page-active {
     transform:
       translate3d(
-        calc(-50% - 8px),
+        calc(-50% - 7px),
         0,
         0
       );
@@ -5447,8 +5383,109 @@ body.invitation-open .wax-seal {
 
 
   /*
-    På mindre desktop-skjermer viser vi bare pilen.
+    Invitasjonssiden er fullbredde. Det er det indre
+    invitasjonskortet som flyttes ved hover.
   */
+
+  body.desktop-page-hover-previous
+  .invitation-section.desktop-page-active
+  .invitation-interior {
+    transform:
+      translate3d(
+        7px,
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-hover-next
+  .invitation-section.desktop-page-active
+  .invitation-interior {
+    transform:
+      translate3d(
+        -7px,
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-mode
+  .invitation-interior {
+    transition:
+      opacity .78s var(--ease) .2s,
+      transform .3s var(--ease),
+      box-shadow .3s ease;
+
+    /*
+      Gjenoppretter det opprinnelige rutenettet:
+      hovedinnhold, nedtelling og mobilens bunnlenke.
+    */
+
+    grid-template-rows:
+      minmax(0, 1fr)
+      auto
+      auto;
+  }
+
+
+  /*
+    Nedtellingen gjenopprettes til den opprinnelige
+    plasseringen og størrelsen.
+  */
+
+  body.desktop-page-mode
+  .countdown {
+    align-self: auto;
+
+    width: min(720px, 82%);
+
+    margin: 0 auto;
+
+    padding:
+      17px
+      0
+      5px;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item span {
+    display: inline;
+
+    line-height: 1;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item small {
+    display: inline;
+
+    margin-top: 0;
+
+    line-height: normal;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item:not(:last-child)::after {
+    top: 3px;
+    height: 36px;
+  }
+
+
+  /*
+    Kontrollene må ligge over innholdet, men ikke
+    endre kortets dimensjoner eller plassering.
+  */
+
+  .invitation-interior,
+  .screen-section,
+  .rsvp-footer-card {
+    position: relative;
+  }
+
 
   @media (max-width: 1180px) {
 
@@ -5460,67 +5497,6 @@ body.invitation-open .wax-seal {
       width: 92px;
     }
 
-  }
-
-
-  /*
-    RETTELSE AV NEDTELLINGEN PÅ INVITASJONEN
-  */
-
-  body.desktop-page-mode
-  .invitation-interior {
-    grid-template-rows:
-      minmax(0, 1fr)
-      auto;
-  }
-
-
-  body.desktop-page-mode
-  .countdown {
-    align-self: end;
-
-    width: min(720px, 72%);
-
-    margin:
-      0
-      auto
-      13px;
-
-    padding:
-      16px
-      0
-      9px;
-  }
-
-
-  body.desktop-page-mode
-  .countdown-item {
-    min-width: 0;
-  }
-
-
-  body.desktop-page-mode
-  .countdown-item span {
-    display: block;
-
-    line-height: .9;
-  }
-
-
-  body.desktop-page-mode
-  .countdown-item small {
-    display: block;
-
-    margin-top: 7px;
-
-    line-height: 1;
-  }
-
-
-  body.desktop-page-mode
-  .countdown-item:not(:last-child)::after {
-    top: 0;
-    height: 40px;
   }
 
 }

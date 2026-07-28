@@ -16,10 +16,11 @@
   --wax-dark: #4d1f29;
   --wax-light: #9a5360;
 
-  --line: rgba(52, 40, 34, .19);
-  --line-dark: rgba(52, 40, 34, .33);
+  --line: rgba(52, 40, 34, .18);
+  --line-dark: rgba(52, 40, 34, .32);
 
   --header-height: 68px;
+  --quick-nav-height: 68px;
   --content-width: 1220px;
 
   --ease: cubic-bezier(.22, 1, .36, 1);
@@ -33,7 +34,12 @@
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: var(--header-height);
+
+  scroll-padding-top:
+    calc(
+      var(--header-height) +
+      var(--quick-nav-height)
+    );
 }
 
 
@@ -85,7 +91,7 @@ textarea {
 
   pointer-events: none;
 
-  opacity: .23;
+  opacity: .22;
 
   background-image:
     repeating-linear-gradient(
@@ -110,7 +116,7 @@ textarea {
 .site-header {
   position: fixed;
   inset: 0 0 auto;
-  z-index: 500;
+  z-index: 600;
 
   min-height: var(--header-height);
 
@@ -124,7 +130,7 @@ textarea {
     0;
 
   color: var(--espresso);
-  background: rgba(245, 241, 234, .96);
+  background: rgba(245, 241, 234, .98);
 
   border-bottom: 1px solid rgba(52, 40, 34, .1);
 
@@ -154,13 +160,13 @@ body.invitation-open .site-header {
 
 .site-header.scrolled {
   box-shadow:
-    0 10px 30px rgba(52, 40, 34, .065);
+    0 10px 30px rgba(52, 40, 34, .06);
 }
 
 
 .wordmark {
   position: relative;
-  z-index: 530;
+  z-index: 630;
 
   font-family: "Bodoni Moda", serif;
   font-size: .98rem;
@@ -257,7 +263,7 @@ body.invitation-open .site-header {
   display: none;
 
   position: relative;
-  z-index: 540;
+  z-index: 640;
 
   width: 42px;
   height: 42px;
@@ -307,6 +313,113 @@ body.invitation-open .site-header {
 .menu-toggle[aria-expanded="true"] span:last-child {
   top: 21px;
   transform: rotate(-45deg);
+}
+
+
+/* HURTIGMENY */
+
+.quick-navigation {
+  position: fixed;
+  top: var(--header-height);
+  left: 50%;
+  z-index: 580;
+
+  width: min(720px, calc(100% - 32px));
+  min-height: var(--quick-nav-height);
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+
+  padding: 5px 9px;
+
+  color: var(--espresso);
+  background: rgba(251, 248, 243, .97);
+
+  border: 1px solid var(--line);
+
+  box-shadow:
+    0 12px 35px rgba(52, 40, 34, .08);
+
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+
+  opacity: 0;
+  visibility: hidden;
+
+  transform:
+    translate(-50%, -20px);
+
+  transition:
+    opacity .5s var(--ease),
+    visibility .5s var(--ease),
+    transform .5s var(--ease);
+}
+
+
+body.invitation-open .quick-navigation {
+  opacity: 1;
+  visibility: visible;
+
+  transform:
+    translate(-50%, 0);
+}
+
+
+.quick-navigation a {
+  position: relative;
+
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  padding: 5px 2px;
+
+  color: var(--espresso-soft);
+
+  border-right: 1px solid var(--line);
+}
+
+
+.quick-navigation a:last-child {
+  border-right: 0;
+}
+
+
+.quick-navigation a.active {
+  color: var(--burgundy);
+}
+
+
+.quick-navigation svg {
+  width: 20px;
+  height: 20px;
+
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.35;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+
+.quick-navigation span {
+  overflow: hidden;
+
+  max-width: 100%;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .36rem;
+  font-weight: 500;
+
+  letter-spacing: .08em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 
@@ -703,36 +816,6 @@ body.invitation-open .invitation-interior {
 }
 
 
-.continue-link {
-  position: relative;
-  z-index: 30;
-
-  grid-column: 1 / -1;
-
-  margin: 11px auto 18px;
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-
-  gap: 2px;
-
-  color: var(--burgundy);
-
-  font-family: "Montserrat", sans-serif;
-  font-size: .44rem;
-  font-weight: 500;
-
-  letter-spacing: .19em;
-  text-transform: uppercase;
-}
-
-
-.continue-link span {
-  font-size: .85rem;
-}
-
-
 /* KONVOLUTT */
 
 .invitation-cover {
@@ -896,9 +979,6 @@ body.invitation-open .envelope-top-flap {
   border-right: 1px solid rgba(52, 40, 34, .14);
 
   transform-origin: left center;
-
-  box-shadow:
-    inset -24px 0 34px rgba(52, 40, 34, .034);
 }
 
 
@@ -909,9 +989,6 @@ body.invitation-open .envelope-top-flap {
   border-left: 1px solid rgba(255, 255, 255, .62);
 
   transform-origin: right center;
-
-  box-shadow:
-    inset 24px 0 34px rgba(52, 40, 34, .034);
 }
 
 
@@ -1090,15 +1167,35 @@ body.invitation-open .wax-seal {
 }
 
 
-/* FELLES SEKSJONER */
+/* FELLES HELSKJERMSSEKSJONER */
+
+.screen-section {
+  position: relative;
+
+  min-height: 100svh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding:
+    calc(
+      var(--header-height) +
+      var(--quick-nav-height) +
+      24px
+    )
+    clamp(24px, 6vw, 90px)
+    28px;
+}
+
 
 .section-label {
-  margin: 0 0 13px;
+  margin: 0 0 8px;
 
   color: var(--burgundy);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .56rem;
+  font-size: .53rem;
   font-weight: 500;
 
   letter-spacing: .3em;
@@ -1106,415 +1203,305 @@ body.invitation-open .wax-seal {
 }
 
 
-.section-intro {
-  width: min(760px, 100%);
-
-  margin: 0 auto 48px;
+.compact-section-heading {
+  margin-bottom: clamp(22px, 3vw, 40px);
 
   text-align: center;
 }
 
 
-.section-intro h2,
-.story-introduction h2,
+.compact-section-heading h2,
 .gifts-content h2,
 .rsvp-card h2,
 .modal-heading h2 {
   margin: 0;
 
   font-family: "Bodoni Moda", serif;
-  font-size: clamp(2.9rem, 5.5vw, 5.5rem);
+  font-size: clamp(2.8rem, 5vw, 5.4rem);
   font-weight: 400;
 
   line-height: 1;
 }
 
 
-.section-intro > p:last-child,
-.story-introduction > p:last-child {
-  max-width: 600px;
+/* SEKSJONSHOPP */
 
-  margin: 19px auto 0;
-
-  color: var(--espresso-soft);
-
-  font-size: 1.01rem;
-  line-height: 1.7;
-}
-
-
-/* HISTORIEN */
-
-.story-section {
-  padding:
-    clamp(85px, 9vw, 135px)
-    clamp(24px, 6vw, 90px);
-
-  background: var(--paper-light);
-}
-
-
-.story-container {
-  width: min(1080px, 100%);
-
-  margin: 0 auto;
-}
-
-
-.story-introduction {
-  margin-bottom:
-    clamp(70px, 8vw, 110px);
-
-  text-align: center;
-}
-
-
-.story-introduction h2 {
-  font-size:
-    clamp(3.3rem, 6vw, 6.2rem);
-}
-
-
-.relationship-timeline {
+.section-jump {
   position: relative;
+
+  width: fit-content;
+
+  margin:
+    clamp(18px, 3vh, 34px)
+    auto 0;
 
   display: flex;
   flex-direction: column;
-
-  gap: 0;
-}
-
-
-.relationship-timeline::before {
-  content: "";
-
-  position: absolute;
-  top: 10px;
-  bottom: 10px;
-  left: 50%;
-
-  width: 1px;
-
-  background:
-    linear-gradient(
-      to bottom,
-      transparent,
-      var(--line-dark) 4%,
-      var(--line-dark) 96%,
-      transparent
-    );
-
-  transform: translateX(-50%);
-}
-
-
-.relationship-event {
-  position: relative;
-
-  min-height: 300px;
-
-  display: grid;
-  grid-template-columns: 1fr 110px 1fr;
   align-items: center;
 
-  gap: 35px;
-
-  padding: 45px 0;
-}
-
-
-.relationship-event:nth-child(odd) .event-date {
-  grid-column: 1;
-  text-align: right;
-}
-
-
-.relationship-event:nth-child(odd) .event-marker {
-  grid-column: 2;
-}
-
-
-.relationship-event:nth-child(odd) .event-content {
-  grid-column: 3;
-}
-
-
-.relationship-event:nth-child(even) .event-date {
-  grid-column: 3;
-  grid-row: 1;
-
-  text-align: left;
-}
-
-
-.relationship-event:nth-child(even) .event-marker {
-  grid-column: 2;
-  grid-row: 1;
-}
-
-
-.relationship-event:nth-child(even) .event-content {
-  grid-column: 1;
-  grid-row: 1;
-
-  text-align: right;
-}
-
-
-.event-date span {
-  display: block;
+  gap: 2px;
 
   color: var(--burgundy);
 
-  font-family: "Bodoni Moda", serif;
-  font-size: 3.3rem;
-
-  line-height: 1;
-}
-
-
-.event-date small {
-  display: block;
-
-  margin-top: 8px;
-
   font-family: "Montserrat", sans-serif;
-  font-size: .51rem;
+  font-size: .46rem;
   font-weight: 500;
 
-  letter-spacing: .23em;
+  letter-spacing: .19em;
   text-transform: uppercase;
 }
 
 
-.event-marker {
-  position: relative;
-  z-index: 2;
+.section-jump i {
+  font-family: inherit;
+  font-size: .95rem;
+  font-style: normal;
 
-  width: 84px;
-  height: 84px;
+  transition:
+    transform .25s ease;
+}
+
+
+.section-jump:hover i {
+  transform: translateY(4px);
+}
+
+
+.light-jump {
+  color: var(--blush-light);
+}
+
+
+.invitation-jump {
+  position: relative;
+  z-index: 30;
+
+  grid-column: 1 / -1;
+
+  margin:
+    11px auto 18px;
+}
+
+
+/* HISTORIE */
+
+.story-section {
+  background: var(--paper-light);
+}
+
+
+.compact-history-grid {
+  position: relative;
+
+  width: min(1060px, 100%);
+
+  margin: 0 auto;
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+}
+
+
+.history-moment {
+  position: relative;
+
+  min-height: 190px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px 14px;
+
+  text-align: center;
+
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+
+.history-icon {
+  width: 45px;
+  height: 45px;
 
   display: grid;
   place-items: center;
 
-  justify-self: center;
+  margin-bottom: 9px;
 
   color: var(--burgundy);
 
-  background: var(--paper-light);
-
   border: 1px solid var(--line-dark);
   border-radius: 50%;
-
-  box-shadow:
-    0 0 0 10px var(--paper-light);
 }
 
 
-.event-marker svg {
-  width: 48px;
-  height: 48px;
+.history-icon svg {
+  width: 25px;
+  height: 25px;
 
   fill: none;
-
   stroke: currentColor;
-  stroke-width: 1.7;
+  stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
 
 
-.event-content {
-  max-width: 390px;
-}
-
-
-.event-number {
-  margin: 0 0 8px;
-
+.history-moment time {
   color: var(--burgundy);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .49rem;
+  font-size: .44rem;
   font-weight: 500;
 
-  letter-spacing: .25em;
+  letter-spacing: .18em;
   text-transform: uppercase;
 }
 
 
-.event-content h3 {
-  margin: 0 0 13px;
+.history-moment h3 {
+  margin: 8px 0 0;
 
   font-family: "Bodoni Moda", serif;
-  font-size: clamp(1.9rem, 3vw, 3rem);
+  font-size: clamp(1.15rem, 2vw, 1.75rem);
   font-weight: 400;
 
   line-height: 1.1;
 }
 
 
-.event-content > p:last-child {
-  margin: 0;
-
-  color: var(--espresso-soft);
-
-  font-size: 1.03rem;
-  line-height: 1.7;
-}
-
-
-.timeline-photo {
-  margin: 28px 0 0;
-  padding: 10px;
-
-  background: var(--paper);
-
-  border: 1px solid var(--line);
-}
-
-
-.timeline-photo img {
-  width: 100%;
-  aspect-ratio: 4 / 5;
-
-  object-fit: cover;
-  object-position: center 38%;
-}
-
-
-.timeline-photo figcaption {
-  padding: 10px 4px 2px;
-
-  font-family: "Montserrat", sans-serif;
-  font-size: .43rem;
-  font-weight: 500;
-
-  letter-spacing: .2em;
-  text-align: center;
-  text-transform: uppercase;
-}
-
-
-.relationship-event.featured-event {
-  align-items: start;
-}
-
-
-.relationship-event.wedding-event
-.event-marker {
+.final-moment {
   color: var(--paper-light);
   background: var(--burgundy);
+}
 
-  border-color: var(--burgundy);
 
-  box-shadow:
-    0 0 0 10px var(--paper-light);
+.final-moment time {
+  color: var(--blush-light);
+}
+
+
+.final-moment .history-icon {
+  color: var(--paper-light);
+
+  border-color:
+    rgba(255, 255, 255, .45);
 }
 
 
 /* PROGRAM */
-
-.content-section {
-  padding:
-    clamp(85px, 9vw, 135px)
-    clamp(24px, 6vw, 90px);
-}
-
 
 .program-section {
   background: var(--blush-light);
 }
 
 
-.timeline {
-  width: min(850px, 100%);
+.program-grid {
+  width: min(1060px, 100%);
 
   margin: 0 auto;
-}
 
-
-.timeline-item {
   display: grid;
-  grid-template-columns: 130px 25px 1fr;
-
-  gap: 23px;
-
-  padding: 27px 0;
+  grid-template-columns: repeat(4, 1fr);
 
   border-top: 1px solid var(--line);
+  border-left: 1px solid var(--line);
 }
 
 
-.timeline-item:last-child {
+.program-card {
+  min-height: 310px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 28px 22px;
+
+  text-align: center;
+
+  border-right: 1px solid var(--line);
   border-bottom: 1px solid var(--line);
 }
 
 
-.timeline-time {
-  padding-top: 5px;
+.program-number {
+  color: var(--burgundy);
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .43rem;
+  font-weight: 500;
+
+  letter-spacing: .2em;
+}
+
+
+.program-card time {
+  margin: 13px 0 11px;
 
   color: var(--burgundy);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .5rem;
+  font-size: .48rem;
   font-weight: 500;
 
-  letter-spacing: .2em;
+  letter-spacing: .16em;
   text-transform: uppercase;
 }
 
 
-.timeline-dot {
-  position: relative;
+.program-icon {
+  width: 50px;
+  height: 50px;
 
-  width: 9px;
-  height: 9px;
+  display: grid;
+  place-items: center;
 
-  margin-top: 7px;
+  margin-bottom: 13px;
 
-  border: 1px solid var(--burgundy);
+  color: var(--burgundy);
+
+  border: 1px solid rgba(101, 47, 59, .3);
   border-radius: 50%;
 }
 
 
-.timeline-dot::after {
-  content: "";
+.program-icon svg {
+  width: 29px;
+  height: 29px;
 
-  position: absolute;
-  top: 8px;
-  left: 3px;
-
-  width: 1px;
-  height: 86px;
-
-  background: var(--line);
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 
-.timeline-item:last-child .timeline-dot::after {
-  display: none;
-}
-
-
-.timeline-item h3,
-.information-card h3 {
-  margin: 0 0 6px;
+.program-card h3 {
+  margin: 0;
 
   font-family: "Bodoni Moda", serif;
-  font-size: 1.55rem;
+  font-size: clamp(1.45rem, 2.4vw, 2.1rem);
   font-weight: 400;
+
+  line-height: 1.1;
 }
 
 
-.timeline-item p,
-.information-card p {
-  margin: 0;
+.program-card p {
+  margin: 9px 0 0;
 
   color: var(--espresso-soft);
 
-  font-size: .97rem;
-  line-height: 1.65;
+  font-size: .95rem;
+  line-height: 1.4;
 }
 
 
@@ -1539,11 +1526,16 @@ body.invitation-open .wax-seal {
 
 
 .information-card {
-  min-height: 260px;
+  min-height: 285px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 
   padding:
-    clamp(30px, 3.3vw, 46px)
-    clamp(22px, 2.6vw, 36px);
+    clamp(24px, 3vw, 42px)
+    clamp(18px, 2vw, 30px);
 
   text-align: center;
 
@@ -1555,25 +1547,40 @@ body.invitation-open .wax-seal {
 .information-card > span {
   display: block;
 
-  margin-bottom: 27px;
+  margin-bottom: 20px;
 
   color: var(--burgundy);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .5rem;
+  font-size: .48rem;
   font-weight: 500;
 
   letter-spacing: .2em;
 }
 
 
-/* GAVEØNSKER */
+.information-card h3 {
+  margin: 0 0 10px;
+
+  font-family: "Bodoni Moda", serif;
+  font-size: clamp(1.5rem, 2.2vw, 2rem);
+  font-weight: 400;
+}
+
+
+.information-card p {
+  margin: 0;
+
+  color: var(--espresso-soft);
+
+  font-size: .94rem;
+  line-height: 1.5;
+}
+
+
+/* GAVER */
 
 .gifts-section {
-  padding:
-    clamp(80px, 8vw, 125px)
-    24px;
-
   color: var(--paper);
   background: var(--burgundy-dark);
 }
@@ -1582,7 +1589,7 @@ body.invitation-open .wax-seal {
 .gifts-content {
   width: min(760px, 100%);
 
-  margin: 0 auto;
+  margin: auto;
 
   text-align: center;
 }
@@ -1599,35 +1606,36 @@ body.invitation-open .wax-seal {
 
 
 .gifts-content p {
-  max-width: 670px;
+  max-width: 680px;
 
-  margin: 18px auto 0;
+  margin: 16px auto 0;
 
   color: var(--paper-shadow);
 
-  font-size: 1.03rem;
-  line-height: 1.75;
+  font-size: 1.01rem;
+  line-height: 1.65;
 }
 
 
 .gifts-content .gifts-lead {
-  margin-top: 27px;
+  margin-top: 25px;
 
   color: var(--paper-light);
 
-  font-size: 1.26rem;
+  font-size: 1.2rem;
   font-style: italic;
 }
 
 
 .gift-button {
-  width: fit-content;
+  width: min(520px, 100%);
 
-  margin: 36px auto 0;
+  margin: 29px auto 0;
   padding: 16px 25px;
 
   display: flex;
   align-items: center;
+  justify-content: center;
 
   gap: 20px;
 
@@ -1642,39 +1650,30 @@ body.invitation-open .wax-seal {
   text-transform: uppercase;
 
   border: 1px solid var(--paper-light);
-
-  transition:
-    color .3s ease,
-    background-color .3s ease;
 }
 
 
-.gift-button:not(.disabled-link):hover {
-  color: var(--paper-light);
-  background: transparent;
-}
-
-
-.gift-button span {
+.gift-button i {
   font-size: 1rem;
+  font-style: normal;
 }
 
 
 .disabled-link {
   cursor: default;
-  opacity: .7;
+  opacity: .76;
 }
 
 
 .gift-link-note {
   display: block;
 
-  margin-top: 12px;
+  margin-top: 11px;
 
   color: var(--blush);
 
   font-family: "Montserrat", sans-serif;
-  font-size: .43rem;
+  font-size: .42rem;
 
   letter-spacing: .18em;
   text-transform: uppercase;
@@ -1684,36 +1683,38 @@ body.invitation-open .wax-seal {
 /* RSVP */
 
 .rsvp-section {
-  padding:
-    clamp(80px, 8vw, 120px)
-    24px;
-
   background: var(--paper-light);
 }
 
 
 .rsvp-card {
-  width: min(820px, 100%);
+  width: min(760px, 100%);
 
-  margin: 0 auto;
+  margin: auto;
   padding:
-    clamp(52px, 6vw, 78px)
-    clamp(25px, 7vw, 80px);
+    clamp(55px, 7vw, 90px)
+    clamp(28px, 7vw, 80px);
 
   text-align: center;
 
-  border: 1px solid var(--line);
+  background: var(--blush-light);
+
+  border: 1px solid rgba(101, 47, 59, .2);
 
   box-shadow:
-    inset 0 0 0 8px var(--paper-light),
-    inset 0 0 0 9px rgba(101, 47, 59, .14);
+    0 30px 70px rgba(52, 40, 34, .13),
+    inset 0 0 0 8px var(--blush-light),
+    inset 0 0 0 9px rgba(101, 47, 59, .15);
+
+  transform:
+    translateY(-5px);
 }
 
 
 .rsvp-card > p:not(.section-label) {
   max-width: 540px;
 
-  margin: 23px auto;
+  margin: 22px auto;
 
   color: var(--espresso-soft);
 
@@ -1750,6 +1751,49 @@ body.invitation-open .wax-seal {
 .form-submit:hover {
   color: var(--burgundy);
   background: transparent;
+}
+
+
+/* FOOTER */
+
+.site-footer {
+  padding:
+    42px 24px
+    calc(42px + env(safe-area-inset-bottom));
+
+  color: var(--espresso);
+  background: var(--paper);
+
+  text-align: center;
+
+  border-top: 1px solid var(--line);
+}
+
+
+.site-footer p {
+  margin: 5px 0;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: .46rem;
+  font-weight: 500;
+
+  letter-spacing: .23em;
+  text-transform: uppercase;
+}
+
+
+.footer-names {
+  margin-bottom: 12px !important;
+
+  color: var(--burgundy);
+
+  font-family: "Allura", cursive !important;
+  font-size: clamp(2.6rem, 5vw, 4rem) !important;
+  font-weight: 400 !important;
+
+  line-height: 1 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
 }
 
 
@@ -2049,55 +2093,16 @@ body.invitation-open .wax-seal {
 }
 
 
-/* FOOTER */
-
-.site-footer {
-  padding:
-    58px 24px
-    calc(58px + env(safe-area-inset-bottom));
-
-  color: var(--paper);
-  background: var(--espresso);
-
-  text-align: center;
-}
-
-
-.site-footer p {
-  margin: 6px 0;
-
-  font-family: "Montserrat", sans-serif;
-  font-size: .48rem;
-  font-weight: 500;
-
-  letter-spacing: .23em;
-  text-transform: uppercase;
-}
-
-
-.footer-names {
-  margin-bottom: 14px !important;
-
-  font-family: "Allura", cursive !important;
-  font-size: clamp(2.8rem, 5vw, 4.3rem) !important;
-  font-weight: 400 !important;
-
-  line-height: 1 !important;
-  letter-spacing: 0 !important;
-  text-transform: none !important;
-}
-
-
 /* SCROLLANIMASJON */
 
 .reveal {
   opacity: 0;
 
-  transform: translateY(24px);
+  transform: translateY(19px);
 
   transition:
-    opacity .8s var(--ease),
-    transform .8s var(--ease);
+    opacity .7s var(--ease),
+    transform .7s var(--ease);
 }
 
 
@@ -2117,8 +2122,7 @@ body.invitation-open .wax-seal {
   }
 
   .inside-panel {
-    padding:
-      29px 22px;
+    padding: 29px 22px;
   }
 
   .inside-information p,
@@ -2136,12 +2140,14 @@ body.invitation-open .wax-seal {
 
   :root {
     --header-height: 64px;
+    --quick-nav-height: 58px;
   }
 
   html {
     scroll-padding-top:
       calc(
         var(--header-height) +
+        var(--quick-nav-height) +
         env(safe-area-inset-top)
       );
   }
@@ -2173,7 +2179,7 @@ body.invitation-open .wax-seal {
   .main-navigation {
     position: fixed;
     inset: 0;
-    z-index: 510;
+    z-index: 610;
 
     min-height: 100dvh;
 
@@ -2246,7 +2252,35 @@ body.invitation-open .wax-seal {
   }
 
 
-  /* MOBILINVITASJON */
+  /* HURTIGMENY MOBIL */
+
+  .quick-navigation {
+    top:
+      calc(
+        var(--header-height) +
+        env(safe-area-inset-top)
+      );
+
+    width: calc(100% - 16px);
+    min-height: var(--quick-nav-height);
+
+    padding: 4px;
+
+    border-radius: 0;
+  }
+
+  .quick-navigation svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .quick-navigation span {
+    font-size: .31rem;
+    letter-spacing: .04em;
+  }
+
+
+  /* INVITASJON MOBIL */
 
   .invitation-section {
     min-height: 100svh;
@@ -2287,28 +2321,28 @@ body.invitation-open .wax-seal {
 
     padding:
       calc(
-        76px +
+        73px +
         env(safe-area-inset-top)
       )
       24px
-      27px;
+      22px;
 
     justify-content: flex-start;
   }
 
   .invitation-eyebrow {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .harmonien-illustration {
     width: min(410px, 92%);
-    max-height: 205px;
+    max-height: 195px;
 
-    margin-bottom: 5px;
+    margin-bottom: 3px;
   }
 
   .inside-center h1 {
-    font-size: clamp(3.65rem, 17vw, 5.2rem);
+    font-size: clamp(3.5rem, 16vw, 4.9rem);
   }
 
   .inside-center h1 span {
@@ -2318,62 +2352,54 @@ body.invitation-open .wax-seal {
   .inside-center h1 em {
     display: block;
 
-    margin: .1em 0 .02em;
+    margin: .05em 0 0;
 
-    font-size: .48em;
+    font-size: .43em;
   }
 
   .invitation-request {
     max-width: 320px;
 
-    margin: 19px auto 12px;
+    margin: 16px auto 10px;
 
-    line-height: 1.65;
+    line-height: 1.55;
   }
 
   .wedding-day {
-    font-size: 2.75rem;
+    font-size: 2.6rem;
   }
 
   .venue {
-    margin-top: 11px;
+    margin-top: 9px;
   }
 
   .countdown {
     width: calc(100% - 36px);
 
     margin-top: 0;
-    padding-top: 15px;
+    padding-top: 13px;
   }
 
   .countdown-item span {
-    font-size: 1.55rem;
+    font-size: 1.48rem;
   }
 
   .countdown-item small {
-    font-size: .36rem;
-    letter-spacing: .1em;
+    font-size: .34rem;
+    letter-spacing: .08em;
   }
 
   .countdown-item:not(:last-child)::after {
-    height: 28px;
+    height: 27px;
   }
 
-  .continue-link {
+  .invitation-jump {
     margin:
-      13px auto
+      10px auto
       calc(
-        26px +
+        20px +
         env(safe-area-inset-bottom)
       );
-  }
-
-  .cover-door-left .cover-content {
-    transform: translateX(-2%);
-  }
-
-  .cover-door-right .cover-content {
-    transform: translateX(2%);
   }
 
   .cover-initial {
@@ -2382,7 +2408,6 @@ body.invitation-open .wax-seal {
 
   .cover-detail {
     margin-top: 25px;
-
     font-size: .48rem;
   }
 
@@ -2394,198 +2419,209 @@ body.invitation-open .wax-seal {
   }
 
 
-  /* MOBIL HISTORIE */
+  /* HELSKJERMSSEKSJONER MOBIL */
 
-  .story-section,
-  .content-section {
+  .screen-section {
+    min-height: 100svh;
+
     padding:
-      76px 22px;
+      calc(
+        var(--header-height) +
+        var(--quick-nav-height) +
+        env(safe-area-inset-top) +
+        14px
+      )
+      18px
+      calc(
+        20px +
+        env(safe-area-inset-bottom)
+      );
   }
 
-  .story-introduction {
-    margin-bottom: 62px;
+  .compact-section-heading {
+    margin-bottom: 15px;
   }
 
-  .story-introduction h2,
-  .section-intro h2 {
-    font-size: clamp(2.8rem, 13vw, 4.2rem);
-
-    line-height: 1.02;
+  .compact-section-heading h2 {
+    font-size: clamp(2.45rem, 11vw, 3.55rem);
   }
 
-  .relationship-timeline::before {
-    left: 39px;
+  .section-label {
+    margin-bottom: 5px;
 
-    transform: none;
+    font-size: .43rem;
   }
 
-  .relationship-event {
-    min-height: auto;
+  .section-jump {
+    margin-top: 14px;
 
-    grid-template-columns: 78px 1fr;
-    align-items: start;
-
-    gap: 25px;
-
-    padding: 38px 0;
-  }
-
-  .relationship-event:nth-child(odd)
-  .event-date,
-  .relationship-event:nth-child(even)
-  .event-date {
-    grid-column: 1;
-    grid-row: 1;
-
-    text-align: center;
-  }
-
-  .relationship-event:nth-child(odd)
-  .event-marker,
-  .relationship-event:nth-child(even)
-  .event-marker {
-    position: absolute;
-    top: 103px;
-    left: 17px;
-
-    grid-column: auto;
-    grid-row: auto;
-  }
-
-  .relationship-event:nth-child(odd)
-  .event-content,
-  .relationship-event:nth-child(even)
-  .event-content {
-    grid-column: 2;
-    grid-row: 1;
-
-    max-width: none;
-
-    text-align: left;
-  }
-
-  .event-date span {
-    font-size: 2.35rem;
-  }
-
-  .event-date small {
     font-size: .38rem;
-    letter-spacing: .12em;
-  }
-
-  .event-marker {
-    width: 45px;
-    height: 45px;
-
-    box-shadow:
-      0 0 0 7px var(--paper-light);
-  }
-
-  .event-marker svg {
-    width: 27px;
-    height: 27px;
-  }
-
-  .event-content {
-    padding-top: 5px;
-  }
-
-  .event-content h3 {
-    font-size: 1.85rem;
-  }
-
-  .event-content > p:last-child {
-    font-size: .98rem;
-    line-height: 1.65;
-  }
-
-  .timeline-photo {
-    margin-top: 20px;
   }
 
 
-  /* MOBIL PROGRAM */
+  /* HISTORIE 2 × 4 */
 
-  .section-intro {
-    margin-bottom: 38px;
+  .compact-history-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .timeline-item {
-    grid-template-columns: 1fr;
+  .history-moment {
+    min-height: 120px;
 
-    gap: 7px;
-
-    padding: 23px 0;
+    padding: 11px 8px;
   }
 
-  .timeline-dot {
-    display: none;
+  .history-icon {
+    width: 35px;
+    height: 35px;
+
+    margin-bottom: 5px;
   }
 
-  .timeline-time {
-    padding-top: 0;
+  .history-icon svg {
+    width: 20px;
+    height: 20px;
   }
 
-  .timeline-item h3 {
-    font-size: 1.45rem;
+  .history-moment time {
+    font-size: .35rem;
+    letter-spacing: .09em;
+  }
+
+  .history-moment h3 {
+    margin-top: 5px;
+
+    font-size: clamp(.97rem, 4.2vw, 1.25rem);
   }
 
 
-  /* 2 x 2 PRAKTISKE BOKSER */
+  /* PROGRAM 2 × 2 */
+
+  .program-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .program-card {
+    min-height: 210px;
+
+    padding: 15px 10px;
+  }
+
+  .program-number {
+    font-size: .35rem;
+  }
+
+  .program-card time {
+    margin: 8px 0;
+
+    font-size: .36rem;
+  }
+
+  .program-icon {
+    width: 39px;
+    height: 39px;
+
+    margin-bottom: 8px;
+  }
+
+  .program-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .program-card h3 {
+    font-size: clamp(1.05rem, 4.8vw, 1.38rem);
+  }
+
+  .program-card p {
+    margin-top: 5px;
+
+    font-size: .77rem;
+    line-height: 1.25;
+  }
+
+
+  /* PRAKTISK 2 × 2 */
+
+  .practical-section {
+    justify-content: flex-start;
+  }
 
   .information-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 
   .information-card {
-    min-height: 250px;
+    min-height: 235px;
 
-    padding: 27px 16px;
+    padding: 18px 10px;
   }
 
   .information-card > span {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
+
+    font-size: .37rem;
   }
 
   .information-card h3 {
-    font-size: 1.35rem;
+    margin-bottom: 6px;
+
+    font-size: clamp(1.12rem, 5vw, 1.4rem);
   }
 
   .information-card p {
-    font-size: .86rem;
-    line-height: 1.5;
+    font-size: .78rem;
+    line-height: 1.38;
   }
 
 
-  /* GAVER OG RSVP */
+  /* GAVER */
 
   .gifts-section {
-    padding:
-      76px 23px;
+    justify-content: center;
   }
 
   .gifts-content h2 {
-    font-size: clamp(3.2rem, 14vw, 4.5rem);
+    font-size: clamp(3rem, 14vw, 4.1rem);
+  }
+
+  .gifts-content p {
+    margin-top: 12px;
+
+    font-size: .9rem;
+    line-height: 1.48;
+  }
+
+  .gifts-content .gifts-lead {
+    margin-top: 18px;
+
+    font-size: 1.02rem;
   }
 
   .gift-button {
     width: 100%;
 
+    margin-top: 21px;
+  }
+
+
+  /* RSVP */
+
+  .rsvp-section {
     justify-content: center;
   }
 
-  .rsvp-section {
-    padding:
-      72px 20px;
-  }
-
   .rsvp-card {
-    padding:
-      55px 24px;
+    width: calc(100% - 8px);
+
+    margin: auto;
+    padding: 52px 24px;
+
+    transform: none;
   }
 
 
-  /* MOBIL POPUP */
+  /* POPUP */
 
   .rsvp-modal {
     padding: 0;
@@ -2643,9 +2679,72 @@ body.invitation-open .wax-seal {
 }
 
 
+/* LAVE MOBILSKJERMER */
+
+@media (max-width: 760px) and (max-height: 760px) {
+
+  .screen-section {
+    padding-top:
+      calc(
+        var(--header-height) +
+        var(--quick-nav-height) +
+        env(safe-area-inset-top) +
+        7px
+      );
+  }
+
+  .compact-section-heading {
+    margin-bottom: 8px;
+  }
+
+  .compact-section-heading h2 {
+    font-size: 2.35rem;
+  }
+
+  .history-moment {
+    min-height: 102px;
+  }
+
+  .history-icon {
+    width: 29px;
+    height: 29px;
+  }
+
+  .history-icon svg {
+    width: 17px;
+    height: 17px;
+  }
+
+  .program-card {
+    min-height: 175px;
+  }
+
+  .information-card {
+    min-height: 195px;
+  }
+
+  .section-jump {
+    margin-top: 8px;
+  }
+
+}
+
+
 /* SMÅ MOBILER */
 
 @media (max-width: 390px) {
+
+  .quick-navigation span {
+    display: none;
+  }
+
+  .quick-navigation {
+    min-height: 45px;
+  }
+
+  :root {
+    --quick-nav-height: 45px;
+  }
 
   .inside-center {
     padding-left: 18px;
@@ -2653,11 +2752,11 @@ body.invitation-open .wax-seal {
   }
 
   .harmonien-illustration {
-    max-height: 175px;
+    max-height: 170px;
   }
 
   .inside-center h1 {
-    font-size: 3.65rem;
+    font-size: 3.45rem;
   }
 
   .wax-seal {
@@ -2665,18 +2764,14 @@ body.invitation-open .wax-seal {
     height: 80px;
   }
 
-  .cover-detail {
-    letter-spacing: .25em;
-  }
-
   .information-card {
-    min-height: 235px;
+    min-height: 220px;
 
-    padding: 23px 12px;
+    padding: 15px 7px;
   }
 
   .information-card p {
-    font-size: .81rem;
+    font-size: .72rem;
   }
 
 }

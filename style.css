@@ -5096,3 +5096,81 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* ==================================================
+   RETTELSE: SENTRER INVITASJONEN PÅ DESKTOP
+   OG SKJULER FOOTEREN I KORTVISNINGEN
+================================================== */
+
+@media (min-width: 761px) {
+
+  /*
+    Invitasjonssiden fyller hele skjermbredden og
+    skal derfor ikke plasseres fra left: 50 %.
+  */
+
+  body.desktop-page-mode
+  .invitation-section {
+    left: 0;
+    right: 0;
+
+    transform: none;
+  }
+
+
+  body.desktop-page-mode
+  .invitation-section.desktop-page-active {
+    transform: none;
+  }
+
+
+  body.desktop-page-mode
+  .invitation-section.desktop-page-before {
+    transform:
+      translate3d(
+        -52px,
+        0,
+        0
+      );
+  }
+
+
+  body.desktop-page-mode
+  .invitation-section.desktop-page-after {
+    transform:
+      translate3d(
+        52px,
+        0,
+        0
+      );
+  }
+
+
+  /*
+    Avslutningsfeltet skjules kun i desktop-
+    kortvisningen. Mobilversjonen er urørt.
+  */
+
+  body.desktop-page-mode
+  .site-footer {
+    display: none !important;
+  }
+
+
+  /*
+    RSVP trenger ikke lenger å reservere plass
+    til footeren nederst.
+  */
+
+  body.desktop-page-mode
+  .rsvp-footer-card {
+    display: block;
+  }
+
+
+  body.desktop-page-mode
+  .rsvp-footer-card
+  .rsvp-section {
+    height: 100%;
+  }
+
+}

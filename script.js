@@ -1501,3 +1501,314 @@ desktopPageMedia.addEventListener(
 
 
 initializeDesktopPages();
+/*
+  ==================================================
+  DESKTOP: BLA MED VENSTRE OG HØYRE SIDEFELT
+  ==================================================
+*/
+
+const createDesktopPageControls = () => {
+
+  if (
+    document.querySelector(
+      "[data-desktop-page-controls]"
+    )
+  ) {
+    return;
+  }
+
+  const controls =
+    document.createElement("div");
+
+  controls.className =
+    "desktop-page-controls";
+
+  controls.setAttribute(
+    "data-desktop-page-controls",
+    ""
+  );
+
+  controls.setAttribute(
+    "aria-label",
+    "Bla mellom sidene"
+  );
+
+
+  const previousButton =
+    document.createElement("button");
+
+  previousButton.type = "button";
+
+  previousButton.className =
+    "desktop-page-control desktop-page-control-previous";
+
+  previousButton.setAttribute(
+    "data-desktop-page-previous",
+    ""
+  );
+
+  previousButton.setAttribute(
+    "aria-label",
+    "Forrige side"
+  );
+
+  previousButton.innerHTML = `
+    <span class="desktop-page-control-arrow" aria-hidden="true">←</span>
+    <span class="desktop-page-control-label">Forrige</span>
+  `;
+
+
+  const nextButton =
+    document.createElement("button");
+
+  nextButton.type = "button";
+
+  nextButton.className =
+    "desktop-page-control desktop-page-control-next";
+
+  nextButton.setAttribute(
+    "data-desktop-page-next",
+    ""
+  );
+
+  nextButton.setAttribute(
+    "aria-label",
+    "Neste side"
+  );
+
+  nextButton.innerHTML = `
+    <span class="desktop-page-control-label">Neste</span>
+    <span class="desktop-page-control-arrow" aria-hidden="true">→</span>
+  `;
+
+
+  controls.append(
+    previousButton,
+    nextButton
+  );
+
+  body.appendChild(controls);
+
+
+  const updateDesktopPageControls = () => {
+
+    if (!desktopPageMedia.matches) {
+      return;
+    }
+
+    const currentIndex =
+      getDesktopPageIndex(
+        activeDesktopPageId
+      );
+
+    const hasPrevious =
+      currentIndex > 0;
+
+    const hasNext =
+      currentIndex <
+      desktopPageIds.length - 1;
+
+    previousButton.disabled =
+      !hasPrevious;
+
+    nextButton.disabled =
+      !hasNext;
+
+    previousButton.setAttribute(
+      "aria-hidden",
+      String(!hasPrevious)
+    );
+
+    nextButton.setAttribute(
+      "aria-hidden",
+      String(!hasNext)
+    );
+
+  };
+
+
+  const moveDesktopPage = (
+    direction
+  ) => {
+
+    if (!desktopPageMedia.matches) {
+      return;
+    }
+
+    const currentIndex =
+      getDesktopPageIndex(
+        activeDesktopPageId
+      );
+
+    const nextIndex =
+      currentIndex + direction;
+
+    if (
+      nextIndex < 0 ||
+      nextIndex >= desktopPageIds.length
+    ) {
+      return;
+    }
+
+    showDesktopPage(
+      desktopPageIds[nextIndex]
+    );
+
+    window.setTimeout(
+      updateDesktopPageControls,
+      20
+    );
+
+  };
+
+
+  previousButton.addEventListener(
+    "click",
+    () => {
+
+      moveDesktopPage(-1);
+
+    }
+  );
+
+
+  nextButton.addEventListener(
+    "click",
+    () => {
+
+      moveDesktopPage(1);
+
+    }
+  );
+
+
+  previousButton.addEventListener(
+    "mouseenter",
+    () => {
+
+      if (previousButton.disabled) {
+        return;
+      }
+
+      body.classList.add(
+        "desktop-page-hover-previous"
+      );
+
+    }
+  );
+
+
+  previousButton.addEventListener(
+    "mouseleave",
+    () => {
+
+      body.classList.remove(
+        "desktop-page-hover-previous"
+      );
+
+    }
+  );
+
+
+  nextButton.addEventListener(
+    "mouseenter",
+    () => {
+
+      if (nextButton.disabled) {
+        return;
+      }
+
+      body.classList.add(
+        "desktop-page-hover-next"
+      );
+
+    }
+  );
+
+
+  nextButton.addEventListener(
+    "mouseleave",
+    () => {
+
+      body.classList.remove(
+        "desktop-page-hover-next"
+      );
+
+    }
+  );
+
+
+  document.addEventListener(
+    "keydown",
+    (event) => {
+
+      if (
+        !desktopPageMedia.matches ||
+        body.classList.contains(
+          "modal-open"
+        ) ||
+        body.classList.contains(
+          "menu-open"
+        )
+      ) {
+        return;
+      }
+
+      if (event.key === "ArrowLeft") {
+
+        moveDesktopPage(-1);
+
+      }
+
+      if (event.key === "ArrowRight") {
+
+        moveDesktopPage(1);
+
+      }
+
+    }
+  );
+
+
+  const desktopPageObserver =
+    new MutationObserver(
+      updateDesktopPageControls
+    );
+
+
+  desktopPageIds.forEach(
+    (pageId) => {
+
+      const page =
+        getDesktopPage(pageId);
+
+      if (!page) {
+        return;
+      }
+
+      desktopPageObserver.observe(
+        page,
+        {
+          attributes: true,
+          attributeFilter: [
+            "class"
+          ]
+        }
+      );
+
+    }
+  );
+
+
+  desktopPageMedia.addEventListener(
+    "change",
+    updateDesktopPageControls
+  );
+
+
+  updateDesktopPageControls();
+
+};
+
+
+createDesktopPageControls();

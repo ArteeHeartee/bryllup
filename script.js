@@ -1503,19 +1503,21 @@ desktopPageMedia.addEventListener(
 initializeDesktopPages();
 /*
   ==================================================
-  DESKTOP: BLA MED VENSTRE OG HØYRE SIDEFELT
+  DESKTOP: BLA DIREKTE PÅ DET AKTIVE KORTET
   ==================================================
 */
 
 const createDesktopPageControls = () => {
 
-  if (
+  const existingControls =
     document.querySelector(
       "[data-desktop-page-controls]"
-    )
-  ) {
-    return;
+    );
+
+  if (existingControls) {
+    existingControls.remove();
   }
+
 
   const controls =
     document.createElement("div");
@@ -1543,18 +1545,21 @@ const createDesktopPageControls = () => {
     "desktop-page-control desktop-page-control-previous";
 
   previousButton.setAttribute(
-    "data-desktop-page-previous",
-    ""
-  );
-
-  previousButton.setAttribute(
     "aria-label",
     "Forrige side"
   );
 
   previousButton.innerHTML = `
-    <span class="desktop-page-control-arrow" aria-hidden="true">←</span>
-    <span class="desktop-page-control-label">Forrige</span>
+    <span
+      class="desktop-page-control-arrow"
+      aria-hidden="true"
+    >
+      ←
+    </span>
+
+    <span class="desktop-page-control-label">
+      Forrige
+    </span>
   `;
 
 
@@ -1567,18 +1572,21 @@ const createDesktopPageControls = () => {
     "desktop-page-control desktop-page-control-next";
 
   nextButton.setAttribute(
-    "data-desktop-page-next",
-    ""
-  );
-
-  nextButton.setAttribute(
     "aria-label",
     "Neste side"
   );
 
   nextButton.innerHTML = `
-    <span class="desktop-page-control-label">Neste</span>
-    <span class="desktop-page-control-arrow" aria-hidden="true">→</span>
+    <span class="desktop-page-control-label">
+      Neste
+    </span>
+
+    <span
+      class="desktop-page-control-arrow"
+      aria-hidden="true"
+    >
+      →
+    </span>
   `;
 
 
@@ -1587,7 +1595,53 @@ const createDesktopPageControls = () => {
     nextButton
   );
 
-  body.appendChild(controls);
+
+  const getDesktopControlsHost = (
+    pageId
+  ) => {
+
+    const page =
+      getDesktopPage(pageId);
+
+    if (!page) {
+      return null;
+    }
+
+    if (pageId === "invitasjon") {
+
+      return page.querySelector(
+        ".invitation-interior"
+      );
+
+    }
+
+    return page;
+
+  };
+
+
+  const mountDesktopControls = () => {
+
+    if (!desktopPageMedia.matches) {
+      return;
+    }
+
+    const host =
+      getDesktopControlsHost(
+        activeDesktopPageId
+      );
+
+    if (!host) {
+      return;
+    }
+
+    if (controls.parentElement !== host) {
+
+      host.appendChild(controls);
+
+    }
+
+  };
 
 
   const updateDesktopPageControls = () => {
@@ -1595,6 +1649,9 @@ const createDesktopPageControls = () => {
     if (!desktopPageMedia.matches) {
       return;
     }
+
+    mountDesktopControls();
+
 
     const currentIndex =
       getDesktopPageIndex(
@@ -1608,11 +1665,13 @@ const createDesktopPageControls = () => {
       currentIndex <
       desktopPageIds.length - 1;
 
+
     previousButton.disabled =
       !hasPrevious;
 
     nextButton.disabled =
       !hasNext;
+
 
     previousButton.setAttribute(
       "aria-hidden",
@@ -1622,6 +1681,12 @@ const createDesktopPageControls = () => {
     nextButton.setAttribute(
       "aria-hidden",
       String(!hasNext)
+    );
+
+
+    body.classList.remove(
+      "desktop-page-hover-previous",
+      "desktop-page-hover-next"
     );
 
   };
@@ -1643,6 +1708,7 @@ const createDesktopPageControls = () => {
     const nextIndex =
       currentIndex + direction;
 
+
     if (
       nextIndex < 0 ||
       nextIndex >= desktopPageIds.length
@@ -1650,13 +1716,14 @@ const createDesktopPageControls = () => {
       return;
     }
 
+
     showDesktopPage(
       desktopPageIds[nextIndex]
     );
 
-    window.setTimeout(
-      updateDesktopPageControls,
-      20
+
+    window.requestAnimationFrame(
+      updateDesktopPageControls
     );
 
   };
@@ -1664,7 +1731,10 @@ const createDesktopPageControls = () => {
 
   previousButton.addEventListener(
     "click",
-    () => {
+    (event) => {
+
+      event.preventDefault();
+      event.stopPropagation();
 
       moveDesktopPage(-1);
 
@@ -1674,7 +1744,10 @@ const createDesktopPageControls = () => {
 
   nextButton.addEventListener(
     "click",
-    () => {
+    (event) => {
+
+      event.preventDefault();
+      event.stopPropagation();
 
       moveDesktopPage(1);
 
@@ -1754,13 +1827,19 @@ const createDesktopPageControls = () => {
         return;
       }
 
+
       if (event.key === "ArrowLeft") {
+
+        event.preventDefault();
 
         moveDesktopPage(-1);
 
       }
 
+
       if (event.key === "ArrowRight") {
+
+        event.preventDefault();
 
         moveDesktopPage(1);
 
@@ -1802,7 +1881,19 @@ const createDesktopPageControls = () => {
 
   desktopPageMedia.addEventListener(
     "change",
-    updateDesktopPageControls
+    () => {
+
+      if (!desktopPageMedia.matches) {
+
+        controls.remove();
+
+        return;
+
+      }
+
+      updateDesktopPageControls();
+
+    }
   );
 
 

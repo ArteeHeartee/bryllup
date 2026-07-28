@@ -1071,3 +1071,433 @@ if (quickNavigation) {
   );
 
 }
+/*
+  ==================================================
+  DESKTOP: SIDEVISNING UTEN VERTIKAL SCROLLING
+  ==================================================
+*/
+
+const desktopPageMedia =
+  window.matchMedia("(min-width: 761px)");
+
+const desktopPageIds = [
+  "invitasjon",
+  "historien",
+  "program",
+  "praktisk",
+  "gaveonsker",
+  "rsvp"
+];
+
+let activeDesktopPageId =
+  "invitasjon";
+
+let desktopPageTransitionTimer =
+  null;
+
+
+const getDesktopPage = (
+  pageId
+) => {
+
+  return document.getElementById(
+    pageId
+  );
+
+};
+
+
+const getDesktopPageIndex = (
+  pageId
+) => {
+
+  return desktopPageIds.indexOf(
+    pageId
+  );
+
+};
+
+
+const cleanDesktopHash = (
+  hash
+) => {
+
+  const pageId =
+    String(hash || "")
+      .replace(/^#/, "");
+
+  if (
+    desktopPageIds.includes(pageId)
+  ) {
+    return pageId;
+  }
+
+  return "invitasjon";
+
+};
+
+
+const updateDesktopPageClasses = (
+  activePageId
+) => {
+
+  const activeIndex =
+    getDesktopPageIndex(
+      activePageId
+    );
+
+  desktopPageIds.forEach(
+    (pageId, pageIndex) => {
+
+      const page =
+        getDesktopPage(pageId);
+
+      if (!page) {
+        return;
+      }
+
+      page.classList.remove(
+        "desktop-page-active",
+        "desktop-page-before",
+        "desktop-page-after"
+      );
+
+      page.setAttribute(
+        "aria-hidden",
+        pageId === activePageId
+          ? "false"
+          : "true"
+      );
+
+      if (
+        pageId === activePageId
+      ) {
+
+        page.classList.add(
+          "desktop-page-active"
+        );
+
+      } else if (
+        pageIndex < activeIndex
+      ) {
+
+        page.classList.add(
+          "desktop-page-before"
+        );
+
+      } else {
+
+        page.classList.add(
+          "desktop-page-after"
+        );
+
+      }
+
+    }
+  );
+
+};
+
+
+const showDesktopPage = (
+  pageId,
+  options = {}
+) => {
+
+  if (!desktopPageMedia.matches) {
+    return;
+  }
+
+  const {
+    updateHash = true,
+    animate = true
+  } = options;
+
+  const nextPageId =
+    cleanDesktopHash(pageId);
+
+  const nextPage =
+    getDesktopPage(nextPageId);
+
+  if (!nextPage) {
+    return;
+  }
+
+  if (
+    nextPageId !== "invitasjon" &&
+    body.classList.contains(
+      "invitation-closed"
+    )
+  ) {
+
+    openInvitation();
+
+  }
+
+  if (
+    desktopPageTransitionTimer
+  ) {
+
+    window.clearTimeout(
+      desktopPageTransitionTimer
+    );
+
+  }
+
+  if (!animate) {
+
+    body.classList.add(
+      "desktop-page-no-animation"
+    );
+
+  }
+
+  body.classList.add(
+    "desktop-page-mode"
+  );
+
+  activeDesktopPageId =
+    nextPageId;
+
+  updateDesktopPageClasses(
+    activeDesktopPageId
+  );
+
+  setActiveNavigation(
+    activeDesktopPageId
+  );
+
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "auto"
+  });
+
+  if (
+    updateHash &&
+    window.history &&
+    window.history.replaceState
+  ) {
+
+    window.history.replaceState(
+      null,
+      "",
+      `#${activeDesktopPageId}`
+    );
+
+  }
+
+  if (!animate) {
+
+    desktopPageTransitionTimer =
+      window.setTimeout(
+        () => {
+
+          body.classList.remove(
+            "desktop-page-no-animation"
+          );
+
+        },
+        40
+      );
+
+  }
+
+};
+
+
+const initializeDesktopPages = () => {
+
+  if (!desktopPageMedia.matches) {
+
+    body.classList.remove(
+      "desktop-page-mode",
+      "desktop-page-no-animation"
+    );
+
+    desktopPageIds.forEach(
+      (pageId) => {
+
+        const page =
+          getDesktopPage(pageId);
+
+        if (!page) {
+          return;
+        }
+
+        page.classList.remove(
+          "desktop-page-active",
+          "desktop-page-before",
+          "desktop-page-after"
+        );
+
+        page.removeAttribute(
+          "aria-hidden"
+        );
+
+      }
+    );
+
+    return;
+  }
+
+  const initialPageId =
+    body.classList.contains(
+      "invitation-closed"
+    )
+      ? "invitasjon"
+      : cleanDesktopHash(
+          window.location.hash
+        );
+
+  showDesktopPage(
+    initialPageId,
+    {
+      updateHash: false,
+      animate: false
+    }
+  );
+
+};
+
+
+document.addEventListener(
+  "click",
+  (event) => {
+
+    if (!desktopPageMedia.matches) {
+      return;
+    }
+
+    const link =
+      event.target.closest(
+        'a[href^="#"]'
+      );
+
+    if (!link) {
+      return;
+    }
+
+    const href =
+      link.getAttribute("href");
+
+    const targetPageId =
+      cleanDesktopHash(href);
+
+    if (
+      !desktopPageIds.includes(
+        targetPageId
+      )
+    ) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopImmediatePropagation();
+
+    closeMenu();
+
+    showDesktopPage(
+      targetPageId
+    );
+
+  },
+  true
+);
+
+
+if (openInvitationButton) {
+
+  openInvitationButton.addEventListener(
+    "click",
+    () => {
+
+      if (!desktopPageMedia.matches) {
+        return;
+      }
+
+      window.setTimeout(
+        () => {
+
+          showDesktopPage(
+            "invitasjon",
+            {
+              updateHash: true,
+              animate: false
+            }
+          );
+
+        },
+        20
+      );
+
+    }
+  );
+
+}
+
+
+if (reopenInvitationButton) {
+
+  reopenInvitationButton.addEventListener(
+    "click",
+    () => {
+
+      if (!desktopPageMedia.matches) {
+        return;
+      }
+
+      activeDesktopPageId =
+        "invitasjon";
+
+      updateDesktopPageClasses(
+        "invitasjon"
+      );
+
+      if (
+        window.history &&
+        window.history.replaceState
+      ) {
+
+        window.history.replaceState(
+          null,
+          "",
+          "#invitasjon"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+window.addEventListener(
+  "hashchange",
+  () => {
+
+    if (!desktopPageMedia.matches) {
+      return;
+    }
+
+    showDesktopPage(
+      cleanDesktopHash(
+        window.location.hash
+      ),
+      {
+        updateHash: false
+      }
+    );
+
+  }
+);
+
+
+desktopPageMedia.addEventListener(
+  "change",
+  initializeDesktopPages
+);
+
+
+initializeDesktopPages();

@@ -4497,12 +4497,7 @@ body.invitation-open .wax-seal {
   }
 
 }
-/* ==================================================
-   DESKTOP: ÉN SIDE PER VISNING
-   Kun desktop. Mobilvisningen under 761 px er urørt.
-================================================== */
 
-@media (min-width: 761px) {
 
   html {
     scroll-snap-type: y mandatory;

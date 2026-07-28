@@ -230,13 +230,23 @@ const getHeaderOffset = () => {
 };
 
 
-const scrollToSection = (
-  target
-) => {
+const scrollToSection = (target) => {
 
-  if (!target) {
-    return;
-  }
+    if (!target) {
+        return;
+    }
+
+    const targetPosition =
+        target.getBoundingClientRect().top +
+        window.scrollY -
+        getHeaderOffset();
+
+    window.scrollTo({
+        top: Math.max(targetPosition, 0),
+        behavior: "smooth"
+    });
+
+};
 
   const targetTop =
     target.getBoundingClientRect().top +

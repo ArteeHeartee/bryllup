@@ -238,11 +238,46 @@ const scrollToSection = (
     return;
   }
 
-  const targetPosition =
+  const targetTop =
     target.getBoundingClientRect().top +
-    window.scrollY -
-    getHeaderOffset();
+    window.scrollY;
 
+  const isDesktop =
+    window.matchMedia(
+      "(min-width: 761px)"
+    ).matches;
+
+  let targetPosition;
+
+  if (
+    isDesktop &&
+    target.classList.contains(
+      "screen-section"
+    )
+  ) {
+
+    const availableHeight =
+      window.innerHeight -
+      getHeaderOffset();
+
+    targetPosition =
+      targetTop -
+      getHeaderOffset() -
+      Math.max(
+        (
+          availableHeight -
+          target.offsetHeight
+        ) / 2,
+        0
+      );
+
+  } else {
+
+    targetPosition =
+      targetTop -
+      getHeaderOffset();
+
+  }
 
   window.scrollTo({
     top: Math.max(targetPosition, 0),

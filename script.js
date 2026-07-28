@@ -1906,7 +1906,7 @@ createDesktopPageControls();
 /*
   ==================================================
   MOBIL: SVEIP MELLOM INVITASJONSSIDENE
-  Gjelder kun skjermer opptil 760 px.
+  Kun skjermer opptil 760 px.
   ==================================================
 */
 
@@ -1925,11 +1925,13 @@ const mobilePageIds = [
 let activeMobilePageId =
   "invitasjon";
 
+let mobileSwipePointerId = null;
+
 let mobileSwipeStartX = 0;
 let mobileSwipeStartY = 0;
 let mobileSwipeCurrentX = 0;
+let mobileSwipeStartTime = 0;
 
-let mobileSwipePointerId = null;
 let mobileSwipeDirectionLocked = false;
 let mobileSwipeIsHorizontal = false;
 let mobileSwipeIsDragging = false;
@@ -1937,8 +1939,13 @@ let mobileSwipeIsDragging = false;
 let mobileSwipeWidth =
   window.innerWidth;
 
-let mobileFirstInvitationSwipe = true;
+let mobileFirstInvitationSwipe =
+  true;
 
+
+/*
+  HENT MOBILSIDE
+*/
 
 const getMobilePage = (
   pageId
@@ -1980,6 +1987,99 @@ const cleanMobilePageId = (
 
 };
 
+
+/*
+  SVEIPEILLUSTRASJON
+*/
+
+const createMobileSwipeHint = () => {
+
+  const existingHint =
+    document.querySelector(
+      "[data-mobile-swipe-hint]"
+    );
+
+  if (existingHint) {
+    return existingHint;
+  }
+
+  const hint =
+    document.createElement("div");
+
+  hint.className =
+    "mobile-swipe-hint";
+
+  hint.setAttribute(
+    "data-mobile-swipe-hint",
+    ""
+  );
+
+  hint.setAttribute(
+    "aria-hidden",
+    "true"
+  );
+
+  hint.innerHTML = `
+    <span class="mobile-swipe-hint-left">‹</span>
+
+    <span class="mobile-swipe-hint-line">
+      <i></i>
+    </span>
+
+    <span class="mobile-swipe-hint-right">›</span>
+
+    <small>Sveip</small>
+  `;
+
+  body.appendChild(hint);
+
+  return hint;
+
+};
+
+
+const mobileSwipeHint =
+  createMobileSwipeHint();
+
+
+const updateMobileSwipeHint = () => {
+
+  if (
+    !mobilePageMedia.matches ||
+    !mobileSwipeHint
+  ) {
+    return;
+  }
+
+  const currentIndex =
+    getMobilePageIndex(
+      activeMobilePageId
+    );
+
+  mobileSwipeHint.classList.toggle(
+    "no-previous",
+    currentIndex === 0
+  );
+
+  mobileSwipeHint.classList.toggle(
+    "no-next",
+    currentIndex ===
+      mobilePageIds.length - 1
+  );
+
+  mobileSwipeHint.classList.toggle(
+    "visible",
+    body.classList.contains(
+      "invitation-open"
+    )
+  );
+
+};
+
+
+/*
+  PLASSERING AV SIDENE
+*/
 
 const setMobilePagePosition = (
   page,
@@ -2131,14 +2231,9 @@ const updateMobilePageClasses = (
 };
 
 
-const updateMobileActiveNavigation = (
-  pageId
-) => {
-
-  setActiveNavigation(pageId);
-
-};
-
+/*
+  VIS MOBILSIDE
+*/
 
 const showMobilePage = (
   pageId,
@@ -2196,24 +2291,20 @@ const showMobilePage = (
     "mobile-page-drag-right"
   );
 
+  body.classList.toggle(
+    "mobile-page-dark",
+    nextPageId === "gaveonsker"
+  );
+
   updateMobilePageClasses(
     activeMobilePageId
   );
 
-  updateMobileActiveNavigation(
+  setActiveNavigation(
     activeMobilePageId
   );
 
-  const activePage =
-    getMobilePage(
-      activeMobilePageId
-    );
-
-  if (activePage) {
-
-    activePage.scrollTop = 0;
-
-  }
+  updateMobileSwipeHint();
 
   if (
     updateHash &&
@@ -2252,6 +2343,10 @@ const showMobilePage = (
 };
 
 
+/*
+  OPPSTART
+*/
+
 const initializeMobilePages = () => {
 
   if (!mobilePageMedia.matches) {
@@ -2261,10 +2356,15 @@ const initializeMobilePages = () => {
       "mobile-page-no-animation",
       "mobile-page-dragging",
       "mobile-page-drag-left",
-      "mobile-page-drag-right"
+      "mobile-page-drag-right",
+      "mobile-page-dark"
     );
 
     resetMobilePageInlineStyles();
+
+    mobileSwipeHint?.classList.remove(
+      "visible"
+    );
 
     return;
   }
@@ -2289,8 +2389,14 @@ const initializeMobilePages = () => {
     }
   );
 
+  updateMobileSwipeHint();
+
 };
 
+
+/*
+  NABOSIDER
+*/
 
 const getMobileNeighbourPages = () => {
 
@@ -2327,6 +2433,10 @@ const getMobileNeighbourPages = () => {
 
 };
 
+
+/*
+  KORTET FØLGER FINGEREN
+*/
 
 const updateMobileDrag = (
   dragOffset
@@ -2409,6 +2519,16 @@ const updateMobileDrag = (
 };
 
 
+/*
+  AVSLUTT SVEIP
+
+  Normal sveip:
+  minst 24 % av skjermbredden.
+
+  Rask sveip:
+  minst 52 px og tydelig hastighet.
+*/
+
 const finishMobileSwipe = (
   dragOffset
 ) => {
@@ -2418,55 +2538,66 @@ const finishMobileSwipe = (
       activeMobilePageId
     );
 
-  const threshold =
-    Math.min(
-      mobileSwipeWidth * .22,
-      105
+  const elapsedTime =
+    Math.max(
+      performance.now() -
+      mobileSwipeStartTime,
+      1
     );
 
-  const velocityAssistedThreshold =
-    55;
+  const velocity =
+    Math.abs(dragOffset) /
+    elapsedTime;
+
+  const distanceThreshold =
+    Math.min(
+      mobileSwipeWidth * .24,
+      118
+    );
+
+  const fastSwipeDistance =
+    52;
+
+  const fastSwipeVelocity =
+    .72;
+
+  const movedFarEnough =
+    Math.abs(dragOffset) >=
+    distanceThreshold;
+
+  const movedFastEnough =
+    Math.abs(dragOffset) >=
+      fastSwipeDistance &&
+    velocity >=
+      fastSwipeVelocity;
 
   let targetIndex =
     currentIndex;
 
   if (
-    dragOffset <= -threshold ||
-    (
-      dragOffset <=
-      -velocityAssistedThreshold &&
-      Math.abs(dragOffset) >
-      Math.abs(
-        mobileSwipeCurrentX -
-        mobileSwipeStartX
-      ) * .8
-    )
+    movedFarEnough ||
+    movedFastEnough
   ) {
 
-    targetIndex =
-      Math.min(
-        currentIndex + 1,
-        mobilePageIds.length - 1
-      );
+    if (dragOffset < 0) {
 
-  } else if (
-    dragOffset >= threshold ||
-    (
-      dragOffset >=
-      velocityAssistedThreshold &&
-      Math.abs(dragOffset) >
-      Math.abs(
-        mobileSwipeCurrentX -
-        mobileSwipeStartX
-      ) * .8
-    )
-  ) {
+      targetIndex =
+        Math.min(
+          currentIndex + 1,
+          mobilePageIds.length - 1
+        );
 
-    targetIndex =
-      Math.max(
-        currentIndex - 1,
-        0
-      );
+    } else if (
+      dragOffset > 0
+    ) {
+
+      targetIndex =
+        Math.max(
+          currentIndex - 1,
+          0
+        );
+
+    }
 
   }
 
@@ -2510,7 +2641,7 @@ const finishMobileSwipe = (
 
     if (
       previousPageId ===
-      "invitasjon" &&
+        "invitasjon" &&
       mobileFirstInvitationSwipe
     ) {
 
@@ -2548,6 +2679,10 @@ const finishMobileSwipe = (
 
 };
 
+
+/*
+  START SVEIP
+*/
 
 const startMobileSwipe = (
   event
@@ -2606,6 +2741,9 @@ const startMobileSwipe = (
   mobileSwipeCurrentX =
     event.clientX;
 
+  mobileSwipeStartTime =
+    performance.now();
+
   mobileSwipeDirectionLocked =
     false;
 
@@ -2617,6 +2755,10 @@ const startMobileSwipe = (
 
 };
 
+
+/*
+  FLYTT SVEIP
+*/
 
 const moveMobileSwipe = (
   event
@@ -2645,8 +2787,8 @@ const moveMobileSwipe = (
   ) {
 
     if (
-      Math.abs(deltaX) < 8 &&
-      Math.abs(deltaY) < 8
+      Math.abs(deltaX) < 10 &&
+      Math.abs(deltaY) < 10
     ) {
       return;
     }
@@ -2656,7 +2798,7 @@ const moveMobileSwipe = (
 
     mobileSwipeIsHorizontal =
       Math.abs(deltaX) >
-      Math.abs(deltaY) * 1.15;
+      Math.abs(deltaY) * 1.3;
 
   }
 
@@ -2669,12 +2811,6 @@ const moveMobileSwipe = (
       activeMobilePageId
     );
 
-  const attemptingPrevious =
-    deltaX > 0;
-
-  const attemptingNext =
-    deltaX < 0;
-
   const hasPrevious =
     currentIndex > 0;
 
@@ -2686,22 +2822,22 @@ const moveMobileSwipe = (
     deltaX;
 
   if (
-    attemptingPrevious &&
+    deltaX > 0 &&
     !hasPrevious
   ) {
 
     adjustedDeltaX =
-      deltaX * .18;
+      deltaX * .16;
 
   }
 
   if (
-    attemptingNext &&
+    deltaX < 0 &&
     !hasNext
   ) {
 
     adjustedDeltaX =
-      deltaX * .18;
+      deltaX * .16;
 
   }
 
@@ -2720,6 +2856,10 @@ const moveMobileSwipe = (
 
 };
 
+
+/*
+  SLIPP SVEIP
+*/
 
 const endMobileSwipe = (
   event
@@ -2748,9 +2888,15 @@ const endMobileSwipe = (
   }
 
   mobileSwipePointerId = null;
-  mobileSwipeDirectionLocked = false;
-  mobileSwipeIsHorizontal = false;
-  mobileSwipeIsDragging = false;
+
+  mobileSwipeDirectionLocked =
+    false;
+
+  mobileSwipeIsHorizontal =
+    false;
+
+  mobileSwipeIsDragging =
+    false;
 
 };
 
@@ -2792,8 +2938,7 @@ document.addEventListener(
 
 
 /*
-  Mobilens toppikoner og bunnlenker bytter side
-  uten at den gamle vertikale scrollingen kjøres.
+  TOPPIKONER OG HASH-LENKER
 */
 
 document.addEventListener(
@@ -2833,6 +2978,7 @@ document.addEventListener(
     }
 
     event.preventDefault();
+
     event.stopImmediatePropagation();
 
     closeMenu();
@@ -2845,6 +2991,10 @@ document.addEventListener(
   true
 );
 
+
+/*
+  ÅPNE INVITASJON
+*/
 
 if (openInvitationButton) {
 
@@ -2867,6 +3017,8 @@ if (openInvitationButton) {
             }
           );
 
+          updateMobileSwipeHint();
+
         },
         40
       );
@@ -2876,6 +3028,58 @@ if (openInvitationButton) {
 
 }
 
+
+/*
+  GÅ TILBAKE TIL SEGLET
+*/
+
+if (reopenInvitationButton) {
+
+  reopenInvitationButton.addEventListener(
+    "click",
+    () => {
+
+      if (!mobilePageMedia.matches) {
+        return;
+      }
+
+      activeMobilePageId =
+        "invitasjon";
+
+      updateMobilePageClasses(
+        "invitasjon"
+      );
+
+      mobileSwipeHint?.classList.remove(
+        "visible"
+      );
+
+      body.classList.remove(
+        "mobile-page-dark"
+      );
+
+      if (
+        window.history &&
+        window.history.replaceState
+      ) {
+
+        window.history.replaceState(
+          null,
+          "",
+          "#invitasjon"
+        );
+
+      }
+
+    }
+  );
+
+}
+
+
+/*
+  NETTLESERENS TILBAKEKNAPP
+*/
 
 window.addEventListener(
   "hashchange",

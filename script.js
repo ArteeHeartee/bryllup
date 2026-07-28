@@ -3129,3 +3129,64 @@ mobilePageMedia.addEventListener(
 
 
 initializeMobilePages();
+/*
+  ==================================================
+  MOBIL: SE INVITASJONEN FRA HAMBURGERMENYEN
+  ==================================================
+*/
+
+const mobileReopenInvitationButton =
+  document.querySelector(
+    "[data-mobile-reopen-invitation]"
+  );
+
+
+if (mobileReopenInvitationButton) {
+
+  mobileReopenInvitationButton.addEventListener(
+    "click",
+    () => {
+
+      if (!mobilePageMedia.matches) {
+        return;
+      }
+
+      closeMenu();
+
+      activeMobilePageId =
+        "invitasjon";
+
+      updateMobilePageClasses(
+        "invitasjon"
+      );
+
+      body.classList.remove(
+        "mobile-page-dark",
+        "mobile-page-dragging",
+        "mobile-page-drag-left",
+        "mobile-page-drag-right"
+      );
+
+      closeInvitation();
+
+      mobileSwipeHint?.classList.remove(
+        "visible"
+      );
+
+      if (
+        window.history &&
+        window.history.replaceState
+      ) {
+
+        window.history.replaceState(
+          null,
+          "",
+          "#invitasjon"
+        );
+
+      }
+
+    }
+  );
+
+}

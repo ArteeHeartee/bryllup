@@ -5602,3 +5602,92 @@ body.invitation-open .wax-seal {
   }
 
 }
+/* ==================================================
+   DESKTOP: KORREKT PLASSERING AV NEDTELLING
+================================================== */
+
+@media (min-width: 761px) {
+
+  body.desktop-page-mode
+  .invitation-interior {
+    grid-template-rows:
+      minmax(0, 1fr)
+      auto
+      auto;
+  }
+
+
+  body.desktop-page-mode
+  .countdown {
+    align-self: auto;
+
+    width: min(720px, 76%);
+
+    margin:
+      0
+      auto
+      24px;
+
+    padding:
+      13px
+      0
+      3px;
+
+    transform: none;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item {
+    min-width: 0;
+
+    gap: 5px;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item span {
+    display: block;
+
+    line-height: .88;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item small {
+    display: block;
+
+    margin-top: 5px;
+
+    line-height: 1.2;
+  }
+
+
+  body.desktop-page-mode
+  .countdown-item:not(:last-child)::after {
+    top: 0;
+
+    height: 35px;
+  }
+
+
+  /*
+    Hindrer at etikettene under nedtellingen synes
+    gjennom den lukkede konvolutten.
+  */
+
+  body.invitation-closed
+  .countdown {
+    opacity: 0;
+  }
+
+
+  body.invitation-open
+  .countdown {
+    opacity: 1;
+
+    transition:
+      opacity .45s ease .55s;
+  }
+
+}
